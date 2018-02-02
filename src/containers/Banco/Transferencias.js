@@ -13,7 +13,7 @@ class Transferencias extends Component {
     render() {
         return (
             <div>
-                <p>Transferencias</p>
+                <h1>Transferencias</h1>
                 <Link to="/banco">Generar Transferencias</Link>
                 <p><Button>Listar Transferencia</Button></p>
             </div>
