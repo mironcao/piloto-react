@@ -10,9 +10,9 @@ class App extends Component {
     return (
       <div className="App">
         <Switch>
+            <Route path="/ListarTransferencias" component={ListarTransferencias}/>
             <Route path="/Banco" component={Banco} />
             <Route path="/Transferencias" component={Transferencias}/>
-            <Route path="/ListarTransferencias" component={ListarTransferencias}/>
           </Switch>
       </div>
     );
