@@ -2,13 +2,20 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as actions from "../../store/actions";
 import {Button} from 'semantic-ui-react';
+import Route from 'react-router-dom/Route';
+import { BrowserRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 
-class Banco extends Component {
+class Transferencias extends Component {
+    generar= ()=>{
+        
+    }
     render() {
         return (
             <div>
-                <p>Prueba</p>
-                <Button onClick>Hola</Button>
+                <p>Transferencias</p>
+                <Link to="/banco">Generar Transferencias</Link>
+                <p><Button>Listar Transferencia</Button></p>
             </div>
         );
     }
@@ -28,4 +35,4 @@ const mapStateToProps = state => {
     }
   }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Banco);
+export default connect(mapStateToProps, mapDispatchToProps)(Transferencias);
