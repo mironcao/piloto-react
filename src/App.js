@@ -12,7 +12,7 @@ class App extends Component {
     return (
       <div className="App">
         <Switch>
-            <Route path="/sucursal" exact component={Sucursales}/>
+            <Route path="/sucursales" exact component={Sucursales}/>
             <Route path="/" component={Banco} />
             <Route path="/" component={MisCuentas} />
           </Switch>
