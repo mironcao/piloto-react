@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as actions from "../../store/actions";
-import { Form, Checkbox, Button } from 'semantic-ui-react';
+import { Form, Checkbox, Button, Header } from 'semantic-ui-react';
 import axios from 'axios';
 
 class CreateMovimiento extends Component {
@@ -36,7 +36,7 @@ class CreateMovimiento extends Component {
     render() {
         return (
             <html>
-                <header>CrearMovimiento</header>
+                <Header>CrearMovimiento</Header>
                 <br/>
                 <div className="mov">
                     <div class="ui segments">
@@ -80,9 +80,16 @@ class CreateMovimiento extends Component {
                     </div>
                     </div>
                     <div>
-                        <Button>Cancelar</Button>
                         <Button 
-                                onClick={() => this.crearMovimiento('6182057801123304201775953')}>Guardar</Button>
+                            href="http://localhost:3000/misMovimientos">
+                            Cancelar
+                        </Button>
+
+                        <Button 
+                            href="http://localhost:3000/misMovimientos"
+                            onClick={() => this.crearMovimiento('6182057801123304201775953')}>
+                            Guardar
+                        </Button>
                     </div>
                 </div>
             </html>

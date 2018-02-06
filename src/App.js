@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import Banco from './containers/Banco/Banco';
 import { Route, Switch } from 'react-router-dom';
+import MisMovimientos from './containers/movimientos/MisMovimientos';
 import CreateMovimiento from './containers/movimientos/CreateMovimiento';
 
 class App extends Component {
@@ -9,7 +9,8 @@ class App extends Component {
     return (
       <div className="App">
         <Switch>
-            <Route path="/" component={CreateMovimiento} />
+            <Route path="/misMovimientos" component={MisMovimientos} />
+            <Route path="/CrearMovimiento" component={CreateMovimiento} />
           </Switch>
       </div>
     );
