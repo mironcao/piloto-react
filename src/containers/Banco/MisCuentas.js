@@ -7,23 +7,48 @@ import {Button, Table} from 'semantic-ui-react';
 class MisCuentas extends Component {
 	constructor(){
 		super();
-		this.state= {cuentas:[], dni:null
-		}
+		this.state= {cuentas:[],dni:null}
 	}
-	
 
-
-buscarCuentas(dni) {
+buscarCuentas=(dni)=> {
 	axios.get('http://localhost:8080/cuenta/miscuentas?dni='+dni).then(response => {
-	this.setState({cuentas:response.data}); }
-	)
+	this.setState({cuentas:response.data}); 
+	}
+	);
+	
 }
 
 actualizarDni=(event)=>  {
 	this.setState({dni:event.target.value});
 }
 
-render() {
+mostrarCosas=()=> {
+	let rows=[];
+	let index=0;
+	for(let c of this.state.cuentas) {
+		index=0;
+		rows.push(<Table.Body>);
+		rows.push(<Table.Row>);
+		rows.push(<Table.Cell rowspan={c.titulares.length}>{c.numeroCuenta}</Table.Cell>);
+		for(let t of c.titulares) { 
+			if(index==0) {
+				rows.push(<Table.Cell>{t.nombre}</Table.Cell>);
+				rows.push(<Table.Cell>{t.apellidos}</Table.Cell>);
+				rows.push(</Table.Row>);
+			} else {
+				rows.push(<Table.Row>);
+				rows.push(<Table.Cell>{t.nombre}</Table.Cell>);
+				rows.push(<Table.Cell>{t.apellidos}</Table.Cell>);
+				rows.push(</Table.Row>);
+			}
+			index=index+1;
+		}
+		rows.push(</Table.Body>);
+	}
+	return rows;
+}
+
+render(){
 	return(
 	<div>
 	<input type="text" onChange={this.actualizarDni}/>
@@ -31,25 +56,14 @@ render() {
 	<Table collapsing celled structured> 
 		<Table.Header>
 			<Table.Row>
-				<Table.HeaderCell rowSpan='2'>Número Cuenta</Table.HeaderCell>
-				<Table.HeaderCell colSpan='2'	>Titulares</Table.HeaderCell>
-			</Table.Row>
-			<Table.Row>
+				<Table.HeaderCell>Número Cuenta</Table.HeaderCell>
 				<Table.HeaderCell>Nombre</Table.HeaderCell>
 				<Table.HeaderCell>Apellidos</Table.HeaderCell>
 			</Table.Row>
 		</Table.Header>
-	{this.state.cuentas.map((cuenta)=> 
-		<Table.Row>
-			<Table.Cell collapsing>{cuenta.numeroCuenta}</Table.Cell>
-			{cuenta.titulares.map((titular)=>
-			<Table.Row>
-			<Table.Cell collapsing>{titular.nombre}</Table.Cell>
-			<Table.Cell collapsing>{titular.apellidos}</Table.Cell>
-			</Table.Row>
-			)}
-		</Table.Row>
-		)}
+		<Table.Body>
+		{this.mostrarCosas()}
+		</Table.Body>
 	</Table>
 	</div>
 	)
@@ -60,5 +74,6 @@ render() {
 
 
 export default MisCuentas;
+
 
 
