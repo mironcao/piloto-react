@@ -13,7 +13,7 @@ const DATA_STATE = {
 class Sucursales extends Component {
 
     state = {
-        dataSate: DATA_STATE.LOADING
+        dataState: DATA_STATE.LOADING
     }
 
     componentDidMount() {
@@ -21,17 +21,17 @@ class Sucursales extends Component {
             .then(response => {
                 this.props.cargarSucursales(response.data);
                 this.setState({
-                    dataSate: DATA_STATE.OK
+                    dataState: DATA_STATE.OK
                 });
             }).catch(error => {
                 this.setState({
-                    dataSate: DATA_STATE.ERROR
+                    dataState: DATA_STATE.ERROR
                 });
             })
     }
 
     renderData = () => {
-        switch (this.state.dataSate) {
+        switch (this.state.dataState) {
             case DATA_STATE.LOADING:
                 return (
                     <Message icon>
