@@ -55,7 +55,6 @@ class MisMovimientos extends Component {
 
                         <Table.Body>
                         {
-                            
                         this.props.movimientos.map((movimiento) =>
                         (<Table.Row onClick={() => this.selectRow(movimiento.id)}>
                             <Table.Cell>{movimiento.fecha}</Table.Cell>
