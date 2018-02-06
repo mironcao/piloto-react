@@ -38,15 +38,17 @@ class ListarTransferencias extends Component {
 					<th style={divStyle}>Fecha de realizacion</th>
 				</thead>
 				{this.props.transferencias.map((transferencia) =>
+				<tbody>
 					<tr>
 						<td style={divStyle}>{transferencia.idDestino}</td>
 
 						<td style={divStyle}> {transferencia.cuenta}</td>
 
-						<td style={divStyle}> {transferencia.importe} </td>
+						<td style={divStyle}> {`${transferencia.importe}€`} </td>
 
 						<td style={divStyle}> {new Date(transferencia.fechaRealizacion).toLocaleString()} </td>
 					</tr>
+					</tbody>
 				)}
 				<tfoot>
 					<p><Link to="/Transferencias">Volver a transferencias</Link></p>

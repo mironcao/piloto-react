@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
 import axios from 'axios';
 import { Table } from 'semantic-ui-react';
-import {withRouter} from 'react-router-dom';
-
+import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 class GenerarTransferencia extends Component {
 
@@ -19,7 +19,7 @@ class GenerarTransferencia extends Component {
 			idDestino: this.state.cuentaDestino,
 			importe: this.state.importe
 		}
-		axios.post('http://localhost:8080/transferencia/transferencia', transferencia).then((response)=>{
+		axios.post('http://localhost:8080/transferencia/transferencia', transferencia).then((response) => {
 			this.props.history.push("/Transferencias");
 		});
 	}
@@ -41,31 +41,25 @@ class GenerarTransferencia extends Component {
 
 	render() {
 		return (
-			<div>
-				<p>
-					<div class="ui fluid icon input">
-						<input onChange={this.asignarOrigenHandler} type="text" placeholder="Inserte cuenta de origen" />
-					</div>
-				</p>
+			<form class="ui fluid form">
+				<div class="field">
+					<label>Inserte cuenta origen</label>
+					<input onChange={this.asignarOrigenHandler} type="text" placeholder="Inserte cuenta de origen" />
+				</div>
+				<div class="field">
+					<label>Inserte cuenta de destino</label>
+					<input onChange={this.asignarDestinoHandler} type="text" placeholder="Inserte cuenta de destino" />
+				</div>
 
-				<p>
-					<div class="ui fluid icon input">
-						<input onChange={this.asignarDestinoHandler} type="text" placeholder="Inserte cuenta de destino" />
-					</div>
-				</p>
+				<div class="field">
+					<label>Importe transferencia</label>
+					<input onChange={this.asignarImporteHandler} type="text" placeholder="Importe transferencia" />
+				</div>
 
-				<p>
-					<div class="ui fluid icon input">
-						<input onChange={this.asignarImporteHandler} type="text" placeholder="Importe transferencia" />
-						<div class="ui basic label">€</div>
-					</div>
-				</p>
+				<button class="ui fluid button" role="button" onClick={this.peticion}>Realizar Transferencia</button>
 
-				<p>
-					<button class="ui fluid button" role="button" onClick={this.peticion}>Realizar Transferencia</button>
-				</p>
-
-			</div>
+				<p><Link to="/Transferencias">Volver a transferencias</Link></p>
+			</form>
 		)
 	}
 
