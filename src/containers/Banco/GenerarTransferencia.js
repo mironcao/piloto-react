@@ -3,33 +3,94 @@ import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
 import axios from 'axios';
 import { Table } from 'semantic-ui-react';
+import { Message } from 'semantic-ui-react';
+import { Input } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 class GenerarTransferencia extends Component {
 
 	state = {
-		cuentaOrigen: null,
-		cuentaDestino: null,
+		cuentaOrigen: {
+			value: "",
+			valid: true,
+			touched: false
+		},
+		cuentaDestino: {
+			value: "",
+			valid: true,
+			touched: false
+		},
 		importe: 0
 	}
 	peticion = () => {
-		const transferencia = {
-			cuenta: this.state.cuentaOrigen,
-			idDestino: this.state.cuentaDestino,
-			importe: this.state.importe
+		let valid = true;
+		for (let prop in this.state) {
+			valid = this.state[prop].valid && this.state[prop].touched && valid;
 		}
-		axios.post('http://localhost:8080/transferencia/transferencia', transferencia).then((response) => {
-			this.props.history.push("/Transferencias");
-		});
+		if (valid) {
+			const transferencia = {
+				cuenta: this.state.cuentaOrigen,
+				idDestino: this.state.cuentaDestino,
+				importe: this.state.importe
+			}
+			axios.post('http://localhost:8080/transferencia/transferencia', transferencia).then((response) => {
+				this.props.history.push("/Transferencias");
+			});
+			this.setState({
+				cuentaOrigen: {
+					value: "",
+					valid: true,
+					touched: false
+				},
+				cuentaDestino: {
+					value: "",
+					valid: true,
+					touched: false
+				},
+				importe: 0
+			});
+		} else {
+			this.setState({
+				cuentaOrigen: {
+					value: "",
+					valid: true,
+					touched: false
+				},
+				cuentaDestino: {
+					value: "",
+					valid: true,
+					touched: false
+				},
+				importe: 0
+			});
+		}
 	}
 
 	asignarOrigenHandler = (event) => {
 		this.setState({ cuentaOrigen: event.target.value })
+		const cuentaOrigen = this.state.cuentaOrigen;
+		let valid = event.target.value.trim(" ") !== "";
+		this.setState({
+			cuentaOrigen: {
+				value: event.target.value,
+				touched: true,
+				valid: valid
+			}
+		});
 	}
 
 	asignarDestinoHandler = (event) => {
 		this.setState({ cuentaDestino: event.target.value })
+		const cuentaDestino = this.state.cuentaDestino;
+		let valid = event.target.value.trim(" ") !== "";
+		this.setState({
+			cuentaDestino: {
+				value: event.target.value,
+				touched: true,
+				valid: valid
+			}
+		});
 	}
 
 	asignarImporteHandler = (event) => {
@@ -40,15 +101,20 @@ class GenerarTransferencia extends Component {
 
 
 	render() {
+		const message = <Message error header='Campo no puede ser vacio' />
 		return (
 			<form class="ui fluid form">
 				<div class="field">
 					<label>Inserte cuenta origen</label>
-					<input onChange={this.asignarOrigenHandler} type="text" placeholder="Inserte cuenta de origen" />
+					<Input fluid error={!this.state.cuentaOrigen.valid}
+						onChange={this.asignarOrigenHandler} placeholder="Inserte cuenta de origen">{this.props.cuentaOrigen ? this.props.cuentaOrigen : null}</Input>
+					{this.state.cuentaOrigen.valid ? null : message}
 				</div>
 				<div class="field">
 					<label>Inserte cuenta de destino</label>
-					<input onChange={this.asignarDestinoHandler} type="text" placeholder="Inserte cuenta de destino" />
+					<Input fluid error={!this.state.cuentaDestino.valid}
+						onChange={this.asignarDestinoHandler} placeholder="Inserte cuenta de destino">{this.props.cuentaDestino ? this.props.cuentaDestino : null}</Input>
+					{this.state.cuentaDestino.valid ? null : message}
 				</div>
 
 				<div class="field">
