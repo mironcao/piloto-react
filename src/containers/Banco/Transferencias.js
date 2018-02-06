@@ -14,8 +14,8 @@ class Transferencias extends Component {
         return (
             <div>
                 <h1>Transferencias</h1>
-                <Link to="/banco">Generar Transferencias</Link>
-                <p><Button>Listar Transferencia</Button></p>
+                <p><Link to="/GenerarTransferencia">Generar Transferencias</Link></p>
+                <p><Link to="/ListarTransferencias">Listar Transferencia</Link></p>
             </div>
         );
     }
