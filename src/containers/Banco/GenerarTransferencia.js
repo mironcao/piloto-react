@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
 import axios from 'axios';
 import { Table } from 'semantic-ui-react';
+import {withRouter} from 'react-router-dom';
 
 
 class GenerarTransferencia extends Component {
@@ -18,7 +19,9 @@ class GenerarTransferencia extends Component {
 			idDestino: this.state.cuentaDestino,
 			importe: this.state.importe
 		}
-		axios.post('http://localhost:8080/transferencia/transferencia', transferencia);
+		axios.post('http://localhost:8080/transferencia/transferencia', transferencia).then((response)=>{
+			this.props.history.push("/Transferencias");
+		});
 	}
 
 	asignarOrigenHandler = (event) => {
@@ -68,4 +71,4 @@ class GenerarTransferencia extends Component {
 
 }
 
-export default GenerarTransferencia;
+export default withRouter(GenerarTransferencia);
