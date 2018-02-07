@@ -15,7 +15,8 @@ class EditItemSucursal extends Component {
             value: "",
             valid: true,
             touched: false
-        }
+        },
+        valid:true
     }
 
     onChangeNombreHandler = (event) => {
@@ -42,66 +43,46 @@ class EditItemSucursal extends Component {
         });
     }
 
+    validateForm = () => {
+       let valid = true;
+        for(let prop of this.state){
+            valid = prop.valid && prop.touched && valid;
+        }
+        this.setState({
+            valid: valid
+        });
+    }
+
     guardarSucursalHandler = () => {
-        let valid = true;
-        for (let prop in this.state) {
-            valid = this.state[prop].valid && this.state[prop].touched && valid;
-        }
-        console.log(valid);
-        if (valid) {
-            const dto = {
-                id: null,
-                nombre: this.state.nombre.value,
-                direccion: this.state.direccion.value,
-                usuario: 'User1'
-            }
-            axios.post("http://localhost:8080/sucursal/", dto).then((response) => {
+        const dto = {
+            id: null,
+            nombre: this.state.nombre.value,
+            direccion: this.state.direccion.value,
+            usuario: "user1"
+        };
+       if(this.state.valid){
+           axios.post("http://localhost:8080/sucursal/", dto)
+           .then((response) => {
                 this.props.addSucursal(response.data);
-            })
-            this.setState({
-                nombre: {
-                    value: "",
-                    valid: true,
-                    touched: false
-                },
-                direccion: {
-                    value: "",
-                    valid: true,
-                    touched: false
-                }
-            });
-            this.props.toggleAddSucursalHandler();
-        } else{
-            this.setState({
-                nombre: {
-                    value: "",
-                    valid: false,
-                    touched: true
-                },
-                direccion: {
-                    value: "",
-                    valid: false,
-                    touched: true
-                }
-            });
-        }
+           })
+       }
     }
 
     cancelarHandler = () => {
-        this.props.toggleAddSucursalHandler();
+        this.props.showEditHandler(false);
     }
 
     render() {
-        const message = <Message error header='Campo no puede ser vacio'/>
+        const message = <Message error header='Campo no puede ser vacio'/>;
         return (
             <Table.Row>
                 <Table.Cell>
                     <Input fluid error={!this.state.nombre.valid} 
-                    onChange={this.onChangeNombreHandler}>{this.props.nombre ? this.props.nombre : null}</Input>
+                    onChange={this.onChangeNombreHandler} value={this.state.nombre.value}></Input>
                     {this.state.nombre.valid?null:message}
                 </Table.Cell>
                 <Table.Cell>
-                    <Input fluid error={!this.state.direccion.valid} onChange={this.onChangeDireccionHandler}>{this.props.direccion ? this.props.direccion : null}</Input>
+                    <Input fluid error={!this.state.direccion.valid} onChange={this.onChangeDireccionHandler} value={this.state.direccion.value}></Input>
                     {this.state.direccion.valid?null:message}
                 </Table.Cell>
                 <Table.Cell textAlign='right'>
@@ -122,7 +103,6 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         addSucursal: (sucursal) => dispatch(actions.addSucursal(sucursal)),
-        toggleAddSucursalHandler: () => dispatch(actions.toggleAddSucursalHandler())
     }
 }
 

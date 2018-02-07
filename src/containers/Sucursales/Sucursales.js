@@ -13,7 +13,8 @@ const DATA_STATE = {
 class Sucursales extends Component {
 
     state = {
-        dataState: DATA_STATE.LOADING
+        dataState: DATA_STATE.LOADING,
+        showEdit: false
     }
 
     componentDidMount() {
@@ -52,7 +53,9 @@ class Sucursales extends Component {
                 return (<ListSucursales
                     sucursales={this.props.sucursal.sucursales}
                     clickBorrar={this.borrarSucursalHandler}
-                    edit={this.props.sucursal.editSucursal} />);
+                    showEditHandler={this.changeShowEditHandler}
+                    showEdit={this.state.showEdit}
+                    clickEdit={this.props.editSucursal} />);
         }
     }
 
@@ -61,8 +64,10 @@ class Sucursales extends Component {
         this.props.borrarSucursal(id);
     }
 
-    toggleAddSucursalHandler = () => {
-        this.props.toggleAddSucursalHandler();
+    changeShowEditHandler = (open) => {
+        this.setState({
+            showEdit: open
+        });
     }
 
     render() {
@@ -74,7 +79,7 @@ class Sucursales extends Component {
                 <Header as="h2">Sucursales</Header>
                 <Container>
                     <Container textAlign='right'>
-                        <Button color='blue' onClick={this.toggleAddSucursalHandler}>Añadir sucursal</Button>
+                        <Button color='blue' onClick={() => this.changeShowEditHandler(true)}>Añadir sucursal</Button>
                     </Container>
                     {sucursales}
                 </Container>
@@ -93,7 +98,7 @@ const mapDispatchToProps = dispatch => {
     return {
         cargarSucursales: sucursales => dispatch(actions.cargarSucursales(sucursales)),
         borrarSucursal: id => dispatch(actions.borrarSucursal(id)),
-        toggleAddSucursalHandler: () => dispatch(actions.toggleAddSucursalHandler())
+        editSucursal: (sucuresal, edit) => dispatch(actions.editSucursal(sucuresal, edit))
     }
 }
 

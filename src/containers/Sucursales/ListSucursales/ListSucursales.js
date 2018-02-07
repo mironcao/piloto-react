@@ -16,13 +16,18 @@ const listSucursales = (props) => {
                 </Table.Row>
             </Table.Header>
             <Table.Body>
-                {props.edit ? (<EditItemSucursal />) : null}
+                {props.showEdit ? <EditItemSucursal showEditHandler={props.showEditHandler} /> : null}
                 {props.sucursales.map(sucursal => (
                     <ListItemSucursal
                         key={sucursal.id}
                         nombre={sucursal.nombre}
                         direccion={sucursal.direccion}
-                        clickBorrar={() => props.clickBorrar(sucursal.id)} />
+                        clickBorrar={props.clickBorrar}
+                        clickEdit={()=>{
+                            props.clickEdit(sucursal, true);
+                            props.showEditHandler(true);
+                        }}
+                        />
                 ))}
             </Table.Body>
         </Table>

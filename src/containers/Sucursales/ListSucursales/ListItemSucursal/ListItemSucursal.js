@@ -7,7 +7,7 @@ const listItemSucursal = (props) => {
             <Table.Cell>{props.nombre}</Table.Cell>
             <Table.Cell>{props.direccion}</Table.Cell>
             <Table.Cell textAlign='right'>
-                <Button icon color='blue'>
+                <Button icon color='blue' onClick={props.clickEdit}>
                     <Icon name='edit' />
                 </Button>
                 <Button icon color='red' onClick={props.clickBorrar}>
