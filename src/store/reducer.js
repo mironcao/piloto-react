@@ -1,6 +1,9 @@
+import* as actions from './actions';
+
 const initialState = {
     test: true,
-	numeroCuenta:""
+	numeroCuenta:"",
+    movimientos:[]
 };
 
 const reducer = (state = initialState, action) => {
@@ -10,10 +13,19 @@ const reducer = (state = initialState, action) => {
 				...state,
 				numeroCuenta:action.numeroCuenta
 			}
+        case actions.CARGAR_MOVIMIENTOS:
+			return {
+				...state,
+				movimientos: action.payload
+			}	
+        case actions.BORRAR_MOVIMIENTO:
+			return{
+				...state,
+				movimientos: action.payload
+			}
         default:
-        return state;
+			return state;
     }
-
 }
 
 export default reducer;
