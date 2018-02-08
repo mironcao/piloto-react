@@ -1,5 +1,5 @@
 export const EJEMPLO_ACTION = "EJEMPLO_ACTION";
-export const MOVIMIENTOS = "MOVIMIENTOS";	
+export const PASAR_CUENTA = "PASAR_CUENTA";
 export const CARGAR_MOVIMIENTOS = "CARGAR_MOVIMIENTOS";
 export const BORRAR_MOVIMIENTO = "BORRAR_MOVIMIENTO";
 export const LISTAR_TRANSFER = "LISTAR_TRANSFER";
@@ -14,7 +14,7 @@ export const ejemploAction = (data) => {
 
 export const listarMovimientos = (numeroCuenta) => {
     return {
-        type: MOVIMIENTOS,
+        type: PASAR_CUENTA,
         numeroCuenta: numeroCuenta
 	}
 }

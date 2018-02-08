@@ -15,7 +15,7 @@ class App extends Component {
       <div className="App">
         <Switch>
 
-            <Route path="/miscuentas" component={MisCuentas} />
+            <Route path="/misCuentas" component={MisCuentas} />
             <Route path="/misMovimientos" component={MisMovimientos} />
             <Route path="/CrearMovimiento" component={CreateMovimiento} />
             <Route path="/Transferencias" component={Transferencias}/>
