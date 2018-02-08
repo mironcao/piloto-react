@@ -9,7 +9,7 @@ import Link from 'react-router-dom/Link';
 class MisMovimientos extends Component {
 
     componentDidMount() {
-        this.cargarMisMovimientos('6182057801123304201775953');
+        this.cargarMisMovimientos(this.props.numeroCuenta);
     }
 
     cargarMisMovimientos = (cuenta) => {
@@ -24,7 +24,6 @@ class MisMovimientos extends Component {
     }
 
     render() {
-        console.log(this.props.movimientos);
         return (
             <div>
                 <Header>Mis Movimientos</Header>
@@ -70,7 +69,8 @@ class MisMovimientos extends Component {
 
 const mapStateToProps = state => {
     return {
-      movimientos: state.movimientos
+      movimientos: state.movimientos,
+      numeroCuenta: state.numeroCuenta
     }
   }
 
@@ -78,7 +78,7 @@ const mapStateToProps = state => {
     return {
         cargarMovimientosAction: movimientos => {
         dispatch(actions.cargarMovimientosAction(movimientos))
-        }
+        }        
     }
   }
 

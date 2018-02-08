@@ -25,10 +25,12 @@ class CreateMovimiento extends Component {
         }
     }
 
-    crearMovimiento = (cuenta) => {
+    crearMovimiento = () => {
+        console.log(this.props.numeroCuenta)
         if(this.validarImporte(this.state.importe.value) && this.comprobarTipo() && this.state.descripcion.value!==""){
-            axios.post('http://localhost:8080/movimiento/?cuenta='+cuenta, {importe: this.state.importe.value,
-                tipo: this.state.tipo.value, descripcion: this.state.descripcion.value, usuario: 'pepe'})
+            axios.post('http://localhost:8080/movimiento/?cuenta=' + this.props.numeroCuenta, 
+                {importe: this.state.importe.value, tipo: this.state.tipo.value, 
+                descripcion: this.state.descripcion.value, usuario: 'pepe'})
                 .then(function (response){
                     console.log(response);
                 })
@@ -188,7 +190,7 @@ class CreateMovimiento extends Component {
                             </Link>
                             <Button.Or />
                             <Button positive 
-                                onClick={() => this.crearMovimiento('6182057801123304201775953')}>
+                                onClick={() => this.crearMovimiento()}>
                                 Guardar
                             </Button>
                         </Button.Group>
@@ -201,7 +203,8 @@ class CreateMovimiento extends Component {
 
 const mapStateToProps = state => {
     return {
-      movimientos: state.movimientos
+      movimientos: state.movimientos,
+      numeroCuenta: state.numeroCuenta
     }
   }
 

@@ -8,7 +8,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch(action.type){
-		case action.MOVIMIENTOS:
+		case actions.PASAR_CUENTA:
 			return {
 				...state,
 				numeroCuenta:action.numeroCuenta
