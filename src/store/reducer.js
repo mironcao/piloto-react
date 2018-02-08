@@ -1,30 +1,24 @@
-import* as actions from './actions';
+import * as actions from './actions';
 
 const initialState = {
     test: true,
-	numeroCuenta:"",
-    movimientos:[]
+    transferencias: []
 };
 
 const reducer = (state = initialState, action) => {
-    switch(action.type){
-		case action.MOVIMIENTOS:
-			return {
-				...state,
-				numeroCuenta:action.numeroCuenta
-			}
-        case actions.CARGAR_MOVIMIENTOS:
-			return {
-				...state,
-				movimientos: action.payload
-			}	
-        case actions.BORRAR_MOVIMIENTO:
-			return{
-				...state,
-				movimientos: action.payload
-			}
+    switch (action.type) {
+        case actions.LISTAR_TRANSFER:
+            return {
+                ...state,
+                transferencias: action.payload
+            }
+        case actions.GENERAR_TRANSFER:
+            return {
+                ...state,
+                transferencias: action.payload
+            }
         default:
-			return state;
+            return state;
     }
 }
 
