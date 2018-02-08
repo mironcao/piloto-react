@@ -3,8 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import MisMovimientos from './containers/movimientos/MisMovimientos';
 import CreateMovimiento from './containers/movimientos/CreateMovimiento';
-import Banco from './containers/Banco/Banco';
-import MisCuentas from './containers/Banco/MisCuentas';
+import MisCuentas from './containers/Cuenta/MisCuentas';
 
 class App extends Component {
   render() {
