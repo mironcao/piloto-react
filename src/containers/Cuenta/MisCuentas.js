@@ -70,6 +70,17 @@ mostrarMovimientos=(numeroCuenta)=> {
 	this.props.history.push('/misMovimientos');
 }
 
+mostrarTransferencias=(numeroCuenta)=> {
+	this.props.listarMovimientos(numeroCuenta);
+	this.props.history.push('/ListarTransferencias');
+}
+
+generarTransferencias=(numeroCuenta)=> {
+	this.props.listarMovimientos(numeroCuenta);
+	this.props.history.push('/GenerarTransferencia');
+}
+
+
 mostrarCosas=()=> {
 	let rows=[];
 	let index=0;
@@ -82,6 +93,8 @@ mostrarCosas=()=> {
 				<Table.Cell>{t.nombre}</Table.Cell>
 				<Table.Cell>{t.apellidos}</Table.Cell>
 				<Table.Cell rowSpan={c.titulares.length}><Button onClick={()=>this.mostrarMovimientos(c.numeroCuenta)}>Mostrar movimientos</Button></Table.Cell>
+				<Table.Cell rowSpan={c.titulares.length}><Button onClick={()=>this.mostrarTransferencias(c.numeroCuenta)}>Mostrar transferencias</Button></Table.Cell>
+				<Table.Cell rowSpan={c.titulares.length}><Button onClick={()=>this.generarTransferencias(c.numeroCuenta)}>Generar transferencias</Button></Table.Cell>
 				</Table.Row>)
 			} else {
 				rows.push(<Table.Row key={t.dni}>
@@ -119,6 +132,8 @@ render(){
 				<Table.HeaderCell>Nombre</Table.HeaderCell>
 				<Table.HeaderCell>Apellidos</Table.HeaderCell>
 				<Table.HeaderCell>Movimientos</Table.HeaderCell>
+				<Table.HeaderCell>ListarTransferencias</Table.HeaderCell>
+				<Table.HeaderCell>GenerarTransferencias</Table.HeaderCell>
 			</Table.Row>
 		</Table.Header>
 		<Table.Body>
@@ -140,8 +155,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		listarMovimientos: numeroCuenta => {
-			dispatch(actions.listarMovimientos(numeroCuenta))
-		}
+			dispatch(actions.listarMovimientos(numeroCuenta))}
 	}
 }
 
