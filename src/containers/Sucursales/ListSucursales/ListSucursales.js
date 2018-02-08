@@ -22,10 +22,10 @@ const listSucursales = (props) => {
                         key={sucursal.id}
                         nombre={sucursal.nombre}
                         direccion={sucursal.direccion}
-                        clickBorrar={props.clickBorrar}
+                        clickBorrar={()=>props.clickBorrar(sucursal.id)}
                         clickEdit={()=>{
-                            props.clickEdit(sucursal, true);
                             props.showEditHandler(true);
+                            props.clickEdit(sucursal, true);
                         }}
                         />
                 ))}

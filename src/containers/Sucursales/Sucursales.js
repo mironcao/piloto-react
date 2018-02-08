@@ -68,6 +68,7 @@ class Sucursales extends Component {
         this.setState({
             showEdit: open
         });
+        this.props.editSucursal({nombre:'', direccion:''}, false);
     }
 
     render() {

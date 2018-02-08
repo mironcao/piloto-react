@@ -5,7 +5,10 @@ const initialState = {
     sucursal: {
         sucursales: [],
         editSucursal: false,
-        toBeEditted: null
+        toBeEditted: {
+            nombre: '',
+            direccion: ''
+        }
     }
 };
 
@@ -43,6 +46,24 @@ const reducer = (state = initialState, action) => {
                     ...state.sucursal,
                     editSucursal: action.edit,
                     toBeEditted: action.sucursal
+                }
+            }
+        case actions.UPDATE_SUCURSAL:
+            const sucursalesActualizadas = state.sucursal.sucursales.map((sucursal) => {
+                if (sucursal.id === state.sucursal.toBeEditted.id) {
+                    return {
+                        ...sucursal,
+                        nombre: action.nombre,
+                        direccion: action.direccion
+                    }
+                }
+                else return sucursal;
+            });
+            return {
+                ...state,
+                sucursal: {
+                    ...state.sucursal,
+                    sucursales: sucursalesActualizadas
                 }
             }
         default:

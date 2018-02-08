@@ -4,6 +4,7 @@ export const CARGAR_SUCURSALES = "CARGAR_SUCURSALES";
 export const BORRAR_SUCURSAL= "BORRAR_SUCURSAL";
 export const ADD_SUCURSAL= "ADD_SUCURSAL";
 export const EDIT_SUCURSAL= "EDIT_SUCURSAL";
+export const UPDATE_SUCURSAL= "UPDATE_SUCURSAL";
 
 export const ejemploAction = (data) => {
     return {
@@ -40,3 +41,12 @@ export const editSucursal = (sucursal, edit) => {
         edit: edit
     }
 }
+
+export const updateSucursal = (nombre, direccion) => {
+    return {
+        type: UPDATE_SUCURSAL,
+        nombre: nombre,
+        direccion: direccion
+    }
+}
+
