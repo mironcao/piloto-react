@@ -9,7 +9,9 @@ const initialState = {
             nombre: '',
             direccion: ''
         }
-    }
+    },
+    transferencias: [],
+    movimientos:[]
 };
 
 const reducer = (state = initialState, action) => {
@@ -66,10 +68,24 @@ const reducer = (state = initialState, action) => {
                     sucursales: sucursalesActualizadas
                 }
             }
+            case actions.PASAR_CUENTA:
+			return {
+				...state,
+				numeroCuenta:action.numeroCuenta
+			}
+        case actions.CARGAR_MOVIMIENTOS:
+			return {
+				...state,
+				movimientos: action.payload
+			}	
+        case actions.BORRAR_MOVIMIENTO:
+			return{
+				...state,
+				movimientos: action.payload
+			}
         default:
             return state;
     }
-
 }
 
 export default reducer;
