@@ -15,6 +15,7 @@ class TablaCliente extends Component {
     }
     editarCliente(dni) {
         this.props.editarCliente(dni);
+        this.props.history.push("/EditarCliente");
     }
 
     render() {
@@ -39,9 +40,7 @@ class TablaCliente extends Component {
                                 <Table.Cell collapsing>{cliente.apellidos}</Table.Cell>
                                 <Table.Cell collapsing>
                                     <Button color="red" icon='delete' onClick={() => this.borrarCliente(cliente.dni)}></Button>
-                                    <Link to="/EditarCliente">
-                                        <Button color="blue" icon='edit' onClick={() => this.editarCliente(cliente.dni)}></Button>
-                                    </Link>
+                                    <Button color="blue" icon='edit' onClick={() => this.editarCliente(cliente.dni)}></Button>
                                 </Table.Cell>
                             </Table.Row>
                                 )

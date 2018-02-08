@@ -1,3 +1,4 @@
+
 import * as actions from './actions';
 
 const initialState = {
@@ -11,7 +12,9 @@ const initialState = {
         }
     },
     transferencias: [],
-    movimientos:[]
+    movimientos:[] ,
+    clientes: [],
+    dni:""
 };
 
 const reducer = (state = initialState, action) => {
@@ -83,6 +86,23 @@ const reducer = (state = initialState, action) => {
 				...state,
 				movimientos: action.payload
 			}
+        case actions.DELETE_CLIENTE:
+            const nuevosClientes = state.clientes.filter((cliente) => cliente.dni !== action.dni);
+            return {
+                ...state,
+                clientes: nuevosClientes
+
+            }
+        case actions.LISTAR_CLIENTE:
+            return {
+                ...state,
+                clientes: action.clientes
+            }
+        case actions.EDITAR_CLIENTE:
+            return{
+                ...state,
+                dni: action.dni
+            }
         default:
             return state;
     }
