@@ -70,137 +70,52 @@ class Cliente extends Component {
             return false;
         }return true;
     }
-
- 
     validarNombre(nombre){
-        var valido = true;
-        if(!this.validateTextoLongitud(nombre, 15 )) {
-            this.setState({nombre:{value:nombre,valid:false}})
-            valido= false;
-        }
-        if(!this.validateTextoNumero(nombre)) {
-            this.setState({nombre:{value: nombre,valid:false}})
-            valido= false;
-        }
-        if(nombre.length===0){
-            this.setState({nombre:{value: nombre,valid:false}})
-            valido= false;
-        }
-        return valido;      
-}
+        if(!validadores.validarNombre(nombre)){
+            this.setState({nombre:{value: nombre, valid:false}})
+            return false;
+        }return true;
+    }
     validarApellidos(apellidos){
-        var valido= true;
-        if(!this.validateTextoLongitud(apellidos, 30 )) {
-            this.setState({apellidos:{value: apellidos,valid:false}})
-            valido= false;
-        }
-        if(!this.validateTextoNumero(apellidos)) {
-            this.setState({apellidos:{value: apellidos,valid:false}})
-            valido= false;
-        }
-        if(apellidos.length===0){
-            this.setState({apellidos:{value: apellidos,valid:false}})
-            valido= false;
-        }
-        return valido;   
+        if(!validadores.validarApellidos(apellidos)){
+            this.setState({apellidos:{value: apellidos, valid:false}})
+            return false;
+        }return true;
     }
     validarDireccion(direccion){
-        var valido = true;
-        if(!this.validateTextoLongitud(direccion, 50 )) {
-            this.setState({direccion:{value: direccion,valid:false}})
-            valido= false;
-        }
-        if(direccion.length===0){
-            this.setState({direccion:{value: direccion,valid:false}})
-            valido= false;
-        }
-        return valido;   
-    }
-
-    validateTextoNumero(texto) {
-        var expr = /^[a-zA-Z ]*$/;
-        if (!expr.test(texto)) {
+        if(!validadores.validarDireccion(direccion)){
+            this.setState({direccion:{value: direccion, valid:false}})
             return false;
-        }
-        return true;
-}
-
-    validateTextoLongitud(texto, longitud) {
-        if (texto.length > longitud) {
-            return false;
-        }
-        return true;
+        }return true;
     }
     cambiarSucursal = (event) => {
         this.setState({ sucursalId: event.target.value });
     }
 
     cambiarDNI = (event) => {
-            this.setState({
-                DNI:
-                    {
-                        value: event.target.value,
-                        valid: true
-                    }
-            })
+        this.setState({DNI:{ value: event.target.value,valid: true}})
     }
 
     cambiarNombre = (event) => {
-            this.setState({
-                nombre:
-                    {
-                        value: event.target.value,
-                        valid: true
-                    }
-            })
+        this.setState({nombre:{value: event.target.value,valid: true}})
     }
 
     cambiarApellidos = (event) => {
-            this.setState({
-                apellidos:
-                    {
-                        value: event.target.value,
-                        valid: true
-                    }
-            })
+        this.setState({apellidos:{value: event.target.value,valid: true}})
     }
 
     cambiarDireccion = (event) => {
-            this.setState({
-                direccion:
-                    {
-                        value: event.target.value,
-                        valid: true
-                    }
-            })
+        this.setState({direccion:{value: event.target.value,valid: true}})
     }
     cambiarEmail = (event) => {
-            this.setState({
-                email:
-                    {
-                        value: event.target.value,
-                        valid: true
-                    }
-            })
+        this.setState({email:{value: event.target.value,valid: true}})
     }
     cambiarFijo = (event) => {
-            this.setState({
-                fijo:
-                    {
-                        value: event.target.value,
-                        valid: true
-                    }
-            })
+        this.setState({fijo:{value: event.target.value,valid: true}})
     }
 
     cambiarMovil = (event) => {
-            this.setState({
-                movil:
-                    {
-                        value: event.target.value,
-                        valid: true
-                    }
-            })
+        this.setState({movil:{value: event.target.value,valid: true}})
     }
     mostrarError(tipo) {
         return (
