@@ -4,6 +4,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions';
 import { withRouter } from 'react-router-dom';
+import Link from 'react-router-dom/Link';
 
 
 class TablaCliente extends Component {
