@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-/*import {connect} from 'react-redux';
-import * as actions from "../../store/actions";*/
+import {connect} from 'react-redux';
+import * as actions from "../../store/actions";
 import axios from 'axios';
 import {Button, Table} from 'semantic-ui-react';
 import {withRouter} from 'react-router-dom';
