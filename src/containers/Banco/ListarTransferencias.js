@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
 import axios from 'axios';
-import { Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom'
 
 var divStyle = {
@@ -21,7 +20,7 @@ class ListarTransferencias extends Component {
 		}
 	}
 	componentDidMount() {
-		axios.get('http://localhost:8080/transferencia/listarTransferenciaId/123456').then(response => {
+		axios.get('http://localhost:8080/transferencia/listarTransferenciaId/6075273453683818608567861').then(response => {
 			this.props.listarTransfersAction(response.data)
 		}
 		)

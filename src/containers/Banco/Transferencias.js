@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as actions from "../../store/actions";
-import {Button} from 'semantic-ui-react';
-import Route from 'react-router-dom/Route';
-import { BrowserRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom'
 
 class Transferencias extends Component {
