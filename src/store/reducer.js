@@ -2,7 +2,8 @@ import * as actions from './actions';
 
 const initialState = {
     test: true,
-    transferencias: []
+    transferencias: [],
+    movimientos:[]
 };
 
 const reducer = (state = initialState, action) => {
