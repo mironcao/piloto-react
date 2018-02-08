@@ -9,28 +9,49 @@ class FormularioCrearEmpleado extends Component {
     constructor () {
         super();
         this.state = {selectedOption: '', empleado: {
-        dni: '', nombre: '', apellidos: '',
-        direccion: '', fijo: '', movil: '',
-        email: '', sucursal: '', usuario: 'user'
+        dni: { value: '', valid: true }, nombre: { value: '', valid: true }, apellidos: { value: '', valid: true },
+        direccion: { value: '', valid: true }, fijo: { value: '', valid: true }, movil: { value: '', valid: true },
+        email: { value: '', valid: true }, sucursal: '', usuario: 'user'
     }}}
 
     createEmpleado = (empleado) => {
         axios.post('http://localhost:8080/empleado/', {
-            dni: empleado.dni,
-            nombre: empleado.nombre,
-            apellidos: empleado.apellidos,
-            direccion: empleado.direccion,
-            fijo: empleado.fijo,
-            movil: empleado.movil,
-            email: empleado.email,
+            dni: empleado.dni.value,
+            nombre: empleado.nombre.value,
+            apellidos: empleado.apellidos.value,
+            direccion: empleado.direccion.value,
+            fijo: empleado.fijo.value,
+            movil: empleado.movil.value,
+            email: empleado.email.value,
             sucursal: empleado.sucursal,
             usuario: empleado.usuario
         }).then(this.props.crearEmpleado(empleado), this.props.history.push("/empleado"));
     }
 
+    validarDni = (dni) => {
+        var validChars = 'TRWAGMYFPDXBNJZSQVHLCKET';
+        var nifRexp = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
+        var nieRexp = /^[XYZ][0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]$/i;
+        var str = dni.toString().toUpperCase();
+
+        if (!nifRexp.test(str) && !nieRexp.test(str)) return false;
+
+        var nie = str
+            .replace(/^[X]/, '0')
+            .replace(/^[Y]/, '1')
+            .replace(/^[Z]/, '2');
+
+        var letter = str.substr(-1);
+        var charIndex = parseInt(nie.substr(0, 8)) % 23;
+
+        if (validChars.charAt(charIndex) === letter) return true;
+
+        return false;
+    }
+
     handleChange = (e, { name, value }) => {
         let empleado = this.state.empleado;
-        empleado[name] = value;
+        empleado[name].value = value;
         this.setState({ 
            empleado: empleado
         });
@@ -52,7 +73,7 @@ class FormularioCrearEmpleado extends Component {
                                     label={{ icon: 'asterisk' }}
                                     labelPosition='right corner'
                                     name='dni'
-                                    value={this.state.empleado.dni}
+                                    value={this.state.empleado.dni.value}
                                     onChange={this.handleChange}
                                 />
                             </Form.Field>
@@ -62,7 +83,7 @@ class FormularioCrearEmpleado extends Component {
                                     label={{ icon: 'asterisk' }}
                                     labelPosition='right corner'
                                     name='nombre'
-                                    value={this.state.empleado.nombre}
+                                    value={this.state.empleado.nombre.value}
                                     onChange={this.handleChange}
                                 />
                             </Form.Field>
@@ -72,7 +93,7 @@ class FormularioCrearEmpleado extends Component {
                                     label={{ icon: 'asterisk' }}
                                     labelPosition='right corner'
                                     name='apellidos'
-                                    value={this.state.empleado.apellidos}
+                                    value={this.state.empleado.apellidos.value}
                                     onChange={this.handleChange}
                                 />
                             </Form.Field>
@@ -82,7 +103,7 @@ class FormularioCrearEmpleado extends Component {
                                     label={{ icon: 'asterisk' }}
                                     labelPosition='right corner'
                                     name='direccion'
-                                    value={this.state.empleado.direccion}
+                                    value={this.state.empleado.direccion.value}
                                     onChange={this.handleChange}
                                 />
                             </Form.Field>
@@ -90,7 +111,7 @@ class FormularioCrearEmpleado extends Component {
                                 <Input
                                     placeholder='Teléfono fijo'
                                     name='fijo'
-                                    value={this.state.empleado.fijo}
+                                    value={this.state.empleado.fijo.value}
                                     onChange={this.handleChange}
                                 />
                             </Form.Field>
@@ -98,7 +119,7 @@ class FormularioCrearEmpleado extends Component {
                                 <Input
                                     placeholder='Teléfono móvil'
                                     name='movil'
-                                    value={this.state.empleado.movil}
+                                    value={this.state.empleado.movil.value}
                                     onChange={this.handleChange}
                                 />
                             </Form.Field>
@@ -106,7 +127,7 @@ class FormularioCrearEmpleado extends Component {
                                 <Input
                                     placeholder='Correo electrónico'
                                     name='email'
-                                    value={this.state.empleado.email}
+                                    value={this.state.empleado.email.value}
                                     onChange={this.handleChange}
                                 />
                             </Form.Field>
@@ -125,7 +146,7 @@ class FormularioCrearEmpleado extends Component {
                     </Form>
                     <Message>
                         (*) Campos obligatorios
-                </Message>
+                    </Message>
                 </Grid.Column>
             </Grid>
         );
