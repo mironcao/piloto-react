@@ -4,7 +4,6 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions';
 import { withRouter } from 'react-router-dom';
-import Link from 'react-router-dom/Link';
 
 
 class TablaCliente extends Component {
@@ -15,11 +14,12 @@ class TablaCliente extends Component {
     }
     editarCliente(dni) {
         this.props.editarCliente(dni);
+        this.props.history.push("/EditarCliente");
     }
 
     render() {
         return (
-            <div>
+            <div >
                 <Table collapsing>
                     <Table.Header>
                         <Table.Row>
@@ -39,9 +39,7 @@ class TablaCliente extends Component {
                                 <Table.Cell collapsing>{cliente.apellidos}</Table.Cell>
                                 <Table.Cell collapsing>
                                     <Button color="red" icon='delete' onClick={() => this.borrarCliente(cliente.dni)}></Button>
-                                    <Link to="/EditarCliente">
                                         <Button color="blue" icon='edit' onClick={() => this.editarCliente(cliente.dni)}></Button>
-                                    </Link>
                                 </Table.Cell>
                             </Table.Row>
                                 )
@@ -64,9 +62,10 @@ class TablaCliente extends Component {
     }
 
 }
+
 const mapStateToProps = state => {
     return {
-                        clintes: state.clientes
+                        clientes: state.clientes
     }
   }
 
