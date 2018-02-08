@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Message } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import * as actions from "../../store/actions";
 import { Input } from 'semantic-ui-react';
-import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form/Form';
 
@@ -24,7 +25,7 @@ class GenerarTransferencia extends Component {
 	}
 	peticion = () => {
 		const transferencia = {
-			cuenta: this.props.numeroCuenta.value,
+			cuenta: this.props.numeroCuenta,
 			idDestino: this.state.cuentaDestino.value,
 			importe: this.state.importe.value
 		}
@@ -116,11 +117,26 @@ class GenerarTransferencia extends Component {
 
 				<button class="ui fluid button" onClick={this.peticion}>Realizar Transferencia</button>
 
-				<p><Link to="/Transferencias">Volver a transferencias</Link></p>
+				<p><Link to="/misCuentas">Volver a transferencias</Link></p>
 			</form>
 		)
 	}
 
 }
 
-export default withRouter(GenerarTransferencia);
+const mapStateToProps = state => {
+	return {
+		transferencias: state.transferencias,
+		numeroCuenta: state.numeroCuenta
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		generarTransfersAction: transferencias => {
+			dispatch(actions.generarTransfersAction(transferencias))
+		}
+	}
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(GenerarTransferencia);

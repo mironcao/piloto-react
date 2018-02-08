@@ -80,6 +80,11 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				movimientos: action.payload
+            }	
+        case actions.GENERAR_TRANSFER:
+			return {
+				...state,
+				transferencias: action.payload
 			}	
         case actions.BORRAR_MOVIMIENTO:
 			return{
