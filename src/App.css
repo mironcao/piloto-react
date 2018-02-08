@@ -26,3 +26,12 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.option-buttons {
+  flex: 1;
+}
+
+td.options{
+  display: flex;
+  flex-direction: row;
+}
