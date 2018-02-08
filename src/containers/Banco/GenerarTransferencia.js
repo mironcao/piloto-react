@@ -24,31 +24,13 @@ class GenerarTransferencia extends Component {
 	}
 	peticion = () => {
 		const transferencia = {
-			cuenta: this.state.cuentaOrigen.value,
+			cuenta: this.props.numeroCuenta.value,
 			idDestino: this.state.cuentaDestino.value,
 			importe: this.state.importe.value
 		}
-		if (this.validarImporte(this.state.importe.value) && this.validarCuenta(this.state.cuentaOrigen.value) && this.validarCuenta(this.state.cuentaDestino.value)) {
+		if (this.validarImporte(this.state.importe.value) && this.validarCuenta(this.state.cuentaDestino.value)) {
 			axios.post('http://localhost:8080/transferencia/transferencia', transferencia).then((response) => {
 				this.props.history.push("/Transferencias");
-			});
-		}
-	}
-
-	asignarOrigenHandler = (event) => {
-		if (!this.validarCuenta(event.target.value)) {
-			this.setState({
-				cuentaOrigen: {
-					value: event.target.value,
-					valid: false
-				}
-			});
-		} else {
-			this.setState({
-				cuentaOrigen: {
-					value: event.target.value,
-					valid: true
-				}
 			});
 		}
 	}
@@ -116,13 +98,6 @@ class GenerarTransferencia extends Component {
 		</Message>
 		return (
 			<form class="ui fluid form">
-				<div class="field">
-					<label>Inserte cuenta origen</label>
-					<Form>
-						<Input fluid error={!this.validarCuenta(this.cuentaOrigen)} onChange={this.asignarOrigenHandler} placeholder="Inserte cuenta de origen" />
-						{this.state.cuentaOrigen.valid ? null : messageCuenta}
-					</Form>
-				</div>
 				<div class="field">
 					<label>Inserte cuenta de destino</label>
 					<Form>

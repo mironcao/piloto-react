@@ -20,11 +20,18 @@ class ListarTransferencias extends Component {
 		}
 	}
 	componentDidMount() {
-		axios.get('http://localhost:8080/transferencia/listarTransferenciaId/6075273453683818608567861').then(response => {
-			this.props.listarTransfersAction(response.data)
-		}
-		)
+		this.cargarMisTransferencias(this.props.numeroCuenta);
 	}
+
+	cargarMisTransferencias = (cuenta) => {
+        axios.get('http://localhost:8080/transferencia/listarTransferenciaId/' + cuenta)
+            .then(response => {
+                this.props.listarTransfersAction(response.data)
+            })
+            .catch(function (error){
+                console.log(error);
+            })
+    }
 
 
 	render() {
@@ -61,7 +68,8 @@ class ListarTransferencias extends Component {
 
 const mapStateToProps = state => {
 	return {
-		transferencias: state.transferencias
+		transferencias: state.transferencias,
+		numeroCuenta: state.numeroCuenta
 	}
 }
 
