@@ -31,8 +31,8 @@ class GenerarTransferencia extends Component {
 		}
 		if (this.validarImporte(this.state.importe.value) && this.validarCuenta(this.state.cuentaDestino.value)) {
 			axios.post('http://localhost:8080/transferencia/transferencia', transferencia).then((response) => {
-				this.props.history.push("/Transferencias");
 			});
+			this.props.history.push("/Transferencias");
 		}
 	}
 
@@ -98,7 +98,7 @@ class GenerarTransferencia extends Component {
 			<p> La cuenta debe tener 25 dígitos</p>
 		</Message>
 		return (
-			<form class="ui fluid form">
+			<div class="ui fluid form">
 				<div class="field">
 					<label>Inserte cuenta de destino</label>
 					<Form>
@@ -117,8 +117,8 @@ class GenerarTransferencia extends Component {
 
 				<button class="ui fluid button" onClick={this.peticion}>Realizar Transferencia</button>
 
-				<p><Link to="/misCuentas">Volver a transferencias</Link></p>
-			</form>
+				<p><Link to="/Transferencias">Volver a transferencias</Link></p>
+			</div>
 		)
 	}
 

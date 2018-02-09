@@ -14,7 +14,8 @@ const initialState = {
     transferencias: [],
     movimientos:[] ,
     clientes: [],
-    dni:""
+    dni:"",
+    numeroCuenta:""
 };
 
 const reducer = (state = initialState, action) => {

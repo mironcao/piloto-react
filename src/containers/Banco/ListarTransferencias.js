@@ -20,6 +20,7 @@ class ListarTransferencias extends Component {
 		}
 	}
 	componentDidMount() {
+		console.log(this.props.numeroCuenta)
 		this.cargarMisTransferencias(this.props.numeroCuenta);
 	}
 
@@ -58,7 +59,7 @@ class ListarTransferencias extends Component {
 					</tbody>
 				)}
 				<tfoot>
-					<p><Link to="/misCuentas">Volver a transferencias</Link></p>
+					<p><Link to="/Transferencias">Volver a transferencias</Link></p>
 				</tfoot>
 			</table>
 
