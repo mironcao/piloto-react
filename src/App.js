@@ -54,9 +54,9 @@ class App extends Component {
                   <Route path="/misCuentas" component={MisCuentas} />
                   <Route path="/misMovimientos" component={MisMovimientos} />
                   <Route path="/CrearMovimiento" component={CreateMovimiento} />
+                  <Route exact strict path="/Transferencias/GenerarTransferencia" component={GenerarTransferencia}/>
+                  <Route exact strict path="/Transferencias/ListarTransferencias" component={ListarTransferencias}/>
                   <Route path="/Transferencias" component={Transferencias}/>
-                  <Route path="/GenerarTransferencia" component={GenerarTransferencia}/>
-                  <Route path="/ListarTransferencias" component={ListarTransferencias}/>
                   <Route path="/ListarClientes" component={ListarCliente} />
                   <Route path="/AñadirClientes" component={AñadirCliente} />
                   <Route path="/EditarCliente" component={EditarCliente} />

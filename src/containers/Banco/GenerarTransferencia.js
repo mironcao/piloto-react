@@ -32,7 +32,6 @@ class GenerarTransferencia extends Component {
 		if (this.validarImporte(this.state.importe.value) && this.validarCuenta(this.state.cuentaDestino.value)) {
 			axios.post('http://localhost:8080/transferencia/transferencia', transferencia).then((response) => {
 			});
-			this.props.history.push("/Transferencias");
 		}
 	}
 

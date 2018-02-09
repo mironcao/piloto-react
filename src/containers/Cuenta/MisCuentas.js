@@ -72,12 +72,12 @@ mostrarMovimientos=(numeroCuenta)=> {
 
 mostrarTransferencias=(numeroCuenta)=> {
 	this.props.listarMovimientos(numeroCuenta);
-	this.props.history.push('/ListarTransferencias');
+	this.props.history.push('/Transferencias/ListarTransferencias');
 }
 
 generarTransferencias=(numeroCuenta)=> {
 	this.props.listarMovimientos(numeroCuenta);
-	this.props.history.push('/GenerarTransferencia');
+	this.props.history.push('/Transferencias/GenerarTransferencia');
 }
 
 gestionarTitulares=(numeroCuenta)=> {
