@@ -29,13 +29,13 @@ class App extends Component {
               Mis cuentas
             </Menu.Item>
             </Link>
-            <Link to="/misMovimientos">
+            <Link to="/sucursales">
             <Menu.Item>
               <Icon name='exchange' />
-              Mis movimientos
+              Sucursales
             </Menu.Item>
             </Link>
-            <Link to="/CrearMovimiento">
+            <Link to="/empleado">
             <Menu.Item>
               <div>
               <Icon.Group size='big'>
@@ -43,13 +43,7 @@ class App extends Component {
                 <Icon corner name='add' color='green' />
               </Icon.Group>
               </div>
-              Crear movimiento
-            </Menu.Item>
-            </Link>
-            <Link to="/titulares/list">
-            <Menu.Item>
-              <Icon name='users' />
-              Titulares
+              Gestionar empleados
             </Menu.Item>
             </Link>
           </Sidebar>

@@ -13,12 +13,12 @@ export default class AppMenu extends Component {
                         <Button>Mis cuentas</Button>
                     </Link>
                     <Button.Or />
-                    <Link to="/misMovimientos">
-                        <Button>Mis movimientos</Button>
+                    <Link to="/sucursales">
+                        <Button>Gestionar sucursales</Button>
                     </Link>
                     <Button.Or />
-                    <Link to="/CrearMovimiento">
-                        <Button>Crear movimiento</Button>
+                    <Link to="/empleado">
+                        <Button>Gestionar empleados</Button>
                     </Link>
                 </Button.Group>
             </Grid.Row></Grid>

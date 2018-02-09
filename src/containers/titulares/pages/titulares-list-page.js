@@ -22,7 +22,8 @@ class TitularesListPage extends Component {
   };
 
   componentDidMount() {
-    axios.get(`${URL}/titulares/${this.props.ncuenta}`)
+    console.log(this.props.numeroCuenta)
+    axios.get(`${URL}/titulares/${this.props.numeroCuenta}`)
       .then(response => {
         this.props.fetchTitulares(response.data);
         this.setState({
@@ -37,7 +38,8 @@ class TitularesListPage extends Component {
   }
 
   eliminarTitular = (titular) => {
-    axios.put(`${URL}/delete/${this.props.ncuenta}`, titular)
+    console.log(this.props.numeroCuenta)
+    axios.put(`${URL}/delete/${this.props.numeroCuenta}`, titular)
       .then(response => {
         this.props.deleteTitular(this.props.titulares.filter(item => item.dniTitular !== titular.dniTitular));
       })
@@ -81,7 +83,7 @@ function mapStateToProps(state) {
   return {
     titulares: state.titulares,
     errors: state.errors,
-    ncuenta: state.numeroCuenta
+    numeroCuenta: state.numeroCuenta
   }
 }
 
