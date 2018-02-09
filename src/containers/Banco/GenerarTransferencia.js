@@ -6,6 +6,7 @@ import * as actions from "../../store/actions";
 import { Input } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form/Form';
+import * as validator from '../Validadores/ValidadorImporte';
 
 class GenerarTransferencia extends Component {
 
@@ -29,7 +30,7 @@ class GenerarTransferencia extends Component {
 			idDestino: this.state.cuentaDestino.value,
 			importe: this.state.importe.value
 		}
-		if (this.validarImporte(this.state.importe.value) && this.validarCuenta(this.state.cuentaDestino.value)) {
+		if (validator.validarImporte(this.state.importe.value) && this.validarCuenta(this.state.cuentaDestino.value)) {
 			axios.post('http://localhost:8080/transferencia/transferencia', transferencia).then((response) => {
 			});
 		}
@@ -54,7 +55,7 @@ class GenerarTransferencia extends Component {
 	}
 
 	asignarImporteHandler = (event) => {
-		if (!this.validarImporte(event.target.value)) {
+		if (!validator.validarImporte(event.target.value)) {
 			this.setState({
 				importe: {
 					value: event.target.value,
@@ -74,13 +75,6 @@ class GenerarTransferencia extends Component {
 	validarCuenta(cuentaDes) {
 		var exprCuenta = /^[0-9]{25}$/;
 		if (cuentaDes == null || !exprCuenta.test(cuentaDes)) {
-			return false;
-		}
-		return true;
-	}
-	validarImporte(importe) {
-		var exprImp = /^([0-9]{1,15})(\.[0-9]{1,2})?$/;
-		if (importe == null || !exprImp.test(importe)) {
 			return false;
 		}
 		return true;
@@ -109,7 +103,7 @@ class GenerarTransferencia extends Component {
 				<div class="field">
 					<label>Importe transferencia</label>
 					<Form>
-						<Input fluid error={!this.validarImporte(this.importe)} onChange={this.asignarImporteHandler} type="text" placeholder="Importe transferencia" />
+						<Input fluid error={!validator.validarImporte(this.importe)} onChange={this.asignarImporteHandler} type="text" placeholder="Importe transferencia" />
 						{this.state.importe.valid ? null : messageImporte}
 					</Form>
 				</div>
