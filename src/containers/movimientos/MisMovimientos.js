@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as actions from "../../store/actions";
-import { Table } from 'semantic-ui-react'
+import { Table, Button, Icon } from 'semantic-ui-react'
 import Header from 'semantic-ui-react/dist/commonjs/elements/Header/Header';
 import axios from 'axios';
+import Link from 'react-router-dom/Link';
 
 class MisMovimientos extends Component {
 
-    constructor() {
-        super();
-        this.state = {movimientoSelected:-1}
-    }
-
     componentDidMount() {
-        this.cargarMisMovimientos('6182057801123304201775953');
+        this.cargarMisMovimientos(this.props.numeroCuenta);
     }
 
     cargarMisMovimientos = (cuenta) => {
@@ -27,21 +23,15 @@ class MisMovimientos extends Component {
             })
     }
 
-    borrarMovimiento = (id) => {
-        axios.delete('http://localhost:8080/movimiento/' + id);
-        const nuevosMovimientos = this.props.movimientos.filter((movimiento)=>movimiento.id!==id);
-        this.props.borrarMovimientosAction(nuevosMovimientos)
-    }
-
-    selectRow = (id) => {
-        this.setState({movimientoSelected:id});
-    }
-
     render() {
-        console.log(this.props.movimientos);
         return (
             <div>
-                <Header>Mis Movimientos</Header>
+                <br/>
+                <Header as='h2'>Mis Movimientos</Header>
+                <Header.Subheader>
+                    Movimientos asociados a la cuenta: {this.props.numeroCuenta}
+                </Header.Subheader>
+                <br/>
                 <div>
                     <Table celled selectable>
                         <Table.Header>
@@ -56,20 +46,33 @@ class MisMovimientos extends Component {
                         <Table.Body>
                         {
                         this.props.movimientos.map((movimiento) =>
-                        (<Table.Row onClick={() => this.selectRow(movimiento.id)}>
+                        <Table.Row>
                             <Table.Cell>{movimiento.fecha}</Table.Cell>
                             <Table.Cell>{movimiento.tipo}</Table.Cell>
                             <Table.Cell>{movimiento.importe}</Table.Cell>
                             <Table.Cell>{movimiento.descripcion}</Table.Cell>
                         </Table.Row>)
-                        )
                         }
                         </Table.Body>
                     </Table>
                     <br/>
                 </div>
 
-               
+                <div>
+                    <Link to='/misCuentas'>
+                        <Button floated='center'>
+                            Atrás
+                        </Button>
+                    </Link>
+
+                    <Link to='/CrearMovimiento'>
+                        <Button color='teal' floated='center'
+                        icon labelPosition='left'>
+                            <Icon name='payment' />
+                            Crear Movimiento
+                        </Button>
+                    </Link>
+                </div>
             </div>
         );
     }
@@ -77,7 +80,8 @@ class MisMovimientos extends Component {
 
 const mapStateToProps = state => {
     return {
-      movimientos: state.movimientos
+      movimientos: state.movimientos,
+      numeroCuenta: state.numeroCuenta
     }
   }
 
@@ -85,10 +89,7 @@ const mapStateToProps = state => {
     return {
         cargarMovimientosAction: movimientos => {
         dispatch(actions.cargarMovimientosAction(movimientos))
-        },
-        borrarMovimientosAction: movimientos => {
-            dispatch(actions.borrarMovimientosAction(movimientos))
-        }
+        }        
     }
   }
 
