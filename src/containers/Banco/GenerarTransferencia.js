@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Message } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import * as actions from "../../store/actions";
 import { Input } from 'semantic-ui-react';
-import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form/Form';
 
@@ -24,14 +25,14 @@ class GenerarTransferencia extends Component {
 	}
 	peticion = () => {
 		const transferencia = {
-			cuenta: this.props.numeroCuenta.value,
+			cuenta: this.props.numeroCuenta,
 			idDestino: this.state.cuentaDestino.value,
 			importe: this.state.importe.value
 		}
 		if (this.validarImporte(this.state.importe.value) && this.validarCuenta(this.state.cuentaDestino.value)) {
 			axios.post('http://localhost:8080/transferencia/transferencia', transferencia).then((response) => {
-				this.props.history.push("/Transferencias");
 			});
+			this.props.history.push("/Transferencias");
 		}
 	}
 
@@ -97,7 +98,7 @@ class GenerarTransferencia extends Component {
 			<p> La cuenta debe tener 25 dígitos</p>
 		</Message>
 		return (
-			<form class="ui fluid form">
+			<div class="ui fluid form">
 				<div class="field">
 					<label>Inserte cuenta de destino</label>
 					<Form>
@@ -117,10 +118,25 @@ class GenerarTransferencia extends Component {
 				<button class="ui fluid button" onClick={this.peticion}>Realizar Transferencia</button>
 
 				<p><Link to="/Transferencias">Volver a transferencias</Link></p>
-			</form>
+			</div>
 		)
 	}
 
 }
 
-export default withRouter(GenerarTransferencia);
+const mapStateToProps = state => {
+	return {
+		transferencias: state.transferencias,
+		numeroCuenta: state.numeroCuenta
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		generarTransfersAction: transferencias => {
+			dispatch(actions.generarTransfersAction(transferencias))
+		}
+	}
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(GenerarTransferencia);

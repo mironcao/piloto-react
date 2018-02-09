@@ -10,7 +10,7 @@ class Cliente extends Component {
         this.state = {
             clientes: [], sucursalId: "", DNI: { value: "", valid: true }, nombre: { value: "", valid: true },
             apellidos: { value: "", valid: true }, direccion: { value: "", valid: true }, email: { value: "", valid: true },
-            fijo: { value: "", valid: true }, movil: { value: "", valid: true }, mensajeError: ""
+            fijo: { value: "", valid: true }, movil: { value: "", valid: true }
         }
     }
 

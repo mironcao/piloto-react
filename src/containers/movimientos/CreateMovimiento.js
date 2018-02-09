@@ -26,7 +26,6 @@ class CreateMovimiento extends Component {
     }
 
     crearMovimiento = () => {
-        console.log(this.props.numeroCuenta)
         if(this.validarImporte(this.state.importe.value) && this.comprobarTipo() && this.state.descripcion.value!==""){
             axios.post('http://localhost:8080/movimiento/?cuenta=' + this.props.numeroCuenta, 
                 {importe: this.state.importe.value, tipo: this.state.tipo.value, 

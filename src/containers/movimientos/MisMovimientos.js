@@ -26,7 +26,12 @@ class MisMovimientos extends Component {
     render() {
         return (
             <div>
-                <Header>Mis Movimientos</Header>
+                <br/>
+                <Header as='h2'>Mis Movimientos</Header>
+                <Header.Subheader>
+                    Movimientos asociados a la cuenta: {this.props.numeroCuenta}
+                </Header.Subheader>
+                <br/>
                 <div>
                     <Table celled selectable>
                         <Table.Header>
@@ -54,6 +59,12 @@ class MisMovimientos extends Component {
                 </div>
 
                 <div>
+                    <Link to='/misCuentas'>
+                        <Button floated='center'>
+                            Atrás
+                        </Button>
+                    </Link>
+
                     <Link to='/CrearMovimiento'>
                         <Button color='teal' floated='center'
                         icon labelPosition='left'>
