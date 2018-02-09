@@ -17,9 +17,7 @@ class TitularFormPage extends Component {
 
   submit = (titular) => {
     axios.post(`${URL}/new/${this.props.ncuenta}`, titular)
-      .then(response => { 
-        console.log(response.data);
-        
+      .then(response => {         
         this.setState({ redirect:true });
         this.addTitular(response.data)
       })
