@@ -14,7 +14,8 @@ class Sucursales extends Component {
 
     state = {
         dataState: DATA_STATE.LOADING,
-        showEdit: false
+        showEdit: false,
+        exported: true
     }
 
     componentDidMount() {
@@ -71,16 +72,28 @@ class Sucursales extends Component {
         this.setState({
             showEdit: open
         });
-        this.props.editSucursal({nombre:'', direccion:''}, false);
+        this.props.editSucursal({ nombre: '', direccion: '' }, false);
     }
 
     exportarSucursales = () => {
-        axios.get("http://localhost:8080/sucursal/export");
+        this.setState({exported: false});
+        axios.get("http://localhost:8080/sucursal/export").then(response => {
+            if (response.status === 200)
+                this.setState({
+                    exported: true
+                });
+        });
     }
 
     render() {
 
         let sucursales = this.renderData();
+        let mensajeExportar = !this.state.exported ? (<Message icon>
+            <Icon name='circle notched' loading />
+            <Message.Content>
+                <Message.Header>Exportando sucursales</Message.Header>
+            </Message.Content>
+        </Message>): null;
 
         return (
             <React.Fragment>
@@ -89,6 +102,7 @@ class Sucursales extends Component {
                     <Container textAlign='right'>
                         <Button color='blue' onClick={() => this.changeShowEditHandler(true)}>Añadir sucursal</Button>
                         <Button color='blue' onClick={() => this.exportarSucursales()}>Exportar Sucursales</Button>
+                        {mensajeExportar}
                     </Container>
                     {sucursales}
                 </Container>
