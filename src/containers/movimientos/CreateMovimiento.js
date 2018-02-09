@@ -4,6 +4,10 @@ import * as actions from "../../store/actions";
 import { Form, Checkbox, Button, Header, TextArea, Message, Input } from 'semantic-ui-react';
 import axios from 'axios';
 import Link from 'react-router-dom/Link';
+import * as validator from '../Validadores/ValidadorImporte';
+
+/*Constantes*/
+const URL = 'http://localhost:8080/movimiento/?cuenta=';
 
 class CreateMovimiento extends Component {
 
@@ -26,8 +30,9 @@ class CreateMovimiento extends Component {
     }
 
     crearMovimiento = () => {
-        if(this.validarImporte(this.state.importe.value) && this.comprobarTipo() && this.state.descripcion.value!==""){
-            axios.post('http://localhost:8080/movimiento/?cuenta=' + this.props.numeroCuenta, 
+        if(validator.validarImporte(this.state.importe.value) && 
+            this.comprobarTipo() && this.state.descripcion.value!==""){
+            axios.post(URL + this.props.numeroCuenta, 
                 {importe: this.state.importe.value, tipo: this.state.tipo.value, 
                 descripcion: this.state.descripcion.value, usuario: 'pepe'})
                 .then(function (response){
@@ -37,6 +42,17 @@ class CreateMovimiento extends Component {
                 .catch(function (error){
                     console.log(error);
             })
+        }
+        else{
+            if(!validator.validarImporte(this.state.importe.value)){
+                this.printImportError();
+            }
+            else if(!this.comprobarTipo()){
+                this.printTipoError();
+            }
+            else if(!this.state.descripcion.value!==""){
+                this.printDescriptionError();
+            }
         }
     }
     
@@ -50,7 +66,7 @@ class CreateMovimiento extends Component {
 
 
     actualizaImporte= (event) => {
-        if(!this.validarImporte(event.target.value)){
+        if(!validator.validarImporte(event.target.value)){
             this.setState({importe:{
                     value: event.target.value,
                     valid: false
@@ -85,14 +101,6 @@ class CreateMovimiento extends Component {
         }
     }
 
-    validarImporte(importe){
-        var exprImp = /^([0-9]{1,15})(\.[0-9]{1,2})?$/;
-        if(importe==null || !exprImp.test(importe)){
-            return false;
-        }
-        return true;
-    }
-
     comprobarTipo(){
         if(this.state.tipo.value!=null){
             this.setState({tipo:{
@@ -112,73 +120,84 @@ class CreateMovimiento extends Component {
         }
     }
 
+    printImportError(){
+        return(
+            <Message negative>
+                <Message.Header>Error</Message.Header>
+                <p>El importe debe tener el formato correcto</p>
+            </Message>
+        );
+    }
+
+    printDescriptionError(){
+        return(
+            <Message negative>
+                <Message.Header>Error</Message.Header>
+                <p>La descripcion no puede ser vacía</p>
+            </Message>
+        );
+    }
+
+    printTipoError(){
+        return(
+            <Message negative>
+                <Message.Header>Error</Message.Header>
+                <p>Debe seleccionarse un tipo de movimiento</p>
+            </Message>
+        );
+    }
+
     render() {
-       var  msgImporte =  <Message negative>
-                   <Message.Header>Error</Message.Header>
-                   <p>El importe debe tener el formato correcto</p>
-                   </Message>
-        
-        var msgDescripcion =  <Message negative>
-                        <Message.Header>Error</Message.Header>
-                        <p>La descripcion no puede ser vacía</p>
-                        </Message>
-
-        var msgTipo =  <Message negative>
-                        <Message.Header>Error</Message.Header>
-                        <p>Debe seleccionarse un tipo de movimiento</p>
-                        </Message>
-
         return (
             <div>
                 <Header>CrearMovimiento</Header>
                 <br/>
                 <div>
                     <div className="ui segments">
-                    <div className="ui segment">
-                        <div className="ui input">
-                        <Form>
-                            <Input id='importe' type="text" placeholder="Importe €" onChange={this.actualizaImporte} />
-                            {this.state.importe.valid ? null : msgImporte}                     
-                        </Form>
+                        <div className="ui segment">
+                            <div className="ui input">
+                            <Form>
+                                <Input id='importe' type="text" placeholder="Importe €" onChange={this.actualizaImporte} />
+                                {this.state.importe.valid ? null : this.printImportError()}                     
+                            </Form>
+                            </div>
                         </div>
-                    </div>
-                    <div className="ui segment">
 
-                    <Form>
-                        <Form.Field>
-                        Tipo: <b>{this.state.value}</b>
-                        </Form.Field>
-                        <Form.Field>
-                        <Checkbox
-                            radio
-                            label='Abono'
-                            name='checkboxRadioGroup'
-                            value='ABONO'
-                            checked={this.state.tipo.value === 'ABONO'}
-                            onChange={this.handleChange}
-                        />
-                        </Form.Field>
-                        <Form.Field>
-                        <Checkbox
-                            radio
-                            label='Cargo'
-                            name='checkboxRadioGroup'
-                            value='CARGO'
-                            checked={this.state.tipo.value === 'CARGO'}
-                            onChange={this.handleChange}
-                        />
-                        </Form.Field>
-                        {this.state.tipo.valid ? null: msgTipo}
-                    </Form>
-                    
-                    </div>
-                    <div className="ui segment">
-                        <Form>
-                            <TextArea id='descripcion' placeholder='Descripción' style={{ minHeight: 100, width:400 }} 
-                                onChange={this.actualizaDescripcion}/>
-                            {this.state.descripcion.valid ? null : msgDescripcion}
-                        </Form>
-                    </div>
+                        <div className="ui segment">
+                            <Form>
+                                <Form.Field>
+                                Tipo: <b>{this.state.value}</b>
+                                </Form.Field>
+                                <Form.Field>
+                                <Checkbox
+                                    radio
+                                    label='Abono'
+                                    name='checkboxRadioGroup'
+                                    value='ABONO'
+                                    checked={this.state.tipo.value === 'ABONO'}
+                                    onChange={this.handleChange}
+                                />
+                                </Form.Field>
+                                <Form.Field>
+                                <Checkbox
+                                    radio
+                                    label='Cargo'
+                                    name='checkboxRadioGroup'
+                                    value='CARGO'
+                                    checked={this.state.tipo.value === 'CARGO'}
+                                    onChange={this.handleChange}
+                                />
+                                </Form.Field>
+                                {this.state.tipo.valid ? null: this.printTipoError()}
+                            </Form>
+                        </div>
+                        <div className="ui segment">
+                            <Form>
+                                <TextArea id='descripcion' placeholder='Descripción' style={{ minHeight: 100, width:400 }} 
+                                    onChange={this.actualizaDescripcion}/>
+                                {this.state.descripcion.valid ? null : this.printDescriptionError()}
+                            </Form>
+                        </div>
                     </div>
                     <div>
                         <Button.Group>

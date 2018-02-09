@@ -58,8 +58,8 @@ class App extends Component {
                 <Switch>
                   <Route path="/sucursales" exact component={Sucursales}/>
                   <Route path="/misCuentas" component={MisCuentas} />
+                  <Route path="/misMovimientos/CrearMovimiento" component={CreateMovimiento} />
                   <Route path="/misMovimientos" component={MisMovimientos} />
-                  <Route path="/CrearMovimiento" component={CreateMovimiento} />
                   <Route path="/Transferencias" component={Transferencias}/>
                   <Route path="/GenerarTransferencia" component={GenerarTransferencia}/>
                   <Route path="/ListarTransferencias" component={ListarTransferencias}/>
