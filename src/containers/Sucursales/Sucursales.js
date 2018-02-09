@@ -55,7 +55,10 @@ class Sucursales extends Component {
                     clickBorrar={this.borrarSucursalHandler}
                     showEditHandler={this.changeShowEditHandler}
                     showEdit={this.state.showEdit}
-                    clickEdit={this.props.editSucursal} />);
+                    clickEdit={this.props.editSucursal} />
+                );
+            default:
+                return;
         }
     }
 
