@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as actions from "../../store/actions";
-import { Form, Checkbox, Button, Header, TextArea, Message, Input } from 'semantic-ui-react';
+import { Form, Checkbox, Button, Header, TextArea, Message, Input, Grid } from 'semantic-ui-react';
 import axios from 'axios';
 import Link from 'react-router-dom/Link';
 import * as validator from '../Validadores/ValidadorImporte';
+import * as estilo from '../css/Movimiento';
 
 /*Constantes*/
 const URL = 'http://localhost:8080/movimiento/?cuenta=';
@@ -157,10 +158,10 @@ class CreateMovimiento extends Component {
 
     render() {
         return (
-            <div>
-                <Header>CrearMovimiento</Header>
+            <div style={estilo.align}>
+                <Header color="teal">CrearMovimiento</Header>
                 <br/>
-                <div>
+                <Grid textAlign = "center" style={{height:"100%"}} verticalAlign="middle">
                     <div className="ui segments">
                         <div className="ui segment">
                             <div className="ui input">
@@ -206,22 +207,21 @@ class CreateMovimiento extends Component {
                                 {this.state.descripcion.valid ? null : this.printDescriptionError()}
                             </Form>
                         </div>
-                    </div>
-                    <div>
-                        <Button.Group>
+
+                        <div className="ui segment">
                             <Link to='/misMovimientos'>
-                                <Button>
+                                <Button fluid>
                                     Cancelar
                                 </Button>
                             </Link>
-                            <Button.Or />
-                            <Button positive 
+                            <br/>
+                            <Button fluid color="teal" 
                                 onClick={() => this.crearMovimiento()}>
                                 Guardar
                             </Button>
-                        </Button.Group>
+                        </div>
                     </div>
-                </div>
+                </Grid>
             </div>
         );
     }
