@@ -38,7 +38,7 @@ class EditarCliente extends Component {
             dni: this.state.DNI,
             nombre: this.state.nombre, apellidos: this.state.apellidos, direccion: this.state.direccion, email: this.state.email,
             fijo: this.state.fijo, movil: this.state.movil
-        }).then((response)=>this.props.history.push("/Clientes"))
+        }).then((response)=>this.props.history.push("/ListarClientes"))
     }
 
 
@@ -121,17 +121,14 @@ class EditarCliente extends Component {
     }
     mostrarError(tipo) {
         return (
-            <div>
-            <Message negative >
+            <Message negative>
                 <p>El {tipo} es incorrecto</p>
-             </Message>
-            </div>
-
+            </Message>
         )
     }
     render() {
         return (
-            <div >
+            <div>
                 <Input focus value={this.state.nombre.value} placeholder='Nombre...' onChange={this.cambiarNombre} ></Input>
                 {this.state.nombre.valid ? null : this.mostrarError("nombre")}
                 <br />
@@ -151,9 +148,9 @@ class EditarCliente extends Component {
                 {this.state.movil.valid ? null : this.mostrarError("movil")}
                 <br />
                 <Button.Group>
-                    <Button onClick={() => this.props.history.push('/Clientes')}>Cancelar</Button>
+                    <Button onClick={() => this.props.history.push('/ListarClientes')}>Cancelar</Button>
                     <Button.Or />
-                    <Button color="teal" onClick={() => this.actualizarCliente()}>  Guardar</Button>
+                    <Button positive onClick={() => this.actualizarCliente()}>  Guardar</Button>
                 </Button.Group>
             </div>
         )

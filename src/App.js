@@ -13,8 +13,7 @@ import ListarCliente from './containers/Cliente/ListarCliente';
 import AñadirCliente from './containers/Cliente/AñadirCliente';
 import EditarCliente from './containers/Cliente/EditarCliente';
 import GestionTitulares from './containers/titulares/GestionTitulares';
-
-import { Sidebar, Segment, Menu, Icon } from 'semantic-ui-react'
+import { Sidebar, Segment, Menu, Icon } from 'semantic-ui-react';
 
 
 class App extends Component {
