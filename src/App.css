@@ -35,3 +35,7 @@ td.options{
   display: flex;
   flex-direction: row;
 }
+
+.grande {
+  height: 100vh;
+}

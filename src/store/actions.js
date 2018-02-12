@@ -88,7 +88,6 @@ export const listarTransfersAction = (transferencias) => {
         payload: transferencias
     }
 }
-
 export const generarTransfersAction = (transferencias) => {
     return {
         type: GENERAR_TRANSFER,

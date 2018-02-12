@@ -41,3 +41,55 @@
         }
         return true;
     }
+
+    export const validarNombre=(nombre)=>{
+        var valido = true;
+        if(!validateTextoLongitud(nombre, 15 )) {
+            valido= false;
+        }
+        if(!validateTextoNumero(nombre)) {
+            valido= false;
+        }
+        if(nombre.length===0){
+            valido= false;
+        }
+        return valido;      
+}
+   export const validarApellidos=(apellidos)=>{
+        var valido= true;
+        if(!validateTextoLongitud(apellidos, 30 )) {
+            valido= false;
+        }
+        if(!validateTextoNumero(apellidos)) {
+            valido= false;
+        }
+        if(apellidos.length===0){
+            valido= false;
+        }
+        return valido;   
+    }
+    export const validarDireccion=(direccion)=>{
+        var valido = true;
+        if(!validateTextoLongitud(direccion, 50 )) {
+            valido= false;
+        }
+        if(direccion.length===0){
+            valido= false;
+        }
+        return valido;   
+    }
+
+   export const validateTextoNumero=(texto) =>{
+        var expr = /^[a-zA-Z ]*$/;
+        if (!expr.test(texto)) {
+            return false;
+        }
+        return true;
+}
+
+    export const validateTextoLongitud=(texto, longitud)=> {
+        if (texto.length > longitud) {
+            return false;
+        }
+        return true;
+    }
