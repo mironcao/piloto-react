@@ -167,7 +167,6 @@ const mapDispatchToProps = dispatch => {
 
 export default withRouter(connect(mapStateToProps,mapDispatchToProps)(MisCuentas));
 
-/*export default MisCuentas;*/
 
 
 

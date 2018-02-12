@@ -19,7 +19,8 @@ const initialState = {
 	titulares: [],
 	titular: {},
 	loading: false,
-	errors: {}
+	errors: {},
+	user:null
 };
 
 const reducer = (state = initialState, action) => {
@@ -80,6 +81,11 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				numeroCuenta: action.numeroCuenta
+			}
+		case actions.PASAR_USER:
+			return {
+				...state,
+				user: action.user
 			}
 		case actions.CARGAR_MOVIMIENTOS:
 			return {

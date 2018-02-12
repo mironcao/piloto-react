@@ -13,6 +13,7 @@ export const GENERAR_TRANSFER = "GENERAR_TRANSFER";
 export const DELETE_CLIENTE = "DELETE_CLIENTE";
 export const LISTAR_CLIENTE = "LISTAR_CLIENTE";
 export const EDITAR_CLIENTE = "EDITAR_CLIENTE";
+export const PASAR_USER = "PASAR_USER";
 
 export const ejemploAction = (data) => {
     return {
@@ -92,6 +93,12 @@ export const deleteCliente = (dni) => {
     return {
         type: DELETE_CLIENTE,
         dni: dni
+    }
+}
+export const pasarUser = (user ) => {
+    return {
+        type: PASAR_USER,
+        user:user
     }
 }
 export const listarClientes = (clientes) => {
