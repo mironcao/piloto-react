@@ -30,9 +30,9 @@ class App extends Component {
             <Route path="/Transferencias" component={Transferencias}/>
             <Route path="/GenerarTransferencia" component={GenerarTransferencia}/>
             <Route path="/ListarTransferencias" component={ListarTransferencias}/>
-            <Route path="/Clientes/AñadirClientes" component={AñadirCliente} />
-            <Route path="/Clientes/EditarCliente" component={EditarCliente} />
-            <Route path="/Clientes" component={ListarCliente} />
+            <Route path="/ListarClientes" component={ListarCliente} />
+            <Route path="/AñadirClientes" component={AñadirCliente} />
+            <Route path="/EditarCliente" component={EditarCliente} />
           </Switch>
 =======
       <div>

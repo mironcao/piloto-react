@@ -14,13 +14,13 @@ class TablaCliente extends Component {
     }
     editarCliente(dni) {
         this.props.editarCliente(dni);
-        this.props.history.push("/Clientes/EditarCliente");
+        this.props.history.push("/EditarCliente");
     }
 
     render() {
         return (
             <div >
-              <center> <Table collapsing align="center">
+                <Table collapsing>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell> DNI </Table.HeaderCell>
@@ -38,8 +38,8 @@ class TablaCliente extends Component {
                                 <Table.Cell collapsing>{cliente.nombre}</Table.Cell>
                                 <Table.Cell collapsing>{cliente.apellidos}</Table.Cell>
                                 <Table.Cell collapsing>
-                                    <Button color="blue" icon='edit' onClick={() => this.editarCliente(cliente.dni)}></Button>
                                     <Button color="red" icon='delete' onClick={() => this.borrarCliente(cliente.dni)}></Button>
+                                    <Button color="blue" icon='edit' onClick={() => this.editarCliente(cliente.dni)}></Button>
                                 </Table.Cell>
                             </Table.Row>
                                 )
@@ -49,14 +49,14 @@ class TablaCliente extends Component {
                                     <Table.Row>
                                         <Table.HeaderCell />
                                         <Table.HeaderCell colSpan='4'>
-                                            <Button color="teal" onClick={() => this.props.history.push('/Clientes/AñadirClientes')} floated='right' icon labelPosition='left' size='small'>
+                                            <Button color="teal" onClick={() => this.props.history.push('/AñadirClientes')} floated='right' icon labelPosition='left' size='small'>
                                                 <Icon name='user' /> Añadir Empleado
                                 </Button>
                                         </Table.HeaderCell>
                                     </Table.Row>
                                 </Table.Footer>
                 </Table>
-                </center>
+
             </div>
         )
     }
