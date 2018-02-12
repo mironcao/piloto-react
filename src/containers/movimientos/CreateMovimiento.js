@@ -44,15 +44,7 @@ class CreateMovimiento extends Component {
             })
         }
         else{
-            if(!validator.validarImporte(this.state.importe.value)){
-                this.printImportError();
-            }
-            else if(!this.comprobarTipo()){
-                this.printTipoError();
-            }
-            else if(!this.state.descripcion.value!==""){
-                this.printDescriptionError();
-            }
+           this.actualizarEstados();
         }
     }
     
@@ -63,7 +55,6 @@ class CreateMovimiento extends Component {
             }
         });
     }
-
 
     actualizaImporte= (event) => {
         if(!validator.validarImporte(event.target.value)){
@@ -127,6 +118,23 @@ class CreateMovimiento extends Component {
                 <p>El importe debe tener el formato correcto</p>
             </Message>
         );
+    }
+
+    actualizarEstados(){
+        if(!validator.validarImporte(this.state.importe.value)){
+            this.setState({importe:{
+                value: null,
+                valid: false
+            }
+        });
+        }
+        if(!this.state.descripcion.value!==""){
+            this.setState({descripcion:{
+                value: null,
+                valid: false
+            }
+        });
+        }
     }
 
     printDescriptionError(){
