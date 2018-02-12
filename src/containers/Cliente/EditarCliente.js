@@ -2,22 +2,28 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import * as actions from '../../store/actions';
-import {  Button, Input, Message } from 'semantic-ui-react';
+import {  Button, Input, Message, Grid, Form} from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
-import * as validadores from '../Validadores/ValidadorPersona'
+import * as validadores from '../Validadores/ValidadorPersona';
+import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment/Segment';
+import FormField from 'semantic-ui-react/dist/commonjs/collections/Form/FormField';
+import FormDropdown from 'semantic-ui-react/dist/commonjs/collections/Form/FormDropdown';
+import Label from 'semantic-ui-react/dist/commonjs/elements/Label/Label';
+
 
 class EditarCliente extends Component {
     constructor() {
         super();
-        this.state = {DNI: { value: "", valid: true }, nombre: { value: "", valid: true },
-        apellidos: { value: "", valid: true }, direccion: { value: "", valid: true }, email: { value: "", valid: true },
-        fijo: { value: "", valid: true }, movil: { value: "", valid: true }}
+        this.state = { nombre: { value: "", valid: true }, apellidos: { value: "", valid: true }, 
+        direccion: { value: "", valid: true }, email: { value: "", valid: true },
+        fijo: { value: "", valid: true }, movil: { value: "", valid: true }, cliente: null}
     }
 
     componentDidMount() {
         axios.get("http://localhost:8080/clientes/buscarCliente/" + this.props.dni).then(response => {
             this.setState(
                 { 
+                    cliente: response.data,
                     DNI: {value: response.data.dni,valid:true},
                     nombre: {value: response.data.nombre,valid:true},
                     apellidos: {value: response.data.apellidos,valid:true},
@@ -38,10 +44,21 @@ class EditarCliente extends Component {
             dni: this.state.DNI,
             nombre: this.state.nombre, apellidos: this.state.apellidos, direccion: this.state.direccion, email: this.state.email,
             fijo: this.state.fijo, movil: this.state.movil
-        }).then((response)=>this.props.history.push("/Clientes"))
+        }).then((response)=>this.props.history.push("/ListarClientes"))
     }
+}
 
-
+    reiniciarFormulario(){
+        this.setState(
+            {
+                nombre: {value: this.state.cliente.nombre ,valid:true},
+                apellidos: {value: this.state.cliente.apellidos,valid:true},
+                direccion: {value: this.state.cliente.direccion,valid:true},
+                email:{value: this.state.cliente.email ,valid:true},
+                fijo:{value: this.state.cliente.fijo,valid:true},
+                movil:{value: this.state.cliente.email,valid:true}
+            }
+        )
     }
 
     validarCliente() {
@@ -98,27 +115,11 @@ class EditarCliente extends Component {
             return false;
         }return true;
     }
-    cambiarNombre = (event) => {
-        this.setState({nombre:{value: event.target.value,valid: true}})
+
+    cambiarEstado = (event,{name, value}) => {
+        this.setState({ [name]: { value: value, valid: true } })
     }
 
-    cambiarApellidos = (event) => {
-            this.setState({apellidos:{value: event.target.value,valid: true}})
-    }
-
-    cambiarDireccion = (event) => {
-            this.setState({direccion:{value: event.target.value,valid: true}})
-    }
-    cambiarEmail = (event) => {
-            this.setState({email:{value: event.target.value,valid: true}})
-    }
-    cambiarFijo = (event) => {
-            this.setState({fijo:{value: event.target.value,valid: true}})
-    }
-
-    cambiarMovil = (event) => {
-            this.setState({movil:{value: event.target.value,valid: true}})
-    }
     mostrarError(tipo) {
         return (
             <div>
@@ -131,31 +132,59 @@ class EditarCliente extends Component {
     }
     render() {
         return (
-            <div >
-                <Input focus value={this.state.nombre.value} placeholder='Nombre...' onChange={this.cambiarNombre} ></Input>
-                {this.state.nombre.valid ? null : this.mostrarError("nombre")}
-                <br />
-                <Input focus value ={this.state.apellidos.value} placeholder='Apellidos...' onChange={this.cambiarApellidos} ></Input>
-                {this.state.apellidos.valid ? null : this.mostrarError("apellidos")}
-                <br />
-                <Input focus value = {this.state.direccion.value} placeholder='Direccion...' onChange={this.cambiarDireccion} ></Input>
-                {this.state.direccion.valid ? null : this.mostrarError("direccion")}
-                <br />
-                <Input focus value = {this.state.email.value} placeholder='Email...' onChange={this.cambiarEmail} ></Input>
-                {this.state.email.valid ? null : this.mostrarError("email")}
-                <br />
-                <Input focus value = {this.state.fijo.value} placeholder='Fijo...' onChange={this.cambiarFijo} ></Input>
-                {this.state.fijo.valid ? null : this.mostrarError("fijo")}
-                <br />
-                <Input focus value = {this.state.movil.value} placeholder='Movil...' onChange={this.cambiarMovil} ></Input>
-                {this.state.movil.valid ? null : this.mostrarError("movil")}
-                <br />
-                <Button.Group>
-                    <Button onClick={() => this.props.history.push('/Clientes')}>Cancelar</Button>
-                    <Button.Or />
-                    <Button color="teal" onClick={() => this.actualizarCliente()}>  Guardar</Button>
-                </Button.Group>
-            </div>
+        <Grid textAlign = "center" style={{height:"100%"}} verticalAlign="middle">
+                <Grid.Column textAlign="left" style={{maxWidth: 500}}>
+                    <Form size="large">
+                        <Segment stacked>
+                        <Form.Field required>
+                                <label >Nombre:</label>
+                                <Input focus label={{ icon: 'asterisk' }} labelPosition="rigth corner" placeholder='Nombre...'
+                                name="nombre" value={this.state.nombre.value} onChange={this.cambiarEstado} maxLength="15" />
+                                {this.state.nombre.valid ? null : this.mostrarError("nombre")}
+                            </Form.Field>
+                        <Form.Field required>
+                                <label >Apellidos:</label>
+                                <Input focus label={{ icon: 'asterisk' }} labelPosition="rigth corner" placeholder='Apellidos...' 
+                                name="apellidos" value={this.state.apellidos.value} onChange={this.cambiarEstado} maxLength="30" />
+                                {this.state.apellidos.valid ? null : this.mostrarError("apellidos")}
+                            </Form.Field>
+                        <Form.Field required>
+                                <label >Direccion:</label>
+                                <Input focus label={{ icon: 'asterisk' }} labelPosition="rigth corner" placeholder='Direccion...' 
+                                name="direccion" value={this.state.direccion.value} onChange={this.cambiarEstado} maxLength="50" />
+                                {this.state.direccion.valid ? null : this.mostrarError("direccion")}
+                            </Form.Field>
+                        <Form.Field>
+                                <label >Email:</label>
+                                <Input focus labelPosition="rigth corner" placeholder='Email...'
+                                 name="email" value={this.state.email.value} onChange={this.cambiarEstado}/>
+                                {this.state.email.valid ? null : this.mostrarError("email")}
+                            </Form.Field>
+                        <Form.Field>
+                                <label >Telefono fijo:</label>
+                                <Input focus labelPosition="rigth corner" placeholder='Fijo...' 
+                                name="fijo" value={this.state.fijo.value}  onChange={this.cambiarEstado} />
+                                {this.state.fijo.valid ? null : this.mostrarError("fijo")}
+                            </Form.Field>
+                        <Form.Field>
+                                <label >Telefono movil:</label>
+                                <Input focus labelPosition="rigth corner" placeholder='Movil...'
+                                name="movil" value={this.state.movil.value} onChange={this.cambiarEstado}/>
+                                {this.state.movil.valid ? null : this.mostrarError("movil")}
+                            </Form.Field>
+                            <Form.Field>
+                            <Button fluid color="teal" onClick={() => this.actualizarCliente()} >Guardar</Button>
+                            </Form.Field>
+                            <Form.Field>
+                            <Button fluid color="teal" onClick={() => this.reiniciarFormulario()}>Reiniciar</Button>
+                            </Form.Field>
+                            <Form.Field>
+                            <Button fluid color="teal" onClick={() => this.props.history.push("/ListarClientes")}>  Cancelar</Button>
+                            </Form.Field>
+                        </Segment>
+                    </Form>
+                </Grid.Column>     
+           </Grid>
         )
     }
 }

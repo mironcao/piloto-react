@@ -10,8 +10,8 @@ import Transferencias from './containers/Banco/Transferencias';
 import ListarTransferencias from './containers/Banco/ListarTransferencias';
 import GenerarTransferencia from './containers/Banco/GenerarTransferencia';
 import ListarCliente from './containers/Cliente/ListarCliente';
-import AñadirCliente from './containers/Cliente/AñadirCliente';
-import EditarCliente from './containers/Cliente/EditarCliente';
+import AñadirCliente from './containers/Cliente/ClienteContenedorAñadir';
+import EditarCliente from './containers/Cliente/ClienteContenedorEditar';
 import GestionTitulares from './containers/titulares/GestionTitulares';
 import { Sidebar, Segment, Menu, Icon } from 'semantic-ui-react';
 
@@ -58,7 +58,7 @@ class App extends Component {
                   <Route exact strict path="/Transferencias/ListarTransferencias" component={ListarTransferencias}/>
                   <Route path="/Transferencias" component={Transferencias}/>
                   <Route path="/ListarClientes" component={ListarCliente} />
-                  <Route path="/AñadirClientes" component={AñadirCliente} />
+                  <Route path="/AñadirCliente" component={AñadirCliente} />
                   <Route path="/EditarCliente" component={EditarCliente} />
                   <Route path="/titulares" component={GestionTitulares} />
                 </Switch>
