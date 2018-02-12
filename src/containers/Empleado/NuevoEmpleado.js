@@ -6,7 +6,7 @@ class NuevoEmpleado extends Component {
     render() {
         return (
             <Container style={{ marginTop: '3em' }}>
-                <Header as='h1' color='teal' >Añadir empleado</Header>
+                <Header as='h1' textAlign='center' color='teal' >Añadir empleado</Header>
                 <Form/>
             </Container>
         );

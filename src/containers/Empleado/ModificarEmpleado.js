@@ -7,7 +7,7 @@ class ModificarEmpleado extends Component {
     render() {
         return (
             <Container style={{ marginTop: '3em' }}>
-                <Header as='h1' color='teal' >Modificar empleado {this.props.dni}</Header>
+                <Header as='h1' textAlign='center' color='teal' >Modificar empleado {this.props.dni}</Header>
                 <Form dni={this.props.dni}/>
             </Container>
         );

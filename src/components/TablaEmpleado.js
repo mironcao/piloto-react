@@ -21,7 +21,7 @@ class TablaEmpleado extends Component {
             <Table celled color='teal' key={'blue'}>
                 <Table.Header>
                     <Table.Row>
-                        <Table.HeaderCell>Dni</Table.HeaderCell>
+                        <Table.HeaderCell>NIF/NIE</Table.HeaderCell>
                         <Table.HeaderCell>Nombre</Table.HeaderCell>
                         <Table.HeaderCell>Apellidos</Table.HeaderCell>
                         <Table.HeaderCell>Opciones</Table.HeaderCell>

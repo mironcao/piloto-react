@@ -15,7 +15,7 @@ class Empleado extends Component {
     render() {
         return (
             <Container style={{ marginTop: '3em' }}>
-                <Header as='h1' color='teal'>Empleados</Header>
+                <Header as='h1' textAlign='center' color='teal'>Empleados</Header>
                 <Table empleados={this.props.empleados}/>
             </Container>
         );

@@ -7,33 +7,56 @@ import { connect } from 'react-redux';
 import * as validadores from '../containers/Validadores/ValidadorPersona';
 
 class FormularioEditarEmpleado extends Component {
-    state = {empleadoInicial: null, empleado: null, selectedOption: ''}
+    state = { empleadoInicial: null, empleado: null, selectedOption: '', sucursales: [] }
 
-    componentWillMount () {
+    componentWillMount() {
         let empleadoSinValidaciones = this.props.empleados.filter((empleado) => empleado.dni === this.props.dni)[0]
         if (empleadoSinValidaciones.fijo === null) empleadoSinValidaciones.fijo = '';
         if (empleadoSinValidaciones.movil === null) empleadoSinValidaciones.movil = '';
         if (empleadoSinValidaciones.email === null) empleadoSinValidaciones.email = '';
         let empleado = {
-            dni: empleadoSinValidaciones.dni, 
-            nombre: { value: empleadoSinValidaciones.nombre, valid: true }, 
+            dni: empleadoSinValidaciones.dni,
+            nombre: { value: empleadoSinValidaciones.nombre, valid: true },
             apellidos: { value: empleadoSinValidaciones.apellidos, valid: true },
-            direccion: { value: empleadoSinValidaciones.direccion, valid: true }, 
-            fijo: { value: empleadoSinValidaciones.fijo, valid: true }, 
+            direccion: { value: empleadoSinValidaciones.direccion, valid: true },
+            fijo: { value: empleadoSinValidaciones.fijo, valid: true },
             movil: { value: empleadoSinValidaciones.movil, valid: true },
-            email: { value: empleadoSinValidaciones.email, valid: true }, 
+            email: { value: empleadoSinValidaciones.email, valid: true },
             sucursal: empleadoSinValidaciones.sucursal, usuario: empleadoSinValidaciones.usuario
         }
-        this.setState({empleadoInicial: {...empleado},
-            empleado: empleado, selectedOption: empleado.sucursal.id})
+        this.setState({
+            empleadoInicial: { ...empleado },
+            empleado: empleado, selectedOption: empleado.sucursal.id
+        })
+    }
+
+    componentDidMount() {
+        if (this.props.sucursales.length === 0) {
+            axios.get("http://localhost:8080/sucursal/")
+                .then(response => {
+                    let listaSucursales = []
+                    response.data.map((sucursal) => {
+                        listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
+                    })
+                    this.setState({ sucursales: listaSucursales });
+                    this.props.cargarSucursales(response.data);
+                })
+        } else {
+            let listaSucursales = []
+            this.props.sucursales.map((sucursal) => {
+                listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
+            })
+            this.setState({ sucursales: listaSucursales })
+        }
     }
 
     reiniciarCampos = () => {
         let empleado = this.state.empleadoInicial;
-        this.setState({empleado: {...empleado}, selectedOption: empleado.sucursal.id})
+        this.setState({ empleado: { ...empleado }, selectedOption: empleado.sucursal.id })
     }
 
     actualizarEmpleado = () => {
+        console.log(this.state.empleado)
         if (this.validarEmpleado()) {
             let empleadoActualizado = {
                 dni: this.state.empleado.dni,
@@ -43,22 +66,14 @@ class FormularioEditarEmpleado extends Component {
                 fijo: this.state.empleado.fijo.value,
                 movil: this.state.empleado.movil.value,
                 email: this.state.empleado.email.value,
-                sucursal: this.state.empleado.sucursal,
+                sucursal: this.state.empleado.sucursal.id,
                 usuario: this.state.empleado.usuario
             };
             axios.put('http://localhost:8080/empleado/' + empleadoActualizado.dni, empleadoActualizado).then(() => {
                 this.props.actualizarEmpleado(empleadoActualizado);
                 this.props.history.push("/empleado")
-            }); 
+            });
         }
-    }
-
-    mostrarError(tipo) {
-        return (
-            <Message negative>
-                <p>El {tipo} es incorrecto</p>
-            </Message>
-        )
     }
 
     handleChange = (e, { name, value }) => {
@@ -67,14 +82,26 @@ class FormularioEditarEmpleado extends Component {
             empleado[name] = value;
         else
             empleado[name].value = value;
-        this.setState({ 
-           empleado: empleado
+        this.setState({
+            empleado: empleado
         });
     }
 
     validarEmpleado() {
         const validos = [true, true, true, true, true, true];
         var valido = true;
+        if (!validadores.validarNombre(this.state.empleado.nombre.value)) {
+            validos[0] = false;
+            valido = false;
+        }
+        if (!validadores.validarApellidos(this.state.empleado.apellidos.value)) {
+            validos[1] = false;
+            valido = false;
+        }
+        if (!validadores.validarDireccion(this.state.empleado.direccion.value)) {
+            validos[2] = false;
+            valido = false;
+        }
         if (!validadores.validateTelefonoFijo(this.state.empleado.fijo.value)) {
             validos[3] = false;
             valido = false;
@@ -87,26 +114,28 @@ class FormularioEditarEmpleado extends Component {
             validos[5] = false;
             valido = false;
         }
-        /* if (!this.validarDireccion(this.state.empleado.direccion.value)) 
-            valido = false;
-        if (!this.validarNombre(this.state.empleado.nombre.value))
-            valido = false;
-        if (!this.validarApellidos(this.state.empleado.apellidos.value))
-            valido = false;        */
-            const empleado = {
-                dni: this.state.empleado.dni, 
-                nombre: { value: this.state.empleado.nombre.value, valid: validos[0] }, 
-                apellidos: { value: this.state.empleado.apellidos.value, valid: validos[1] },
-                direccion: { value: this.state.empleado.direccion.value, valid: validos[2] }, 
-                fijo: { value: this.state.empleado.fijo.value, valid: validos[3] }, 
-                movil: { value: this.state.empleado.movil.value, valid: validos[4] },
-                email: { value: this.state.empleado.email.value, valid: validos[5] }, 
-                sucursal: this.state.empleado.sucursal, usuario: this.state.empleado.usuario
-            }
-        this.setState( {
+        const empleado = {
+            dni: this.state.empleado.dni,
+            nombre: { value: this.state.empleado.nombre.value, valid: validos[0] },
+            apellidos: { value: this.state.empleado.apellidos.value, valid: validos[1] },
+            direccion: { value: this.state.empleado.direccion.value, valid: validos[2] },
+            fijo: { value: this.state.empleado.fijo.value, valid: validos[3] },
+            movil: { value: this.state.empleado.movil.value, valid: validos[4] },
+            email: { value: this.state.empleado.email.value, valid: validos[5] },
+            sucursal: this.state.empleado.sucursal, usuario: this.state.empleado.usuario
+        }
+        this.setState({
             empleado: empleado
         })
         return valido;
+    }
+
+    mostrarError(mensaje) {
+        return (
+            <Message negative>
+                <p>{mensaje}</p>
+            </Message>
+        )
     }
 
     render() {
@@ -128,7 +157,7 @@ class FormularioEditarEmpleado extends Component {
                                     value={this.state.empleado.nombre.value}
                                     onChange={this.handleChange}
                                 />
-                                {this.state.empleado.nombre.valid ? null : this.mostrarError('nombre')}
+                                {this.state.empleado.nombre.valid ? null : this.mostrarError('El nombre es incorrecto')}
                             </Form.Field>
                             <Form.Field>
                                 <Input
@@ -139,7 +168,7 @@ class FormularioEditarEmpleado extends Component {
                                     value={this.state.empleado.apellidos.value}
                                     onChange={this.handleChange}
                                 />
-                                {this.state.empleado.apellidos.valid ? null : this.mostrarError('apellidos')}
+                                {this.state.empleado.apellidos.valid ? null : this.mostrarError('Los apellidos son incorrectos')}
                             </Form.Field>
                             <Form.Field>
                                 <Input
@@ -150,7 +179,7 @@ class FormularioEditarEmpleado extends Component {
                                     value={this.state.empleado.direccion.value}
                                     onChange={this.handleChange}
                                 />
-                                {this.state.empleado.direccion.valid ? null : this.mostrarError('dirección')}
+                                {this.state.empleado.direccion.valid ? null : this.mostrarError('La dirección es incorrecta')}
                             </Form.Field>
                             <Form.Field>
                                 <Input
@@ -159,7 +188,7 @@ class FormularioEditarEmpleado extends Component {
                                     value={this.state.empleado.fijo.value}
                                     onChange={this.handleChange}
                                 />
-                                {this.state.empleado.fijo.valid ? null : this.mostrarError('fijo')}
+                                {this.state.empleado.fijo.valid ? null : this.mostrarError('El teléfono fijo es incorrecto')}
                             </Form.Field>
                             <Form.Field>
                                 <Input
@@ -168,7 +197,7 @@ class FormularioEditarEmpleado extends Component {
                                     value={this.state.empleado.movil.value}
                                     onChange={this.handleChange}
                                 />
-                                {this.state.empleado.movil.valid ? null : this.mostrarError('móvil')}
+                                {this.state.empleado.movil.valid ? null : this.mostrarError('El teléfono móvil es incorrecto')}
                             </Form.Field>
                             <Form.Field>
                                 <Input
@@ -177,18 +206,20 @@ class FormularioEditarEmpleado extends Component {
                                     value={this.state.empleado.email.value}
                                     onChange={this.handleChange}
                                 />
-                                {this.state.empleado.email.valid ? null : this.mostrarError('email')}
+                                {this.state.empleado.email.valid ? null : this.mostrarError('El correo electrónico es incorrecto')}
                             </Form.Field>
-                            <Form.Dropdown onChange={(event, data) => {this.setState({selectedOption: data.value})
-                                this.handleChange(event, data)}}
-                                placeholder='Sucursal' fluid selection options={sucursalOptions} 
+                            <Form.Dropdown onChange={(event, data) => {
+                                this.setState({ selectedOption: data.value })
+                                this.handleChange(event, data)
+                            }}
+                                placeholder='Sucursal' fluid selection options={this.state.sucursales}
                                 name='sucursal' value={this.state.selectedOption} />
 
                             <Button onClick={this.actualizarEmpleado}
                                 style={{ marginBottom: '1em' }} color='teal' fluid size='large'>Guardar</Button>
-                            <Button onClick={() => this.reiniciarCampos()} 
+                            <Button onClick={() => this.reiniciarCampos()}
                                 style={{ marginBottom: '1em' }} color='teal' fluid size='large'>Reiniciar</Button>
-                            <Button onClick={() => this.props.history.push("/empleado")} 
+                            <Button onClick={() => this.props.history.push("/empleado")}
                                 color='teal' fluid size='large'>Cancelar</Button>
                         </Segment>
                     </Form>
@@ -201,31 +232,18 @@ class FormularioEditarEmpleado extends Component {
     }
 };
 
-const sucursalOptions = [
-    {
-        text: 'Sucursal1',
-        value: 1
-    },
-    {
-        text: 'Sucursal2',
-        value: 2
-    },
-    {
-        text: 'Sucursal3',
-        value: 3
-    }
-]
-
 const mapStateToProps = state => {
     return {
         empleados: state.empleados,
-        dni: state.dni
+        dni: state.dni,
+        sucursales: state.sucursal.sucursales
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        actualizarEmpleado: empleado => dispatch(actions.actualizarEmpleado(empleado))
+        actualizarEmpleado: empleado => dispatch(actions.actualizarEmpleado(empleado)),
+        cargarSucursales: sucursales => dispatch(actions.cargarSucursales(sucursales))
     }
 }
 
