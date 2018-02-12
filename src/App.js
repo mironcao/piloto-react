@@ -20,21 +20,6 @@ import { Sidebar, Segment, Menu, Icon } from 'semantic-ui-react'
 class App extends Component {
   render() {
     return (
-<<<<<<< HEAD
-      <div className="App">
-        <Switch>
-            <Route path="/sucursales" exact component={Sucursales}/>
-            <Route path="/misCuentas" component={MisCuentas} />
-            <Route path="/misMovimientos" component={MisMovimientos} />
-            <Route path="/CrearMovimiento" component={CreateMovimiento} />
-            <Route path="/Transferencias" component={Transferencias}/>
-            <Route path="/GenerarTransferencia" component={GenerarTransferencia}/>
-            <Route path="/ListarTransferencias" component={ListarTransferencias}/>
-            <Route path="/Clientes/AñadirClientes" component={AñadirCliente} />
-            <Route path="/Clientes/EditarCliente" component={EditarCliente} />
-            <Route path="/Clientes" component={ListarCliente} />
-          </Switch>
-=======
       <div>
         <Sidebar.Pushable as={Segment}>
           <Sidebar as={Menu} width='thin' visible icon='labeled' vertical inverted>
@@ -81,7 +66,6 @@ class App extends Component {
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
->>>>>>> 27b5105f6d5d155902b6bc769de24c9ba1c0e152
       </div>
     );
   }
