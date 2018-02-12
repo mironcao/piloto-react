@@ -20,13 +20,15 @@ class ListarTransferencias extends Component {
 		}
 	}
 	componentDidMount() {
+		console.log(this.props.numeroCuenta)
 		this.cargarMisTransferencias(this.props.numeroCuenta);
 	}
 
 	cargarMisTransferencias = (cuenta) => {
         axios.get('http://localhost:8080/transferencia/listarTransferenciaId/' + cuenta)
             .then(response => {
-                this.props.listarTransfersAction(response.data)
+				this.setState({transferencias:response.data})
+                /*this.props.listarTransfersAction(response.data)*/
             })
             .catch(function (error){
                 console.log(error);
@@ -43,7 +45,7 @@ class ListarTransferencias extends Component {
 					<th style={divStyle}>Importe</th>
 					<th style={divStyle}>Fecha de realizacion</th>
 				</thead>
-				{this.props.transferencias.map((transferencia) =>
+				{this.state.transferencias.map((transferencia) =>
 				<tbody>
 					<tr>
 						<td style={divStyle}>{transferencia.idDestino}</td>

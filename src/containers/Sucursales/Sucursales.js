@@ -55,7 +55,10 @@ class Sucursales extends Component {
                     clickBorrar={this.borrarSucursalHandler}
                     showEditHandler={this.changeShowEditHandler}
                     showEdit={this.state.showEdit}
-                    clickEdit={this.props.editSucursal} />);
+                    clickEdit={this.props.editSucursal} />
+                );
+            default:
+                return;
         }
     }
 
@@ -71,6 +74,10 @@ class Sucursales extends Component {
         this.props.editSucursal({nombre:'', direccion:''}, false);
     }
 
+    exportarSucursales = () => {
+        axios.get("http://localhost:8080/sucursal/export");
+    }
+
     render() {
 
         let sucursales = this.renderData();
@@ -81,6 +88,7 @@ class Sucursales extends Component {
                 <Container>
                     <Container textAlign='right'>
                         <Button color='blue' onClick={() => this.changeShowEditHandler(true)}>Añadir sucursal</Button>
+                        <Button color='blue' onClick={() => this.exportarSucursales()}>Exportar Sucursales</Button>
                     </Container>
                     {sucursales}
                 </Container>

@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Message } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import * as actions from "../../store/actions";
 import { Input } from 'semantic-ui-react';
-import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form/Form';
+import * as validator from '../Validadores/ValidadorImporte';
 
 class GenerarTransferencia extends Component {
 
@@ -24,13 +26,12 @@ class GenerarTransferencia extends Component {
 	}
 	peticion = () => {
 		const transferencia = {
-			cuenta: this.props.numeroCuenta.value,
+			cuenta: this.props.numeroCuenta,
 			idDestino: this.state.cuentaDestino.value,
 			importe: this.state.importe.value
 		}
-		if (this.validarImporte(this.state.importe.value) && this.validarCuenta(this.state.cuentaDestino.value)) {
+		if (validator.validarImporte(this.state.importe.value) && this.validarCuenta(this.state.cuentaDestino.value)) {
 			axios.post('http://localhost:8080/transferencia/transferencia', transferencia).then((response) => {
-				this.props.history.push("/Transferencias");
 			});
 		}
 	}
@@ -54,7 +55,7 @@ class GenerarTransferencia extends Component {
 	}
 
 	asignarImporteHandler = (event) => {
-		if (!this.validarImporte(event.target.value)) {
+		if (!validator.validarImporte(event.target.value)) {
 			this.setState({
 				importe: {
 					value: event.target.value,
@@ -78,13 +79,6 @@ class GenerarTransferencia extends Component {
 		}
 		return true;
 	}
-	validarImporte(importe) {
-		var exprImp = /^([0-9]{1,15})(\.[0-9]{1,2})?$/;
-		if (importe == null || !exprImp.test(importe)) {
-			return false;
-		}
-		return true;
-	}
 
 	render() {
 		var messageImporte = <Message negative>
@@ -97,7 +91,7 @@ class GenerarTransferencia extends Component {
 			<p> La cuenta debe tener 25 dígitos</p>
 		</Message>
 		return (
-			<form class="ui fluid form">
+			<div class="ui fluid form">
 				<div class="field">
 					<label>Inserte cuenta de destino</label>
 					<Form>
@@ -109,7 +103,7 @@ class GenerarTransferencia extends Component {
 				<div class="field">
 					<label>Importe transferencia</label>
 					<Form>
-						<Input fluid error={!this.validarImporte(this.importe)} onChange={this.asignarImporteHandler} type="text" placeholder="Importe transferencia" />
+						<Input fluid error={!validator.validarImporte(this.importe)} onChange={this.asignarImporteHandler} type="text" placeholder="Importe transferencia" />
 						{this.state.importe.valid ? null : messageImporte}
 					</Form>
 				</div>
@@ -117,10 +111,25 @@ class GenerarTransferencia extends Component {
 				<button class="ui fluid button" onClick={this.peticion}>Realizar Transferencia</button>
 
 				<p><Link to="/Transferencias">Volver a transferencias</Link></p>
-			</form>
+			</div>
 		)
 	}
 
 }
 
-export default withRouter(GenerarTransferencia);
+const mapStateToProps = state => {
+	return {
+		transferencias: state.transferencias,
+		numeroCuenta: state.numeroCuenta
+	}
+}
+
+const mapDispatchToProps = dispatch => {
+	return {
+		generarTransfersAction: transferencias => {
+			dispatch(actions.generarTransfersAction(transferencias))
+		}
+	}
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(GenerarTransferencia);

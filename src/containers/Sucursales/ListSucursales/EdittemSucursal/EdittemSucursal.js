@@ -3,6 +3,7 @@ import { Table, Button, Input, Message } from 'semantic-ui-react';
 import * as actions from '../../../../store/actions';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import * as validadores from '../../../Validadores/ValidadorPersona';
 
 class EditItemSucursal extends Component {
     state = {
@@ -130,16 +131,16 @@ class EditItemSucursal extends Component {
     }
 
     render() {
-        const message = <Message error header='Campo no puede ser vacio' />;
+        const message = <Message size='tiny' attached='top' error content='Campo no puede ser vacio' />;
         return (
             <Table.Row>
                 <Table.Cell>
-                    <Input fluid error={!this.state.nombre.valid}
+                    <Input maxLength="15" fluid error={!this.state.nombre.valid}
                         onChange={this.onChangeNombreHandler} value={this.state.nombre.value}>{}</Input>
                     {this.state.nombre.valid ? null : message}
                 </Table.Cell>
                 <Table.Cell>
-                    <Input fluid error={!this.state.direccion.valid} onChange={this.onChangeDireccionHandler} value={this.state.direccion.value}></Input>
+                    <Input maxLength="50" fluid error={!this.state.direccion.valid} onChange={this.onChangeDireccionHandler} value={this.state.direccion.value}></Input>
                     {this.state.direccion.valid ? null : message}
                 </Table.Cell>
                 <Table.Cell textAlign='right'>
