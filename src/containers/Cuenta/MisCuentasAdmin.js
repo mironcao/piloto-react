@@ -8,13 +8,61 @@ import {withRouter} from 'react-router-dom';
 class MisCuentas extends Component {
 	constructor(){
 		super();
-		this.state= {cuentas:[],dni:null, active:false}
+		this.state= {cuentas:[],dni:null, active:false, visible:true, error:null}
 	}
 	
+handleDismiss = () => {
+    this.setState({ visible: false })
+}
   
 buscarCuentas=(dni)=> {
+	let ret = this.validarDni(dni);
+	let message = (<Message error onDismiss={this.handleDismiss} header='Formato de DNI/NIE/NIF inválido'
+					content='Por favor introduzca un valor correcto'/>)
+	if(ret) {
 		axios.get('http://localhost:8080/cuenta/miscuentas?dni='+dni).then(response => {
-			this.setState({cuentas:response.data}); })
+			this.setState({cuentas:response.data}); 
+			}
+		);
+		this.setState({error:null});
+		return ret;
+	}
+	this.setState({error:message});
+	this.setState({visible:true});
+	return ret;
+}
+
+validarDni(dni) {
+	var validChars = 'TRWAGMYFPDXBNJZSQVHLCKET';
+	var nifRexp = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/i;
+	var nieRexp = /^[XYZ]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/i;
+	var str = dni.toString().toUpperCase();
+
+	if (!nifRexp.test(str) && !nieRexp.test(str)){
+		this.setState({mensajeError:this.state.mensajeError+"El DNI es incorrecto\n"});
+		return false;
+	}
+	var nie = str
+	.replace(/^[X]/, '0')
+	.replace(/^[Y]/, '1')
+	.replace(/^[Z]/, '2');
+
+	var letter = str.substr(-1);
+	var charIndex = parseInt(nie.substr(0, 8)) % 23;
+	if (validChars.charAt(charIndex) === letter) 
+		return true;
+	this.setState({mensajeError:this.state.mensajeError+"El DNI es incorrecto\n"});
+	return false;
+} 
+ 
+
+
+actualizarDni=(event)=>  {
+	this.setState({dni:event.target.value});
+	if(event.target.value.length===9)
+		this.setState({active:true});
+	else
+		this.setState({active:false});
 }
 
 mostrarMovimientos=(numeroCuenta)=> {
@@ -75,7 +123,12 @@ render(){
 			Información acerca de sus cuentas y movimientos.
 		</Header.Subheader>	
 	</Header>
-	{this.buscarCuentas(this.props.user.dni)}
+	<label htmlFor="dni">DNI/NIE/NIF: &nbsp;&nbsp; </label>
+	<input name="dni" type="text" onChange={this.actualizarDni}/>
+	<Button toggle disabled={!this.state.active} onClick={()=>this.buscarCuentas(this.state.dni)}>Buscar</Button>
+	{this.state.visible? this.state.error : null}
+	<br></br>
+	
 	<br></br>
 	<Table collapsing unstackable celled structured color='teal'> 
 		<Table.Header>
@@ -101,8 +154,7 @@ render(){
 
 const mapStateToProps = state => {
 	return {
-		cuentas:state.cuentas,
-		user:state.user
+		cuentas:state.cuentas
 	}
 }
 

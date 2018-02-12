@@ -19,6 +19,10 @@ import { Route, Switch, Link, Redirect, withRouter } from 'react-router-dom';
 
 class Banco extends Component {
 
+  logout=()=> {
+    this.props.pasarUser(null);  
+  }
+
   generateContent() {
     return (
       <div>
@@ -45,6 +49,15 @@ class Banco extends Component {
                   </Icon.Group>
                 </div>
                 Gestionar empleados
+            </Menu.Item>
+            <Menu.Item onClick={this.logout}>
+                <div>
+                  <Icon.Group size='big'>
+                    <Icon name='sign out' />
+                    <Icon corner name='add' color='green' />
+                  </Icon.Group>
+                </div>
+                Log out
             </Menu.Item>
             </Link>
           </Sidebar>
@@ -77,16 +90,15 @@ class Banco extends Component {
 
 const mapStateToProps = state => {
   return {
-    test: state.test,
+    user: state.user
   }
 }
 
 const mapDispatchToProps = dispatch => {
-  return {
-    ejemplo: data => {
-      dispatch(actions.ejemploAction)
-    }
-  }
+	return {
+		pasarUser: user => {
+			dispatch(actions.pasarUser(user))}
+	}
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Banco));
+export default withRouter(connect(mapStateToProps,mapDispatchToProps) (Banco));

@@ -13,9 +13,8 @@ class LoginPage extends React.Component {
 
   login=()=> {
     axios.get('http://localhost:8080/clientes/buscarCliente/' + this.state.dni).then(response => {
-      console.log("fueradelif", response.data)
       if(response.data.nombre!==null) { 
-        this.props.pasarUser(response.data);   
+        this.props.pasarUser(response.data);  
         this.props.history.push('/misCuentas')
       }
       })
