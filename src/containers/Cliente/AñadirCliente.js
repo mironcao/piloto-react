@@ -30,9 +30,9 @@ class Cliente extends Component {
             valido = false;
         if (!this.validarEmail(this.state.email.value))
             valido= false;
-        if (this.state.fijo.value.length!==0 && !this.validarFijo(this.state.fijo.value))
+        if (!this.validarFijo(this.state.fijo.value))
             valido= false;
-        if (this.state.movil.value.length!==0 && !this.validarMovil(this.state.movil.value))
+        if (!this.validarMovil(this.state.movil.value))
             valido= false;
         if (!this.validarDireccion(this.state.direccion.value)) 
             valido= false;

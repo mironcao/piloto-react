@@ -29,16 +29,14 @@
     }
     export const validateTelefonoMovil=(movil)=> {
         var expr = /^(\\+34|0034|34)?[6|7][0-9]{8}$/;
-        if (!expr.test(movil)) {
+        if (!expr.test(movil) && movil.length !== 0) {
             return false;
         }
         return true;
     }
     export const validateTelefonoFijo=(fijo) =>{
         var expr = /^(\\+34|0034|34)?[8|9][0-9]{8}$/;
-        console.log("fijo", expr.test(fijo))
-        console.log("length", fijo.length)
-        if (!expr.test(fijo)) {
+        if (!expr.test(fijo) && fijo.length !== 0) {
             return false;
         }
         return true;
