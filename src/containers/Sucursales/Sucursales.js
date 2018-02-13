@@ -96,7 +96,6 @@ class Sucursales extends Component {
         </Message>) : null;
 
         return (
-            <React.Fragment>
                 <Container style={{ marginTop: '3em' }}>
                     <Header as='h1' textAlign='center' color='teal'>Sucursales</Header>
                     <Container textAlign='right'>
@@ -106,10 +105,6 @@ class Sucursales extends Component {
                     </Container>
                     {sucursales}
                 </Container>
-                <Container>
-                    
-                </Container>
-            </React.Fragment>
         );
     }
 }

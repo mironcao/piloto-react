@@ -110,7 +110,7 @@ class GenerarTransferencia extends Component {
 
 				<button class="ui fluid button" onClick={this.peticion}>Realizar Transferencia</button>
 
-				<p><Link to="/Transferencias">Volver a transferencias</Link></p>
+				<p><Link to="/misCuentas">Volver a transferencias</Link></p>
 			</div>
 		)
 	}
