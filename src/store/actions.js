@@ -13,6 +13,11 @@ export const GENERAR_TRANSFER = "GENERAR_TRANSFER";
 export const DELETE_CLIENTE = "DELETE_CLIENTE";
 export const LISTAR_CLIENTE = "LISTAR_CLIENTE";
 export const EDITAR_CLIENTE = "EDITAR_CLIENTE";
+export const CARGAR_EMPLEADOS = "CARGAR_EMPLEADOS";
+export const DELETE_EMPLEADO = "DELETE_EMPLEADO";
+export const CREAR_EMPLEADO = "CREAR_EMPLEADO";
+export const MODIFICAR_EMPLEADO = "MODIFICAR_EMPLEADO";
+export const ACTUALIZAR_EMPLEADO = "ACTUALIZAR_EMPLEADO";
 export const PASAR_USER = "PASAR_USER";
 
 export const ejemploAction = (data) => {
@@ -21,6 +26,7 @@ export const ejemploAction = (data) => {
         payload: data
     }
 }
+
 export const cargarSucursales = (sucursalesData) => {
     return {
         type: CARGAR_SUCURSALES,
@@ -114,3 +120,37 @@ export const editarCliente = (dni) => {
     }
 }
 
+export const cargarEmpleados = (empleadosData) => {
+    return {
+        type: CARGAR_EMPLEADOS,
+        payload: empleadosData
+    }
+}
+
+export const deleteEmpleado = (dni) => {
+    return {
+        type: DELETE_EMPLEADO,
+        dni: dni
+    }
+}
+
+export const crearEmpleado = (empleado) => {
+    return {
+        type: CREAR_EMPLEADO,
+        empleado: empleado
+    }
+}
+
+export const modificarEmpleado = (dni) => {
+    return {
+        type: MODIFICAR_EMPLEADO,
+        dni: dni
+    }
+}
+
+export const actualizarEmpleado = (empleado) => {
+    return {
+        type: ACTUALIZAR_EMPLEADO,
+        empleado: empleado
+    }
+}

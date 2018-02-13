@@ -17,7 +17,7 @@ handleDismiss = () => {
   
 buscarCuentas=(dni)=> {
 	let ret = this.validarDni(dni);
-	let message = (<Message error onDismiss={this.handleDismiss} header='Formato de DNI/NIE/NIF inválido'
+	let message = (<Message error onDismiss={this.handleDismiss} header='Formato de NIF/NIE inválido'
 					content='Por favor introduzca un valor correcto'/>)
 	if(ret) {
 		axios.get('http://localhost:8080/cuenta/miscuentas?dni='+dni).then(response => {

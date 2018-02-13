@@ -7,7 +7,7 @@ const listSucursales = (props) => {
 
     return (
 
-        <Table selectable>
+        <Table selectable celled color='teal'>
             <Table.Header>
                 <Table.Row>
                     <Table.HeaderCell>Nombre</Table.HeaderCell>
