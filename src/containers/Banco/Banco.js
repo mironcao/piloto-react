@@ -13,6 +13,9 @@ import GenerarTransferencia from '../Banco/GenerarTransferencia';
 import ListarCliente from '../Cliente/ListarCliente';
 import AñadirCliente from '../Cliente/AñadirCliente';
 import EditarCliente from '../Cliente/EditarCliente';
+import Empleado from '../Empleado/Empleado';
+import NuevoEmpleado from '../Empleado/NuevoEmpleado';
+import ModificarEmpleado from '../Empleado/ModificarEmpleado';
 import GestionTitulares from '../titulares/GestionTitulares';
 import { Route, Switch, Link, Redirect, withRouter } from 'react-router-dom';
 
@@ -42,24 +45,17 @@ class Banco extends Component {
             </Link>
             <Link to="/empleado">
               <Menu.Item>
-                <div>
-                  <Icon.Group size='big'>
-                    <Icon name='exchange' />
-                    <Icon corner name='add' color='green' />
-                  </Icon.Group>
-                </div>
+                  <Icon name='users' />
                 Gestionar empleados
-            </Menu.Item>
+              </Menu.Item>
+            </Link>
             <Menu.Item onClick={this.logout}>
-                <div>
                   <Icon.Group size='big'>
                     <Icon name='sign out' />
                     <Icon corner name='add' color='green' />
                   </Icon.Group>
-                </div>
                 Log out
             </Menu.Item>
-            </Link>
           </Sidebar>
           <Sidebar.Pusher>
             <Segment basic className='grande'>
@@ -75,6 +71,9 @@ class Banco extends Component {
             <Route path="/AñadirClientes" component={AñadirCliente} />
             <Route path="/EditarCliente" component={EditarCliente} />
             <Route path="/titulares" component={GestionTitulares} />
+            <Route path="/empleado" component={Empleado} />
+            <Route path="/nuevoEmpleado" component={NuevoEmpleado} />
+            <Route path="/modificarEmpleado" component={ModificarEmpleado} />
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>

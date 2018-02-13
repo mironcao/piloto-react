@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../store/actions';
 import axios from 'axios';
 import Tabla from "../../components/TablaCliente"
+import { Header, Container } from 'semantic-ui-react';
 
 class ListarCliente extends Component {
 
@@ -16,7 +17,11 @@ class ListarCliente extends Component {
 
     render() {
         return (
-            <Tabla clientes={this.props.clientes} />
+            <Container  style={{ marginTop: '3em' }}>
+                <Header textAlign=" center" as='h1' color='teal'>Clientes</Header>
+                <Tabla   clientes={this.props.clientes}/>
+            </Container>
+
         )
 
 
