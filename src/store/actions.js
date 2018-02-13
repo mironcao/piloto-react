@@ -18,6 +18,7 @@ export const DELETE_EMPLEADO = "DELETE_EMPLEADO";
 export const CREAR_EMPLEADO = "CREAR_EMPLEADO";
 export const MODIFICAR_EMPLEADO = "MODIFICAR_EMPLEADO";
 export const ACTUALIZAR_EMPLEADO = "ACTUALIZAR_EMPLEADO";
+export const PASAR_USER = "PASAR_USER";
 
 export const ejemploAction = (data) => {
     return {
@@ -98,6 +99,12 @@ export const deleteCliente = (dni) => {
     return {
         type: DELETE_CLIENTE,
         dni: dni
+    }
+}
+export const pasarUser = (user ) => {
+    return {
+        type: PASAR_USER,
+        user:user
     }
 }
 export const listarClientes = (clientes) => {

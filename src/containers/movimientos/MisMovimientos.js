@@ -5,6 +5,7 @@ import { Table, Button, Icon } from 'semantic-ui-react'
 import Header from 'semantic-ui-react/dist/commonjs/elements/Header/Header';
 import axios from 'axios';
 import Link from 'react-router-dom/Link';
+import * as estilo from '../css/Movimiento';
 
 /* Constantes */
 const URL = 'http://localhost:8080/movimiento/mismovimientos/';
@@ -24,16 +25,16 @@ class MisMovimientos extends Component {
 
     render() {
         return (
-            <div>
+            <div style={estilo.align}>
                 <br/>
-                <Header as='h2'>Mis Movimientos</Header>
+                <Header as='h2' color="teal">Mis Movimientos</Header>
                 <Header.Subheader>
                     Movimientos asociados a la cuenta: {this.props.numeroCuenta}
                 </Header.Subheader>
                 <br/>
                 <div>
-                    <Table celled selectable>
-                        <Table.Header>
+                    <Table celled selectable color="teal">
+                        <Table.Header style={estilo.align}>
                         <Table.Row>
                             <Table.HeaderCell>Fecha</Table.HeaderCell>
                             <Table.HeaderCell>Tipo</Table.HeaderCell>
