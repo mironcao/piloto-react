@@ -7,7 +7,6 @@ import Sucursales from '../Sucursales/Sucursales';
 import MisMovimientos from '../movimientos/MisMovimientos';
 import CreateMovimiento from '../movimientos/CreateMovimiento';
 import MisCuentas from '../Cuenta/MisCuentas';
-import Transferencias from '../Banco/Transferencias';
 import ListarTransferencias from '../Banco/ListarTransferencias';
 import GenerarTransferencia from '../Banco/GenerarTransferencia';
 import ListarCliente from '../Cliente/ListarCliente';
@@ -66,7 +65,6 @@ class Banco extends Component {
             <Route path="/CrearMovimiento" component={CreateMovimiento} />
             <Route exact strict path="/Transferencias/GenerarTransferencia" component={GenerarTransferencia} />
             <Route exact strict path="/Transferencias/ListarTransferencias" component={ListarTransferencias} />
-            <Route path="/Transferencias" component={Transferencias} />
             <Route path="/ListarClientes" component={ListarCliente} />
             <Route path="/AñadirClientes" component={AñadirCliente} />
             <Route path="/EditarCliente" component={EditarCliente} />
