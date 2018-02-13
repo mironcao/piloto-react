@@ -5,17 +5,17 @@ import { Table, Button, Icon } from 'semantic-ui-react'
 import Header from 'semantic-ui-react/dist/commonjs/elements/Header/Header';
 import axios from 'axios';
 import Link from 'react-router-dom/Link';
+import * as estilo from '../css/Movimiento';
+
+/* Constantes */
+const URL = 'http://localhost:8080/movimiento/mismovimientos/';
 
 class MisMovimientos extends Component {
 
     componentDidMount() {
-        this.cargarMisMovimientos(this.props.numeroCuenta);
-    }
-
-    cargarMisMovimientos = (cuenta) => {
-        axios.get('http://localhost:8080/movimiento/mismovimientos/' + cuenta)
+        axios.get(URL + this.props.numeroCuenta)
             .then(response => {
-                this.props.cargarMovimientosAction(response.data)
+                this.props.cargarMovimientosAction(response.data);
                 console.log(response.data);
             })
             .catch(function (error){
@@ -25,16 +25,16 @@ class MisMovimientos extends Component {
 
     render() {
         return (
-            <div>
+            <div style={estilo.align}>
                 <br/>
-                <Header as='h2'>Mis Movimientos</Header>
+                <Header as='h2' color="teal">Mis Movimientos</Header>
                 <Header.Subheader>
                     Movimientos asociados a la cuenta: {this.props.numeroCuenta}
                 </Header.Subheader>
                 <br/>
                 <div>
-                    <Table celled selectable>
-                        <Table.Header>
+                    <Table celled selectable color="teal">
+                        <Table.Header style={estilo.align}>
                         <Table.Row>
                             <Table.HeaderCell>Fecha</Table.HeaderCell>
                             <Table.HeaderCell>Tipo</Table.HeaderCell>
@@ -65,7 +65,7 @@ class MisMovimientos extends Component {
                         </Button>
                     </Link>
 
-                    <Link to='/CrearMovimiento'>
+                    <Link to='/misMovimientos/CrearMovimiento'>
                         <Button color='teal' floated='center'
                         icon labelPosition='left'>
                             <Icon name='payment' />
