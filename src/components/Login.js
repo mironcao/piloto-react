@@ -68,7 +68,7 @@ class LoginPage extends React.Component {
                   placeholder='Contraseña'
                   type='password'
                 />
-                {this.state.error ? <p>El usuario o contraseña es incorrecto</p> : null}
+                {this.state.error ? <p style={{color:"#FF0000"}}>El usuario o contraseña es incorrecto</p> : null}
                 <Button color='teal' fluid size='large' onClick={this.login}>Login</Button>
               </Segment>
             </Form>
