@@ -145,36 +145,33 @@ class FormularioEditarEmpleado extends Component {
                 style={{ height: '100%' }}
                 verticalAlign='middle'
             >
-                <Grid.Column style={{ maxWidth: 500 }}>
+                <Grid.Column textAlign='left' style={{ maxWidth: 500 }}>
                     <Form size='large'>
                         <Segment stacked>
-                            <Form.Field>
+                            <Form.Field required>
+                                <label>Nombre:</label>
                                 <Input
                                     placeholder='Nombre'
-                                    label={{ icon: 'asterisk' }}
-                                    labelPosition='right corner'
                                     name='nombre'
                                     value={this.state.empleado.nombre.value}
                                     onChange={this.handleChange}
                                 />
                                 {this.state.empleado.nombre.valid ? null : this.mostrarError('El nombre es incorrecto')}
                             </Form.Field>
-                            <Form.Field>
+                            <Form.Field required>
+                                <label>Apellidos:</label>
                                 <Input
                                     placeholder='Apellidos'
-                                    label={{ icon: 'asterisk' }}
-                                    labelPosition='right corner'
                                     name='apellidos'
                                     value={this.state.empleado.apellidos.value}
                                     onChange={this.handleChange}
                                 />
                                 {this.state.empleado.apellidos.valid ? null : this.mostrarError('Los apellidos son incorrectos')}
                             </Form.Field>
-                            <Form.Field>
+                            <Form.Field required>
+                                <label>Dirección:</label>
                                 <Input
                                     placeholder='Dirección'
-                                    label={{ icon: 'asterisk' }}
-                                    labelPosition='right corner'
                                     name='direccion'
                                     value={this.state.empleado.direccion.value}
                                     onChange={this.handleChange}
@@ -182,6 +179,7 @@ class FormularioEditarEmpleado extends Component {
                                 {this.state.empleado.direccion.valid ? null : this.mostrarError('La dirección es incorrecta')}
                             </Form.Field>
                             <Form.Field>
+                                <label>Teléfono fijo:</label>
                                 <Input
                                     placeholder='Teléfono fijo'
                                     name='fijo'
@@ -191,6 +189,7 @@ class FormularioEditarEmpleado extends Component {
                                 {this.state.empleado.fijo.valid ? null : this.mostrarError('El teléfono fijo es incorrecto')}
                             </Form.Field>
                             <Form.Field>
+                                <label>Teléfono móvil:</label>
                                 <Input
                                     placeholder='Teléfono móvil'
                                     name='movil'
@@ -200,6 +199,7 @@ class FormularioEditarEmpleado extends Component {
                                 {this.state.empleado.movil.valid ? null : this.mostrarError('El teléfono móvil es incorrecto')}
                             </Form.Field>
                             <Form.Field>
+                                <label>Correo electrónico:</label>
                                 <Input
                                     placeholder='Correo electrónico'
                                     name='email'
@@ -208,12 +208,15 @@ class FormularioEditarEmpleado extends Component {
                                 />
                                 {this.state.empleado.email.valid ? null : this.mostrarError('El correo electrónico es incorrecto')}
                             </Form.Field>
-                            <Form.Dropdown onChange={(event, data) => {
-                                this.setState({ selectedOption: data.value })
-                                this.handleChange(event, data)
-                            }}
-                                placeholder='Sucursal' fluid selection options={this.state.sucursales}
-                                name='sucursal' value={this.state.selectedOption} />
+                            <Form.Field>
+                                <label>Sucursal:</label>
+                                <Form.Dropdown onChange={(event, data) => {
+                                    this.setState({ selectedOption: data.value })
+                                    this.handleChange(event, data)
+                                }}
+                                    placeholder='Sucursal' fluid selection options={this.state.sucursales}
+                                    name='sucursal' value={this.state.selectedOption} />
+                            </Form.Field>
 
                             <Button onClick={this.actualizarEmpleado}
                                 style={{ marginBottom: '1em' }} color='teal' fluid size='large'>Guardar</Button>
