@@ -7,7 +7,6 @@ import Sucursales from '../Sucursales/Sucursales';
 import MisMovimientos from '../movimientos/MisMovimientos';
 import CreateMovimiento from '../movimientos/CreateMovimiento';
 import MisCuentas from '../Cuenta/MisCuentas';
-import Transferencias from '../Banco/Transferencias';
 import ListarTransferencias from '../Banco/ListarTransferencias';
 import GenerarTransferencia from '../Banco/GenerarTransferencia';
 import ListarCliente from '../Cliente/ListarCliente';
