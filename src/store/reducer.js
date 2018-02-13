@@ -27,6 +27,7 @@ const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actions.CARGAR_SUCURSALES:
 			return {
+			
 				...state,
 				sucursal: {
 					...state.sucursal,

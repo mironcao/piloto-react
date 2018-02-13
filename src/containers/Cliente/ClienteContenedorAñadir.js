@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import Form from '../../components/FormularioCrearEmpleado';
+import Form from './AñadirCliente';
 import { Header, Container } from 'semantic-ui-react';
 
-class ClienteContenedor extends Component {
+class ClienteContenedorAñadir extends Component {
     render() {
         return (
             <Container style={{ marginTop: '3em' }}>
-                <Header as='h1' color='teal' >Añadir cliente</Header>
+                <Header textAlign="center" as='h1' color='teal' >Añadir cliente</Header>
                 <Form/>
             </Container>
         );
     }
 }
 
-export default ClienteContenedor;
+export default ClienteContenedorAñadir;
