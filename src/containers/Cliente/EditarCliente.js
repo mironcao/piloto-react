@@ -138,37 +138,37 @@ class EditarCliente extends Component {
                         <Segment stacked>
                         <Form.Field required>
                                 <label >Nombre:</label>
-                                <Input focus label={{ icon: 'asterisk' }} labelPosition="rigth corner" placeholder='Nombre...'
+                                <Input focus  placeholder='Nombre...'
                                 name="nombre" value={this.state.nombre.value} onChange={this.cambiarEstado} maxLength="15" />
                                 {this.state.nombre.valid ? null : this.mostrarError("nombre")}
                             </Form.Field>
                         <Form.Field required>
                                 <label >Apellidos:</label>
-                                <Input focus label={{ icon: 'asterisk' }} labelPosition="rigth corner" placeholder='Apellidos...' 
+                                <Input focus placeholder='Apellidos...' 
                                 name="apellidos" value={this.state.apellidos.value} onChange={this.cambiarEstado} maxLength="30" />
                                 {this.state.apellidos.valid ? null : this.mostrarError("apellidos")}
                             </Form.Field>
                         <Form.Field required>
                                 <label >Direccion:</label>
-                                <Input focus label={{ icon: 'asterisk' }} labelPosition="rigth corner" placeholder='Direccion...' 
+                                <Input focus placeholder='Direccion...' 
                                 name="direccion" value={this.state.direccion.value} onChange={this.cambiarEstado} maxLength="50" />
                                 {this.state.direccion.valid ? null : this.mostrarError("direccion")}
                             </Form.Field>
                         <Form.Field>
                                 <label >Email:</label>
-                                <Input focus labelPosition="rigth corner" placeholder='Email...'
+                                <Input focus placeholder='Email...'
                                  name="email" value={this.state.email.value} onChange={this.cambiarEstado}/>
                                 {this.state.email.valid ? null : this.mostrarError("email")}
                             </Form.Field>
                         <Form.Field>
                                 <label >Telefono fijo:</label>
-                                <Input focus labelPosition="rigth corner" placeholder='Fijo...' 
+                                <Input focus placeholder='Fijo...' 
                                 name="fijo" value={this.state.fijo.value}  onChange={this.cambiarEstado} />
                                 {this.state.fijo.valid ? null : this.mostrarError("fijo")}
                             </Form.Field>
                         <Form.Field>
                                 <label >Telefono movil:</label>
-                                <Input focus labelPosition="rigth corner" placeholder='Movil...'
+                                <Input focus placeholder='Movil...'
                                 name="movil" value={this.state.movil.value} onChange={this.cambiarEstado}/>
                                 {this.state.movil.valid ? null : this.mostrarError("movil")}
                             </Form.Field>
