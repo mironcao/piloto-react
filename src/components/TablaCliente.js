@@ -14,7 +14,7 @@ class TablaCliente extends Component {
     }
     editarCliente(dni) {
         this.props.editarCliente(dni);
-        this.props.history.push("/EditarCliente");
+        this.props.history.push("/Clientes/EditarCliente");
     }
 
     render() {
