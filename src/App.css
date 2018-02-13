@@ -27,6 +27,15 @@
   to { transform: rotate(360deg); }
 }
 
+.option-buttons {
+  flex: 1;
+}
+
+td.options{
+  display: flex;
+  flex-direction: row;
+}
+
 .grande {
   height: 100vh;
 }

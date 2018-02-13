@@ -49,7 +49,7 @@ class LoginPage extends React.Component {
                 fluid
                 icon='user'
                 iconPosition='left'
-                placeholder='DNI/NIE/NIF'
+                placeholder='NIF/NIE'
               />
               <Form.Input
                 fluid
