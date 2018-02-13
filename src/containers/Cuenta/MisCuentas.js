@@ -64,6 +64,9 @@ mostrarCosas=()=> {
 	}
 	return rows;
 }
+componentDidMount(){
+	this.buscarCuentas(this.props.user.dni)
+}
 
 render(){
 	return(
@@ -75,7 +78,6 @@ render(){
 			Información acerca de sus cuentas y movimientos.
 		</Header.Subheader>	
 	</Header>
-	{this.buscarCuentas(this.props.user.dni)}
 	<br></br>
 	<Table collapsing unstackable celled structured color='teal'> 
 		<Table.Header>
