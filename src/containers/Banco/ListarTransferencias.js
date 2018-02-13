@@ -59,7 +59,7 @@ class ListarTransferencias extends Component {
 					</tbody>
 				)}
 				<tfoot>
-					<p><Link to="/Transferencias">Volver a transferencias</Link></p>
+					<p><Link to="/misCuentas">Volver a transferencias</Link></p>
 				</tfoot>
 			</table>
 

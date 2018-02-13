@@ -66,11 +66,10 @@ class Banco extends Component {
             <Route path="/sucursales" exact component={Sucursales} />
             <Route exact path="/misCuentas" component={MisCuentas} />
             <Route path="/misMovimientos/CrearMovimiento" component={CreateMovimiento} />
-            <Route path="/misMovimientos" component={MisMovimientos} />
+            <Route exact path="/misMovimientos" component={MisMovimientos} />
             <Route path="/CrearMovimiento" component={CreateMovimiento} />
             <Route exact strict path="/Transferencias/GenerarTransferencia" component={GenerarTransferencia} />
             <Route exact strict path="/Transferencias/ListarTransferencias" component={ListarTransferencias} />
-            <Route path="/Transferencias" component={Transferencias} />
             <Route path="/ListarClientes" component={ListarCliente} />
             <Route path="/Clientes/AñadirClientes" component={AñadirCliente} />
             <Route path="/Clientes/EditarCliente" component={EditarCliente} />
