@@ -8,20 +8,28 @@ import * as actions from '../store/actions';
 class LoginPage extends React.Component {
 
   state = {
-    dni:""
+    dni:"",
+    password: ""
   }
 
   login=()=> {
-    axios.get('http://localhost:8080/clientes/buscarCliente/' + this.state.dni).then(response => {
-      if(response.data.nombre!==null) { 
-        this.props.pasarUser(response.data);  
-        this.props.history.push('/misCuentas')
-      }
+    if(this.state.dni!=="" && this.state.password!==""){
+      axios.post('http://localhost:8080/login/', 
+        {dni: this.state.dni, password: this.state.password}).then(response => {
+          if(response.data.nombre!==null) { 
+            this.props.pasarUser(response.data);  
+            this.props.history.push('/misCuentas')
+          }
       })
+    }
   }
 
   actualizarDni=(event)=>  {
     this.setState({dni:event.target.value});
+  }
+
+  actualizarPassword=(event)=>{
+    this.setState({password:event.target.value});
   }
 
   render() {
@@ -51,7 +59,7 @@ class LoginPage extends React.Component {
                 iconPosition='left'
                 placeholder='NIF/NIE'
               />
-              <Form.Input
+              <Form.Input onChange={this.actualizarPassword}
                 fluid
                 icon='lock'
                 iconPosition='left'
