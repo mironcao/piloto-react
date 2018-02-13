@@ -10,8 +10,8 @@ import MisCuentas from '../Cuenta/MisCuentas';
 import ListarTransferencias from '../Banco/ListarTransferencias';
 import GenerarTransferencia from '../Banco/GenerarTransferencia';
 import ListarCliente from '../Cliente/ListarCliente';
-import AñadirCliente from '../Cliente/AñadirCliente';
-import EditarCliente from '../Cliente/EditarCliente';
+import AñadirCliente from '../Cliente/ClienteContenedorAñadir';
+import EditarCliente from '../Cliente/ClienteContenedorEditar';
 import Empleado from '../Empleado/Empleado';
 import NuevoEmpleado from '../Empleado/NuevoEmpleado';
 import ModificarEmpleado from '../Empleado/ModificarEmpleado';
@@ -70,7 +70,7 @@ class Banco extends Component {
             <Route exact strict path="/Transferencias/GenerarTransferencia" component={GenerarTransferencia} />
             <Route exact strict path="/Transferencias/ListarTransferencias" component={ListarTransferencias} />
             <Route path="/ListarClientes" component={ListarCliente} />
-            <Route path="/Clientes/AñadirClientes" component={AñadirCliente} />
+            <Route path="/Clientes/AñadirCliente" component={AñadirCliente} />
             <Route path="/Clientes/EditarCliente" component={EditarCliente} />
             <Route path="/titulares" component={GestionTitulares} />
             <Route path="/empleado" component={Empleado} />
