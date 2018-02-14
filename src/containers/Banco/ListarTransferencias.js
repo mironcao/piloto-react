@@ -22,7 +22,6 @@ class ListarTransferencias extends Component {
 	}
 
 	cargarMisTransferencias = (cuenta) => {
-		let split = []
 		axios.get('http://localhost:8080/transferencia/listarTransferenciaId/' + cuenta)
 		.then(response => {
 			this.setState({transferencias:response.data})
