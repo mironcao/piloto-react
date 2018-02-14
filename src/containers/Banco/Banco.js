@@ -6,6 +6,7 @@ import Sucursales from '../Sucursales/Sucursales';
 import MisMovimientos from '../movimientos/MisMovimientos';
 import CreateMovimiento from '../movimientos/CreateMovimiento';
 import MisCuentas from '../Cuenta/MisCuentas';
+import MisCuentasAdmin from '../Cuenta/MisCuentasAdmin';
 import ListarTransferencias from '../Banco/ListarTransferencias';
 import GenerarTransferencia from '../Banco/GenerarTransferencia';
 import ListarCliente from '../Cliente/ListarCliente';
@@ -129,7 +130,26 @@ class Banco extends Component {
         </nav>
         <section>
           <Container>
+<<<<<<< HEAD
             {this.generarRoutes()}
+=======
+            <Route path="/sucursales" exact component={Sucursales} />
+            <Route exact path="/misCuentas" component={MisCuentas} />
+            <Route exact path="/misCuentasAdmin" component={MisCuentasAdmin} />
+            <Route path="/misMovimientos/CrearMovimiento" component={CreateMovimiento} />
+            <Route exact path="/misMovimientos" component={MisMovimientos} />
+            <Route path="/CrearMovimiento" component={CreateMovimiento} />
+            <Route exact strict path="/Transferencias/GenerarTransferencia" component={GenerarTransferencia} />
+            <Route exact strict path="/Transferencias/ListarTransferencias" component={ListarTransferencias} />
+            <Route path="/ListarClientes" component={ListarCliente} />
+            <Route path="/Clientes/AñadirCliente" component={AñadirCliente} />
+            <Route path="/Clientes/EditarCliente" component={EditarCliente} />
+            <Route path="/titulares" component={GestionTitulares} />
+            <Route path="/empleado" component={Empleado} />
+            <Route path="/nuevoEmpleado" component={NuevoEmpleado} />
+            <Route path="/modificarEmpleado" component={ModificarEmpleado} />
+            <Route path="/misTarjetas" component={GestionTarjetas} />
+>>>>>>> feature/loginEmpleado
           </Container>
         </section>
       </div>)
