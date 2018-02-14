@@ -17,9 +17,9 @@ class AñadirCliente extends Component {
         this.state = {
             clientes: [], sucursalId: "", DNI: { value: "", valid: true }, nombre: { value: "", valid: true },
             apellidos: { value: "", valid: true }, direccion: { value: "", valid: true }, email: { value: "", valid: true },
-            fijo: { value: "", valid: true }, movil: { value: "", valid: true, sucursales: [] }
-        }
-    }
+            fijo: { value: "", valid: true }, movil: { value: "", valid: true}, sucursales: [], password: { value: "", valid: true},
+            repitPassword: { value: "", valid: true} }}
+        
 
     componentDidMount() {
         if (this.props.sucursales.length === 0) {
@@ -48,7 +48,7 @@ class AñadirCliente extends Component {
             axios.post("http://localhost:8080/clientes/clientes?sucursalId=" + this.state.sucursalId, {
                 dni: this.state.DNI.value,
                 nombre: this.state.nombre.value, apellidos: this.state.apellidos.value, direccion: this.state.direccion.value,
-                email: this.state.email.value, fijo: this.state.fijo.value, movil: this.state.movil.value
+                email: this.state.email.value, fijo: this.state.fijo.value, movil: this.state.movil.value, password: this.state.password.value
             }).then((response) => this.props.history.push("/ListarClientes"))
         }
 
@@ -63,7 +63,10 @@ class AñadirCliente extends Component {
                 direccion: { value: "", valid: true },
                 email: { value: "", valid: true },
                 fijo: { value: "", valid: true },
-                movil: { value: "", valid: true }
+                movil: { value: "", valid: true }, 
+                password: { value: "", valid: true},
+                repitPassword: { value: "", valid: true} 
+
             }
         )
     }
@@ -182,6 +185,18 @@ class AñadirCliente extends Component {
                                 <Input focus placeholder='Direccion...'
                                     name="direccion" value={this.state.direccion.value} onChange={this.cambiarEstado} maxLength="50" />
                                 {this.state.direccion.valid ? null : this.mostrarError("direccion")}
+                            </Form.Field>
+                            <Form.Field required>
+                                <label >Contraseña:</label>
+                                <Input focus placeholder='Contraseña...'
+                                    name="password" value={this.state.password.value} onChange={this.cambiarEstado} maxLength="32" />
+                                {this.state.password.valid ? null : this.mostrarError("Contraseña")}
+                            </Form.Field>
+                            <Form.Field required>
+                                <label >Repetir contraseña:</label>
+                                <Input focus placeholder='Repetir contraseña...'
+                                    name="repitPassword" value={this.state.repitPassword.value} onChange={this.cambiarEstado} maxLength="32" />
+                                {this.state.repitPassword.valid ? null : this.mostrarError("Contraseña")}
                             </Form.Field>
                             <Form.Field >
                                 <label >Email:</label>
