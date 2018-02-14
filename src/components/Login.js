@@ -16,8 +16,8 @@ class LoginPage extends React.Component {
   login = () => {
     if (this.state.dni !== "" && this.state.password !== "") {
       axios.post('http://localhost:8080/login/',
-        { dni: this.state.dni, password: this.state.password, 
-          token: this.generarToken() }).then(response => {
+        { dni: this.state.dni, password: this.state.password}
+          ).then(response => {
             if (response.data.nombre !== null) {
               this.props.pasarUser(response.data);
               this.props.history.push('/misCuentas')
@@ -33,11 +33,6 @@ class LoginPage extends React.Component {
 
   actualizarPassword = (event) => {
     this.setState({ password: event.target.value });
-  }
-
-  generarToken(cadena){
-    return this.state.dni 
-              + this.state.password;
   }
 
   render() {
