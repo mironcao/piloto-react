@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Banco from './containers/Banco/Banco';
 import { Route, Redirect, withRouter } from 'react-router-dom';
-import { Sidebar, Segment, Menu, Icon } from 'semantic-ui-react';
 import LoginPage from './components/Login';
 import { connect } from 'react-redux';
 
