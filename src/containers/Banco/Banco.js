@@ -31,7 +31,7 @@ class Banco extends Component {
     }).catch(function (error){
       console.log(error)
     })
-    this.props.pasarUser(null);
+    this.props.logout();
   }
 
   handleItemClick = (path) => {
@@ -108,8 +108,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    pasarUser: user => {
-      dispatch(actions.pasarUser(user))
+    logout: () => {
+      dispatch(actions.logout())
     }
   }
 }

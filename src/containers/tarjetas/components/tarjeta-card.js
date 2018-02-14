@@ -1,7 +1,6 @@
 // src/components/titular-card.js
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Card, Button, Icon } from 'semantic-ui-react';
 
 export default function TarjetaCard({tarjeta, deleteTarjeta}) {
@@ -33,8 +32,3 @@ export default function TarjetaCard({tarjeta, deleteTarjeta}) {
 const deleteTarjetaHandle = (tarjeta,deleteTarjeta) => {
   return deleteTarjeta(tarjeta);
 }
-
-
-/* TarjetaCard.propTypes = {
-  titular: PropTypes.object.isRequired
-} */
