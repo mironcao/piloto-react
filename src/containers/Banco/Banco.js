@@ -89,7 +89,7 @@ class Banco extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.bancoStore.user
   }
 }
 

@@ -20,7 +20,7 @@ class Transferencias extends Component {
 
 const mapStateToProps = state => {
     return {
-      test: state.test,
+      test: state.bancoStore.test,
     }
   }
 

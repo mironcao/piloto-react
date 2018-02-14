@@ -113,7 +113,7 @@ class Sucursales extends Component {
 
 const mapStateToProps = state => {
     return {
-        sucursal: state.sucursal,
+        sucursal: state.bancoStore.sucursal,
     }
 }
 

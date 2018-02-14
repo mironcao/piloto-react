@@ -119,8 +119,8 @@ class GenerarTransferencia extends Component {
 
 const mapStateToProps = state => {
 	return {
-		transferencias: state.transferencias,
-		numeroCuenta: state.numeroCuenta
+		transferencias: state.bancoStore.transferencias,
+		numeroCuenta: state.bancoStore.numeroCuenta
 	}
 }
 
