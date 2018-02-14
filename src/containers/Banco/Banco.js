@@ -15,7 +15,10 @@ import Empleado from '../Empleado/Empleado';
 import NuevoEmpleado from '../Empleado/NuevoEmpleado';
 import ModificarEmpleado from '../Empleado/ModificarEmpleado';
 import GestionTitulares from '../titulares/GestionTitulares';
-import { Route, withRouter } from 'react-router-dom';
+import GestionTarjetas from '../tarjetas/GestionTarjetas';
+import MisCuentasAdmin from '../Cuenta/MisCuentasAdmin';
+import { Route, Switch, Link, Redirect, withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 
 class Banco extends Component {
@@ -23,6 +26,12 @@ class Banco extends Component {
   state = { activeItem: '/misCuentas' }
 
   logout = () => {
+    axios.post('http://localhost:8080/login/out').
+      then(response => {
+        console.log(response)
+      }).catch(function (error) {
+        console.log(error)
+      })
     this.props.pasarUser(null);
   }
 
@@ -32,12 +41,21 @@ class Banco extends Component {
   }
 
   mostrarLinks = () => {
+    console.log(this.props.user);
+
     if (this.props.user.role === "USER") {
       return (
-        <Menu.Item name='Mis Cuentas' active={this.activeItem === '/misCuentas'} onClick={() => this.handleItemClick('/misCuentas')} >
-          <Icon name='suitcase' />
-          MisCuentas
-    </Menu.Item>);
+        <React.Fragment>
+          <Menu.Item name='Mis Cuentas' active={this.activeItem === '/misCuentas'} onClick={() => this.handleItemClick('/misCuentas')} >
+            <Icon name='suitcase' />
+            MisCuentas
+        </Menu.Item>
+          <Menu.Item name='Logout' active={this.activeItem === '/misCuentas'} onClick={this.logout} >
+            <Icon name='log out' />
+            Logout
+         </Menu.Item>
+        </React.Fragment>
+      );
     } else {
       return (
         <React.Fragment>
@@ -83,7 +101,7 @@ class Banco extends Component {
       return (
         <React.Fragment>
           <Route path="/sucursales" exact component={Sucursales} />
-          <Route exact path="/misCuentas" component={MisCuentas} />
+          <Route exact path="/misCuentas" component={MisCuentasAdmin} />
           <Route path="/misMovimientos/CrearMovimiento" component={CreateMovimiento} />
           <Route exact path="/misMovimientos" component={MisMovimientos} />
           <Route path="/CrearMovimiento" component={CreateMovimiento} />
@@ -126,7 +144,7 @@ class Banco extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.bancoStore.user
   }
 }
 

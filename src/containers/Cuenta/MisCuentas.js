@@ -2,21 +2,31 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
 import axios from 'axios';
-import { Button, Table, Header, Message, Container } from 'semantic-ui-react';
+import { Button, Table, Header, Container, Pagination } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 
 class MisCuentas extends Component {
+
 	constructor() {
 		super();
-		this.state = { cuentas: [], dni: null, active: false }
+		this.state = { cuentas: [[]], dni: null, active: false, itemsPerPage:5, activePage:1 }
 	}
 
 
 	buscarCuentas = (dni) => {
+		let split=[]
 		axios.get('http://localhost:8080/cuenta/miscuentas?dni=' + dni).then(response => {
-			this.setState({ cuentas: response.data });
+			for(let i=0; i<=response.data.length; i+=this.state.itemsPerPage) {
+				if(i+this.state.itemsPerPage <= response.data.length)
+					split.push(response.data.slice(i,i+this.state.itemsPerPage))
+				else
+					split.push(response.data.slice(i,response.data.length))
+			}
+			this.setState({cuentas:split})
 		})
 	}
+
+	handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
 
 	mostrarMovimientos = (numeroCuenta) => {
 		this.props.listarMovimientos(numeroCuenta);
@@ -41,7 +51,7 @@ class MisCuentas extends Component {
 	mostrarCosas = () => {
 		let rows = [];
 		let index = 0;
-		for (let c of this.state.cuentas) {
+		for (let c of this.state.cuentas[this.state.activePage-1]) {
 			index = 0;
 			for (let t of c.titulares) {
 				if (index === 0) {
@@ -65,7 +75,8 @@ class MisCuentas extends Component {
 		}
 		return rows;
 	}
-	componentDidMount() {
+
+	componentWillMount() {
 		this.buscarCuentas(this.props.user.dni)
 	}
 
@@ -96,6 +107,7 @@ class MisCuentas extends Component {
 					<Table.Body>
 						{this.mostrarCosas()}
 					</Table.Body>
+					<Pagination defaultActivePage={1} onPageChange={this.handlePaginationChange} totalPages={this.state.cuentas.length} />
 				</Table>
 			</Container>
 		)
@@ -103,10 +115,11 @@ class MisCuentas extends Component {
 
 }
 
+
 const mapStateToProps = state => {
 	return {
-		cuentas: state.cuentas,
-		user: state.user
+		cuentas:state.bancoStore.cuentas,
+		user:state.bancoStore.user
 	}
 }
 

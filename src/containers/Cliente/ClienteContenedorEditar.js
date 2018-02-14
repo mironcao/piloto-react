@@ -16,7 +16,7 @@ class ClienteContenedorEditar extends Component {
 
 const mapStateToProps = state => {
     return {
-        dni: state.dni
+        dni: state.bancoStore.dni
     }
 }
 

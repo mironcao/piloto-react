@@ -3,23 +3,27 @@
 import React, { Component} from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import { addTitular as addTitularAction } from '../actions/titulares-actions';
-import TitularForm from '../components/titular-form';
+import { addTarjeta as addTarjetaAction } from '../actions/tarjetas-actions';
+import TarjetaForm from '../components/tarjeta-form';
 import axios from "axios";
 
 
-const URL = 'http://localhost:8080/cliente_cuenta';
+const URL = 'http://localhost:8080/tarjetas';
 
 class TitularFormPage extends Component {
   state = {
     redirect: false
   }
 
-  submit = (titular) => {
-    axios.post(`${URL}/new/${this.props.ncuenta}`, titular)
+  submit = (tarjeta) => {
+    const dto = {
+      dni: this.props.dni,
+      numeroCuenta: tarjeta.numeroCuenta
+    };
+    axios.post(URL, dto)
       .then(response => {         
         this.setState({ redirect:true });
-        this.addTitular(response.data)
+        this.props.addTarjeta(response.data)
       })
   }
 
@@ -28,8 +32,8 @@ class TitularFormPage extends Component {
       <div>
         {
           this.state.redirect ?
-          <Redirect to="/titulares/list" /> :
-          <TitularForm contact={this.props.titular} loading={this.props.loading} onSubmit={this.submit} />
+          <Redirect to="/misTarjetas" /> :
+          <TarjetaForm tarjeta={this.props.tarjeta} loading={this.props.loading} onSubmit={this.submit} />
         }
       </div>
     )
@@ -38,16 +42,16 @@ class TitularFormPage extends Component {
 
 const mapStateToProps= state => {
   return {
-    titular: state.bancoStore.titular,
+    tarjeta: state.bancoStore.tarjeta,
     errors: state.bancoStore.errors,
-    ncuenta: state.bancoStore.numeroCuenta
+    dni: state.bancoStore.user.dni
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addTitular: (titular) => {
-      dispatch(addTitularAction(titular))
+    addTarjeta: (tarjeta) => {
+      dispatch(addTarjetaAction(tarjeta))
     }
   }
 }
