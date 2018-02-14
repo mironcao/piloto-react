@@ -16,13 +16,14 @@ class EditarCliente extends Component {
         super();
         this.state = { nombre: { value: "", valid: true }, apellidos: { value: "", valid: true }, 
         direccion: { value: "", valid: true }, email: { value: "", valid: true },
-        fijo: { value: "", valid: true }, movil: { value: "", valid: true }, cliente: null}
+        fijo: { value: "", valid: true }, movil: { value: "", valid: true }, cliente: null,password: { value: "", valid: true },}
     }
 
     componentDidMount() {
         axios.get("http://localhost:8080/clientes/buscarCliente/" + this.props.dni).then(response => {
             this.setState(
                 { 
+                    
                     cliente: response.data,
                     DNI: {value: response.data.dni,valid:true},
                     nombre: {value: response.data.nombre,valid:true},
@@ -30,9 +31,12 @@ class EditarCliente extends Component {
                     direccion: {value: response.data.direccion,valid:true},
                     email:{value: response.data.email,valid:true},
                     fijo:{value: response.data.fijo,valid:true},
-                    movil:{value: response.data.movil,valid:true}
+                    movil:{value: response.data.movil,valid:true},
+                    password:{value: response.data.password,valid:true}
                 }
+               
             )
+            console.log(response.data.password)
         }
         )
 
@@ -41,9 +45,9 @@ class EditarCliente extends Component {
     actualizarCliente() {
         if (this.validarCliente()) {
         axios.put("http://localhost:8080/clientes/cliente/" + this.props.dni, {
-            dni: this.state.DNI,
-            nombre: this.state.nombre, apellidos: this.state.apellidos, direccion: this.state.direccion, email: this.state.email,
-            fijo: this.state.fijo, movil: this.state.movil
+            dni: this.state.DNI.value,
+            nombre: this.state.nombre.value, apellidos: this.state.apellidos.value, direccion: this.state.direccion.value, email: this.state.email.value,
+            fijo: this.state.fijo.value, movil: this.state.movil.value, password:this.state.password.value
         }).then((response)=>this.props.history.push("/ListarClientes"))
     }
 }

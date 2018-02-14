@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Sidebar, Segment, Menu, Icon, Container } from 'semantic-ui-react';
+import {Menu, Icon, Container } from 'semantic-ui-react';
 import * as actions from "../../store/actions";
-import { Button } from 'semantic-ui-react';
 import Sucursales from '../Sucursales/Sucursales';
 import MisMovimientos from '../movimientos/MisMovimientos';
 import CreateMovimiento from '../movimientos/CreateMovimiento';
@@ -17,6 +16,7 @@ import NuevoEmpleado from '../Empleado/NuevoEmpleado';
 import ModificarEmpleado from '../Empleado/ModificarEmpleado';
 import GestionTitulares from '../titulares/GestionTitulares';
 import { Route, Switch, Link, Redirect, withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 
 class Banco extends Component {
@@ -24,6 +24,12 @@ class Banco extends Component {
   state = { activeItem: '/misCuentas' }
 
   logout = () => {
+    axios.post('http://localhost:8080/login/out').
+    then(response => {
+      console.log(response)
+    }).catch(function (error){
+      console.log(error)
+    })
     this.props.pasarUser(null);
   }
 
