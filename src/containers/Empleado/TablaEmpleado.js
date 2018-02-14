@@ -9,6 +9,7 @@ class TablaEmpleado extends Component {
     state = {
         exported: true
     }
+    
     deleteEmpleado = (dni) => {
         axios.delete('http://localhost:8080/empleado/' + dni);
         this.props.deleteEmpleado(dni);
@@ -21,7 +22,7 @@ class TablaEmpleado extends Component {
 
     exportarEmpleados = () => {
         this.setState({ exported: false });
-        axios.get("http://localhost:8080/sucursal/export").then(response => {
+        axios.get("http://localhost:8080/empleado/export").then(response => {
             if (response.status === 200)
                 this.setState({
                     exported: true
@@ -67,13 +68,13 @@ class TablaEmpleado extends Component {
                 <Table.Footer fullWidth>
                     <Table.Row>
                         <Table.HeaderCell colSpan='4'>
-                            <Button onClick={() => this.props.history.push("/nuevoEmpleado")}
-                                color='teal' floated='right' icon labelPosition='left' size='small'>
-                                <Icon name='user' />Añadir empleado
-                            </Button>
                             <Button onClick={() => this.exportarEmpleados()}
                                 color='teal' floated='right' icon labelPosition='left' size='small'>
                                 <Icon name='external' />Exportar empleados
+                            </Button>
+                            <Button onClick={() => this.props.history.push("/nuevoEmpleado")}
+                                color='teal' floated='right' icon labelPosition='left' size='small'>
+                                <Icon name='user' />Añadir empleado
                             </Button>
                             {mensajeExportar}
                         </Table.HeaderCell>
