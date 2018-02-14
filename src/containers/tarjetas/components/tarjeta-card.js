@@ -9,15 +9,16 @@ export default function TarjetaCard({tarjeta, deleteTarjeta}) {
     <Card>
       <Card.Content>
         <Card.Header>
-          <Icon name='card outline'/> {tarjeta.numeroTarjeta}
+          <Icon name='credit card'/> {tarjeta.numeroTarjeta}
         </Card.Header>
         <Card.Description>
-          <p><Icon name='id case outline'/> {tarjeta.numeroTarjeta}</p>
+          <p><Icon name='suitcase'/> {tarjeta.numeroCuenta}</p>
+          <p><Icon name='money'/> {tarjeta.importe} €</p>
         </Card.Description>
       </Card.Content>
       <Card.Content extra>
         <div className="ui two buttons">
-          <Button basic color="red" 
+          <Button negative 
             onClick={() => {
               deleteTarjetaHandle(tarjeta,deleteTarjeta);
               console.log(tarjeta);

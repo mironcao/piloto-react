@@ -162,7 +162,7 @@ const reducer = (state = initialState, action) => {
 		case 'ADD_TITULAR': {
 			return {
 				...state,
-				titulares: [...state.titulares, action.payload.data],
+				titulares: [...state.titulares, action.payload],
 				errors: {},
 				loading: false
 			};
@@ -194,7 +194,7 @@ const reducer = (state = initialState, action) => {
 		case 'ADD_TARJETA': {
 			return {
 				...state,
-				tarjetas: [...state.tarjetas, action.payload.data],
+				tarjetas: [...state.tarjetas, action.payload],
 				errors: {},
 				loading: false
 			};

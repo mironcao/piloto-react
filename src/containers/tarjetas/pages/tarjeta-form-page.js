@@ -8,22 +8,22 @@ import TarjetaForm from '../components/tarjeta-form';
 import axios from "axios";
 
 
-const URL = 'http://localhost:8080/cliente_cuenta';
+const URL = 'http://localhost:8080/tarjetas';
 
 class TitularFormPage extends Component {
   state = {
     redirect: false
   }
 
-  submit = (titular) => {
+  submit = (tarjeta) => {
     const dto = {
-      id: this.props.dni,
-      numeroCuenta: titular.numeroCuenta
+      dni: this.props.dni,
+      numeroCuenta: tarjeta.numeroCuenta
     };
-    axios.post(`${URL}/new/${this.props.ncuenta}`, dto)
+    axios.post(URL, dto)
       .then(response => {         
         this.setState({ redirect:true });
-        this.addTitular(response.data)
+        this.props.addTarjeta(response.data)
       })
   }
 
@@ -32,7 +32,7 @@ class TitularFormPage extends Component {
       <div>
         {
           this.state.redirect ?
-          <Redirect to="/titulares/list" /> :
+          <Redirect to="/misTarjetas" /> :
           <TarjetaForm tarjeta={this.props.tarjeta} loading={this.props.loading} onSubmit={this.submit} />
         }
       </div>

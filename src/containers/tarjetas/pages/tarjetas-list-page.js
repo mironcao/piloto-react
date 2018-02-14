@@ -41,7 +41,7 @@ class TarjetasListPage extends Component {
   }
 
   eliminarTarjeta = (tarjeta) => {
-    axios.put(`${URL}/delete/${tarjeta.numeroTarjeta}`, tarjeta)
+    axios.delete(`${URL}/${tarjeta.numeroTarjeta}`)
       .then(response => {
         this.props.deleteTarjeta(this.props.tarjetas.filter(item => item.numeroTarjeta !== tarjeta.numeroTarjeta));
       })
@@ -91,7 +91,7 @@ const mapDispatchToProps = dispatch => {
     fetchTarjetas: (tarjetas) => {
       dispatch(fetchTarjetasAction(tarjetas))
     },
-    deleteTitular: tarjeta => {
+    deleteTarjeta: tarjeta => {
       dispatch(deleteTarjetaAction(tarjeta))
     }
   }

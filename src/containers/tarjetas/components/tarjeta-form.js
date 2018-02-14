@@ -23,12 +23,12 @@ class TarjetaForm extends Component {
     const { handleSubmit, pristine, submitting, loading } = this.props;
 
     return (
-      <Grid centered columns={2}>
+      <Grid>
         <Grid.Column>
-          <h1 style={{marginTop:"1em"}}>Add New Tarjeta</h1>
+          <h1 style={{marginTop:"1em"}}>Crear una nueva tarjeta</h1>
           <Form onSubmit={handleSubmit} loading={loading}>
             <Field name="numeroCuenta" type="text" component={this.renderField} label="Numero de cuenta"/>
-            <Button primary type='submit' disabled={pristine || submitting}>Save</Button>
+            <Button primary type='submit' disabled={pristine || submitting}>Crear</Button>
           </Form>
         </Grid.Column>
       </Grid>

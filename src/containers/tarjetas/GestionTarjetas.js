@@ -9,15 +9,15 @@ export default class GestionTarjetas extends Component {
     return (
       <Container>
         <div className="ui two item menu">
-          <NavLink className="item" activeClassName="active" exact to="/tarjetas/list">
+          <NavLink className="item" activeClassName="active" exact to="/misTarjetas">
             Listado de tarjetas
             </NavLink>
-          <NavLink className="item" activeClassName="active" exact to="/tarjetas/new">
+          <NavLink className="item" activeClassName="active" exact to="/misTarjetas/new">
             Añadir tarjeta
             </NavLink>
         </div>
-        <Route exact path="/tarjetas/list" component={TarjetasListPage} />
-        <Route path="/tarjetas/new" component={TarjetaFormPage} />
+        <Route exact path="/misTarjetas" component={TarjetasListPage} />
+        <Route path="/misTarjetas/new" component={TarjetaFormPage} />
       </Container>
     );
   }
