@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Message } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
-import { Input } from 'semantic-ui-react';
+import { Input, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import Form from 'semantic-ui-react/dist/commonjs/collections/Form/Form';
 import * as validator from '../Validadores/ValidadorImporte';
@@ -42,6 +42,7 @@ class GenerarTransferencia extends Component {
 				cuentaDestino: {
 					value: event.target.value,
 					valid: false
+
 				}
 			});
 		} else {
@@ -110,7 +111,9 @@ class GenerarTransferencia extends Component {
 
 				<button class="ui fluid button" onClick={this.peticion}>Realizar Transferencia</button>
 
-				<p><Link to="/Transferencias">Volver a transferencias</Link></p>
+				<Button color="teal" onClick={() => this.props.history.push('/misCuentas')} floated='left' size='small'>
+					Volver a mis cuentas
+				</Button>
 			</div>
 		)
 	}
@@ -132,4 +135,4 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(GenerarTransferencia);
+export default connect(mapStateToProps, mapDispatchToProps)(GenerarTransferencia);
