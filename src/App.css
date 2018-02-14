@@ -39,3 +39,7 @@ td.options{
 .grande {
   height: 100vh;
 }
+
+.mensajeObligatorio {
+  text-align: center !important
+}

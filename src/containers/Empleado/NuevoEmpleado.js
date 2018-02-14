@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Form from '../../components/FormularioCrearEmpleado';
+import Form from './FormularioCrearEmpleado';
 import { Header, Container } from 'semantic-ui-react';
 
 class NuevoEmpleado extends Component {
