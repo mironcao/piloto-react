@@ -90,6 +90,9 @@ const reducer = (state = initialState, action) => {
 				...state,
 				user: action.user
 			}
+		case actions.LOG_OUT:
+			return initialState;
+			
 		case actions.CARGAR_MOVIMIENTOS:
 			return {
 				...state,

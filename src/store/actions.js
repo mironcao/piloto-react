@@ -19,6 +19,7 @@ export const CREAR_EMPLEADO = "CREAR_EMPLEADO";
 export const MODIFICAR_EMPLEADO = "MODIFICAR_EMPLEADO";
 export const ACTUALIZAR_EMPLEADO = "ACTUALIZAR_EMPLEADO";
 export const PASAR_USER = "PASAR_USER";
+export const LOG_OUT = "LOG_OUT";
 
 export const ejemploAction = (data) => {
     return {
@@ -105,6 +106,11 @@ export const pasarUser = (user ) => {
     return {
         type: PASAR_USER,
         user:user
+    }
+}
+export const logout = () => {
+    return {
+        type: LOG_OUT
     }
 }
 export const listarClientes = (clientes) => {

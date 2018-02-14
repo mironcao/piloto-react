@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { NavLink, Route, Redirect } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import { Container, Message } from 'semantic-ui-react';
 import TitularesListPage from './pages/titulares-list-page';
 import TitularFormPage from './pages/titular-form-page';
