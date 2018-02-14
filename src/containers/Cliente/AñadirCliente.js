@@ -6,10 +6,6 @@ import * as validadores from '../Validadores/ValidadorPersona'
 import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment/Segment';
-import FormField from 'semantic-ui-react/dist/commonjs/collections/Form/FormField';
-import FormDropdown from 'semantic-ui-react/dist/commonjs/collections/Form/FormDropdown';
-import Label from 'semantic-ui-react/dist/commonjs/elements/Label/Label';
-import { cargarSucursales } from '../../store/actions';
 
 class AñadirCliente extends Component {
     constructor() {
