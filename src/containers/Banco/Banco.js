@@ -15,7 +15,8 @@ import Empleado from '../Empleado/Empleado';
 import NuevoEmpleado from '../Empleado/NuevoEmpleado';
 import ModificarEmpleado from '../Empleado/ModificarEmpleado';
 import GestionTitulares from '../titulares/GestionTitulares';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, Switch, Link, Redirect, withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 
 class Banco extends Component {
@@ -23,6 +24,12 @@ class Banco extends Component {
   state = { activeItem: '/misCuentas' }
 
   logout = () => {
+    axios.post('http://localhost:8080/login/out').
+    then(response => {
+      console.log(response)
+    }).catch(function (error){
+      console.log(error)
+    })
     this.props.pasarUser(null);
   }
 
