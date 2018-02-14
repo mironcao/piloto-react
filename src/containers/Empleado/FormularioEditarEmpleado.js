@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Button, Form, Segment, Grid, Message, Input } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
-import * as actions from "../store/actions";
+import * as actions from "../../store/actions";
 import { connect } from 'react-redux';
-import * as validadores from '../containers/Validadores/ValidadorPersona';
+import * as validadores from '../Validadores/ValidadorPersona';
 
 class FormularioEditarEmpleado extends Component {
     state = { empleadoInicial: null, empleado: null, selectedOption: '', sucursales: [] }
@@ -226,9 +226,9 @@ class FormularioEditarEmpleado extends Component {
                                 color='teal' fluid size='large'>Cancelar</Button>
                         </Segment>
                     </Form>
-                    <Message>
+                    <Message className='mensajeObligatorio'>
                         (*) Campos obligatorios
-                </Message>
+                    </Message>
                 </Grid.Column>
             </Grid>
         );
