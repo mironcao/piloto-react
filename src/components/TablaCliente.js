@@ -14,7 +14,7 @@ class TablaCliente extends Component {
     }
     editarCliente(dni) {
         this.props.editarCliente(dni);
-        this.props.history.push("/EditarCliente");
+        this.props.history.push("/Clientes/EditarCliente");
     }
 
     render() {
@@ -47,8 +47,8 @@ class TablaCliente extends Component {
                                     <Table.Row>
                                         <Table.HeaderCell />
                                         <Table.HeaderCell colSpan='4'>
-                                            <Button color="teal" onClick={() => this.props.history.push('/AñadirCliente')} floated='right' icon labelPosition='left' size='small'>
-                                                <Icon name='user' /> Añadir Empleado
+                                            <Button color="teal" onClick={() => this.props.history.push('/Clientes/AñadirCliente')} floated='right' icon labelPosition='left' size='small'>
+                                                <Icon name='user' /> Añadir Cliente
                                 </Button>
                                         </Table.HeaderCell>
                                     </Table.Row>
@@ -61,7 +61,7 @@ class TablaCliente extends Component {
 
 const mapStateToProps = state => {
     return {
-                        clientes: state.clientes
+                        clientes: state.bancoStore.clientes
     }
   }
 

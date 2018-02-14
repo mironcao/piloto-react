@@ -39,7 +39,7 @@ class GestionTitulares extends Component {
 
 function mapStateToProps(state) {
   return {
-    numeroCuenta: state.numeroCuenta
+    numeroCuenta: state.bancoStore.numeroCuenta
   }
 }
 

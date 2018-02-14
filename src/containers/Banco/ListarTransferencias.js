@@ -3,13 +3,10 @@ import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
 import axios from 'axios';
 import { Link } from 'react-router-dom'
+import { Table, Button } from 'semantic-ui-react'
 
-var divStyle = {
-	width: "25%%"
-};
-var divStyle100 = {
-	width: "100%"
-};
+import { withRouter } from 'react-router-dom';
+
 class ListarTransferencias extends Component {
 
 
@@ -25,53 +22,56 @@ class ListarTransferencias extends Component {
 	}
 
 	cargarMisTransferencias = (cuenta) => {
-        axios.get('http://localhost:8080/transferencia/listarTransferenciaId/' + cuenta)
-            .then(response => {
-				this.setState({transferencias:response.data})
-                /*this.props.listarTransfersAction(response.data)*/
-            })
-            .catch(function (error){
-                console.log(error);
-            })
-    }
-
+		axios.get('http://localhost:8080/transferencia/listarTransferenciaId/' + cuenta)
+			.then(response => {
+				this.setState({ transferencias: response.data })
+			})
+			.catch(function (error) {
+				console.log(error);
+			})
+	}
 
 	render() {
 		return (
-			<table style={divStyle100}>
-				<thead>
-					<th style={divStyle}>Cuenta de destino</th>
-					<th style={divStyle}>Cuenta de Origen</th>
-					<th style={divStyle}>Importe</th>
-					<th style={divStyle}>Fecha de realizacion</th>
-				</thead>
-				{this.state.transferencias.map((transferencia) =>
-				<tbody>
-					<tr>
-						<td style={divStyle}>{transferencia.idDestino}</td>
-
-						<td style={divStyle}> {transferencia.cuenta}</td>
-
-						<td style={divStyle}> {`${transferencia.importe}€`} </td>
-
-						<td style={divStyle}> {new Date(transferencia.fechaRealizacion).toLocaleString()} </td>
-					</tr>
-					</tbody>
-				)}
-				<tfoot>
-					<p><Link to="/Transferencias">Volver a transferencias</Link></p>
-				</tfoot>
-			</table>
-
+			<Table celled color='teal' key={'blue'}>
+				<Table.Header>
+					<Table.Row>
+						<Table.HeaderCell> Cuenta de destino </Table.HeaderCell>
+						<Table.HeaderCell> Cuenta de origen </Table.HeaderCell>
+						<Table.HeaderCell> Importe </Table.HeaderCell>
+						<Table.HeaderCell> Fecha de realizacion</Table.HeaderCell>
+					</Table.Row>
+				</Table.Header>
+				<Table.Body>
+					{
+						this.state.transferencias.map((transferencia) =>
+							<Table.Row>
+								<Table.Cell >{transferencia.idDestino}</Table.Cell>
+								<Table.Cell >{transferencia.cuenta}</Table.Cell>
+								<Table.Cell >{`${transferencia.importe}€`}</Table.Cell>
+								<Table.Cell >{new Date(transferencia.fechaRealizacion).toLocaleString()} </Table.Cell>
+							</Table.Row>
+						)
+					}
+				</Table.Body>
+				<Table.Footer fullWidth>
+					<Table.Row>
+						<Table.HeaderCell colSpan='4'>
+							<Button color="teal" onClick={() => this.props.history.push('/misCuentas')} floated='left' size='small'>
+								Volver a mis cuentas
+							</Button>
+						</Table.HeaderCell>
+					</Table.Row>
+				</Table.Footer>
+			</Table>
 		)
 	}
-
 }
 
 const mapStateToProps = state => {
 	return {
-		transferencias: state.transferencias,
-		numeroCuenta: state.numeroCuenta
+		transferencias: state.bancoStore.transferencias,
+		numeroCuenta: state.bancoStore.numeroCuenta
 	}
 }
 
@@ -83,4 +83,4 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListarTransferencias);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListarTransferencias));

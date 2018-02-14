@@ -6,7 +6,6 @@ import Sucursales from './containers/Sucursales/Sucursales';
 import MisMovimientos from './containers/movimientos/MisMovimientos';
 import CreateMovimiento from './containers/movimientos/CreateMovimiento';
 import MisCuentas from './containers/Cuenta/MisCuentas';
-import Transferencias from './containers/Banco/Transferencias';
 import ListarTransferencias from './containers/Banco/ListarTransferencias';
 import GenerarTransferencia from './containers/Banco/GenerarTransferencia';
 import ListarCliente from './containers/Cliente/ListarCliente';
@@ -29,7 +28,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user
+    user: state.bancoStore.user
   }
 }
 

@@ -76,7 +76,7 @@ class Sucursales extends Component {
     }
 
     exportarSucursales = () => {
-        this.setState({exported: false});
+        this.setState({ exported: false });
         axios.get("http://localhost:8080/sucursal/export").then(response => {
             if (response.status === 200)
                 this.setState({
@@ -93,27 +93,25 @@ class Sucursales extends Component {
             <Message.Content>
                 <Message.Header>Exportando sucursales</Message.Header>
             </Message.Content>
-        </Message>): null;
+        </Message>) : null;
 
         return (
-            <React.Fragment>
-                <Header as="h2">Sucursales</Header>
-                <Container>
+                <Container style={{ marginTop: '3em' }}>
+                    <Header as='h1' textAlign='center' color='teal'>Sucursales</Header>
                     <Container textAlign='right'>
-                        <Button color='blue' onClick={() => this.changeShowEditHandler(true)}>Añadir sucursal</Button>
-                        <Button color='blue' onClick={() => this.exportarSucursales()}>Exportar Sucursales</Button>
+                        <Button className="option-buttons" color='blue' onClick={() => this.changeShowEditHandler(true)}>Añadir sucursal</Button>
+                        <Button className="option-buttons" color='blue' onClick={() => this.exportarSucursales()}>Exportar Sucursales</Button>
                         {mensajeExportar}
                     </Container>
                     {sucursales}
                 </Container>
-            </React.Fragment>
         );
     }
 }
 
 const mapStateToProps = state => {
     return {
-        sucursal: state.sucursal,
+        sucursal: state.bancoStore.sucursal,
     }
 }
 

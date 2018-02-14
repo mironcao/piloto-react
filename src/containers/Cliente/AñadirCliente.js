@@ -219,7 +219,7 @@ class AñadirCliente extends Component {
 }
 const mapStateToProps = state => {
     return {
-        sucursales: state.sucursal.sucursales
+        sucursales: state.bancoStore.sucursal.sucursales
     }
 }
 

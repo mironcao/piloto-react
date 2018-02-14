@@ -38,9 +38,9 @@ class TitularFormPage extends Component {
 
 const mapStateToProps= state => {
   return {
-    titular: state.titular,
-    errors: state.errors,
-    ncuenta: state.numeroCuenta
+    titular: state.bancoStore.titular,
+    errors: state.bancoStore.errors,
+    ncuenta: state.bancoStore.numeroCuenta
   }
 }
 
