@@ -80,9 +80,9 @@ class LoginPage extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  return {
-    user: state.user
-  }
+	return {
+		user:state.bancoStore.user
+	}
 }
 
 const mapDispatchToProps = dispatch => {

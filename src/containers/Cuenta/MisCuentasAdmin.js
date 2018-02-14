@@ -154,7 +154,7 @@ render(){
 
 const mapStateToProps = state => {
 	return {
-		cuentas:state.cuentas
+		cuentas:state.bancoStore.cuentas
 	}
 }
 

@@ -29,7 +29,7 @@ class ListarCliente extends Component {
 }
 const mapStateToProps = state => {
     return {
-        clientes: state.clientes
+        clientes: state.bancoStore.clientes
     }
   }
   
