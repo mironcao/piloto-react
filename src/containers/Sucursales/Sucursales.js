@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import { Grid, Container, Header, Message, Icon, Button } from 'semantic-ui-react';
+import { Container, Header, Message, Icon, Button } from 'semantic-ui-react';
 import ListSucursales from './ListSucursales/ListSucursales';
 
 const DATA_STATE = {
@@ -15,8 +15,7 @@ class Sucursales extends Component {
     state = {
         dataState: DATA_STATE.LOADING,
         showEdit: false,
-        exported: true
-    }
+        exported: true,}
 
     componentDidMount() {
         axios.get("http://localhost:8080/sucursal/")
@@ -56,7 +55,7 @@ class Sucursales extends Component {
                     clickBorrar={this.borrarSucursalHandler}
                     showEditHandler={this.changeShowEditHandler}
                     showEdit={this.state.showEdit}
-                    clickEdit={this.props.editSucursal} />
+                    clickEdit={this.props.editSucursal}/>
                 );
             default:
                 return;
@@ -111,7 +110,7 @@ class Sucursales extends Component {
 
 const mapStateToProps = state => {
     return {
-        sucursal: state.sucursal,
+        sucursal: state.bancoStore.sucursal,
     }
 }
 

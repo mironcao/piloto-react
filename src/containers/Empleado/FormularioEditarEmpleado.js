@@ -237,9 +237,9 @@ class FormularioEditarEmpleado extends Component {
 
 const mapStateToProps = state => {
     return {
-        empleados: state.empleados,
-        dni: state.dni,
-        sucursales: state.sucursal.sucursales
+        empleados: state.bancoStore.empleados,
+        dni: state.bancoStore.dni,
+        sucursales: state.bancoStore.sucursal.sucursales
     }
 }
 

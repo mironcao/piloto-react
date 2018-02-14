@@ -243,8 +243,8 @@ class FormularioCrearEmpleado extends Component {
 
 const mapStateToProps = state => {
     return {
-        empleados: state.empleados,
-        sucursales: state.sucursal.sucursales
+        empleados: state.bancoStore.empleados,
+        sucursales: state.bancoStore.sucursal.sucursales
     }
 }
 

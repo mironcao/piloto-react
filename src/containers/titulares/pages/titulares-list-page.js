@@ -81,9 +81,9 @@ class TitularesListPage extends Component {
 // Make titulares  array available in  props
 function mapStateToProps(state) {
   return {
-    titulares: state.titulares,
-    errors: state.errors,
-    numeroCuenta: state.numeroCuenta
+    titulares: state.bancoStore.titulares,
+    errors: state.bancoStore.errors,
+    numeroCuenta: state.bancoStore.numeroCuenta
   }
 }
 

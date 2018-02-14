@@ -32,6 +32,7 @@ class GenerarTransferencia extends Component {
 		if (validator.validarImporte(this.state.importe.value) && this.validarCuenta(this.state.cuentaDestino.value)) {
 			axios.post('http://localhost:8080/transferencia/transferencia', transferencia).then((response) => {
 			});
+			this.props.history.push('/misCuentas')
 		}
 	}
 
@@ -121,8 +122,8 @@ class GenerarTransferencia extends Component {
 
 const mapStateToProps = state => {
 	return {
-		transferencias: state.transferencias,
-		numeroCuenta: state.numeroCuenta
+		transferencias: state.bancoStore.transferencias,
+		numeroCuenta: state.bancoStore.numeroCuenta
 	}
 }
 

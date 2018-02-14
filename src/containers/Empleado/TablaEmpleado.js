@@ -86,7 +86,7 @@ class TablaEmpleado extends Component {
 
 const mapStateToProps = state => {
     return {
-        empleados: state.empleados
+        empleados: state.bancoStore.empleados
     }
 }
 
