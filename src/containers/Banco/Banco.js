@@ -15,6 +15,7 @@ import Empleado from '../Empleado/Empleado';
 import NuevoEmpleado from '../Empleado/NuevoEmpleado';
 import ModificarEmpleado from '../Empleado/ModificarEmpleado';
 import GestionTitulares from '../titulares/GestionTitulares';
+import GestionTarjetas from '../tarjetas/GestionTarjetas';
 import { Route, Switch, Link, Redirect, withRouter } from 'react-router-dom';
 import axios from 'axios';
 
@@ -45,7 +46,7 @@ class Banco extends Component {
           <Menu pointing size="huge" icon='labeled'>
             <Menu.Item name='Mis Cuentas' active={this.activeItem === '/misCuentas'} onClick={() => this.handleItemClick('/misCuentas')} >
               <Icon name='suitcase' />
-              MisCuentas
+              Mis cuentas
             </Menu.Item>
             <Menu.Item name='Sucursales' active={this.activeItem === '/sucursales'} onClick={() => this.handleItemClick('/sucursales')} >
               <Icon name='building' />
@@ -59,6 +60,10 @@ class Banco extends Component {
               <Icon name='users' />
               Clientes
              </Menu.Item>
+             <Menu.Item name='Mis tarjetas' active={this.activeItem === '/misTarjetas'} onClick={() => this.handleItemClick('/misTarjetas')} >
+              <Icon name='credit card alternative' />
+              Mis tarjetas
+            </Menu.Item>
              <Menu.Item name='Logout' active={this.activeItem === '/misCuentas'} onClick={this.logout} >
               <Icon name='log out' />
               Logout
@@ -82,6 +87,7 @@ class Banco extends Component {
             <Route path="/empleado" component={Empleado} />
             <Route path="/nuevoEmpleado" component={NuevoEmpleado} />
             <Route path="/modificarEmpleado" component={ModificarEmpleado} />
+            <Route path="/misTarjetas" component={GestionTarjetas} />
           </Container>
         </section>
       </div>)
