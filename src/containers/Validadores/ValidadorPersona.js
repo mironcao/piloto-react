@@ -80,7 +80,7 @@
     }
 
    export const validateTextoNumero=(texto) =>{
-        var expr = /^[a-zA-Z ]*$/;
+        var expr = /^[a-zñÑA-Z ]*$/;
         if (!expr.test(texto)) {
             return false;
         }
