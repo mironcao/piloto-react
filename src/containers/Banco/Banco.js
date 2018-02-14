@@ -27,12 +27,12 @@ class Banco extends Component {
 
   logout = () => {
     axios.post('http://localhost:8080/login/out').
-      then(response => {
-        console.log(response)
-      }).catch(function (error) {
-        console.log(error)
-      })
-    this.props.pasarUser(null);
+    then(response => {
+      console.log(response)
+    }).catch(function (error){
+      console.log(error)
+    })
+    this.props.logout();
   }
 
   handleItemClick = (path) => {
@@ -150,8 +150,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    pasarUser: user => {
-      dispatch(actions.pasarUser(user))
+    logout: () => {
+      dispatch(actions.logout())
     }
   }
 }
