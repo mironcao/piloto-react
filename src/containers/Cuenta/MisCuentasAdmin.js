@@ -94,7 +94,7 @@ class MisCuentas extends Component {
 		this.props.history.push('/titulares/list');
 	}
 
-	mostrarCosas = () => {
+	mostrarCuentas = () => {
 		let rows = [];
 		let index = 0;
 		for (let c of this.state.cuentas[this.state.activePage - 1]) {
@@ -152,7 +152,7 @@ class MisCuentas extends Component {
 						</Table.Row>
 					</Table.Header>
 					<Table.Body>
-						{this.mostrarCosas()}
+						{this.mostrarCuentas()}
 					</Table.Body>
 					<Table.Footer>
 						<Table.Row>

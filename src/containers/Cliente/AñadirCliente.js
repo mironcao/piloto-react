@@ -210,18 +210,18 @@ class AñadirCliente extends Component {
                             <Form.Field required>
                                 <label >Contraseña:</label>
                                 <Input focus placeholder='Contraseña...'
-                                    name="password" value={this.state.password.value} onChange={this.cambiarEstado}  maxLength="32" />
+                                    name="password" type='password' value={this.state.password.value} onChange={this.cambiarEstado}  maxLength="32" />
                                 {this.state.password.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
                             <Form.Field required>
                                 <label >Repetir contraseña:</label>
                                 <Input focus placeholder='Repetir contraseña...'
-                                    name="repitPassword" value={this.state.repitPassword.value} onChange={this.cambiarEstado}   maxLength="32" />
+                                    type='password' name="repitPassword" value={this.state.repitPassword.value} onChange={this.cambiarEstado}   maxLength="32" />
                                 {this.state.repitPassword.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
                             <Form.Field >
                                 <label >Email:</label>
-                                <Input focus labelPosition="rigth corner" placeholder='Email...'
+                                <Input focus labelPosition="right corner" placeholder='Email...'
                                     name="email" value={this.state.email.value} onChange={this.cambiarEstado} />
                                 {this.state.email.valid ? null : this.mostrarError("email")}
                             </Form.Field>
