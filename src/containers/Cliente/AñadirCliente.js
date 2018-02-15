@@ -18,7 +18,7 @@ class AñadirCliente extends Component {
             clientes: [], sucursalId: "", DNI: { value: "", valid: true }, nombre: { value: "", valid: true },
             apellidos: { value: "", valid: true }, direccion: { value: "", valid: true }, email: { value: "", valid: true },
             fijo: { value: "", valid: true }, movil: { value: "", valid: true}, sucursales: [], password: { value: "", valid: true},
-            repitPassword: { value: "", valid: true} }}
+            repitPassword: { value: "", valid: true} ,message:""}}
         
 
     componentDidMount() {
@@ -86,6 +86,8 @@ class AñadirCliente extends Component {
             valido = false;
         if (!this.validarApellidos(this.state.apellidos.value))
             valido = false;
+        if (!this.validarContraseña(this.state.password.value, this.state.repitPassword.value))
+            valido = false;
         return valido;
     }
 
@@ -134,6 +136,22 @@ class AñadirCliente extends Component {
         } return true;
     }
 
+    validarContraseña(contraseña, repetirContraseña){
+        if(contraseña.length<8){
+            this.setState({ password: { value: contraseña, valid: false }, 
+                            repitPassword: { value: repetirContraseña, valid: false },
+                            message:"Las contraseñas tiene que tener un minimo de 8 caracteres" })
+            return false;
+        }
+       else if(contraseña !== repetirContraseña){
+            this.setState({ password: { value: contraseña, valid: false }, 
+                            repitPassword: { value: repetirContraseña, valid: false },
+                            message:"Las contraseñas no son iguales" })
+            return false;
+        }
+        return true;
+    }
+
     cambiarSucursal = (event, data) => {
         this.setState({ sucursalId: data.value });
     }
@@ -144,7 +162,14 @@ class AñadirCliente extends Component {
     mostrarError(tipo) {
         return (
             <Message negative>
-                <p>El {tipo} es incorrecto</p>
+                <p>El formato del {tipo} no es correcto</p>
+            </Message>
+        )
+    }
+    mostrarErrorContraseña() {
+        return (
+            <Message negative>
+                <p>{this.state.message}</p>     
             </Message>
         )
     }
@@ -189,14 +214,14 @@ class AñadirCliente extends Component {
                             <Form.Field required>
                                 <label >Contraseña:</label>
                                 <Input focus placeholder='Contraseña...'
-                                    name="password" value={this.state.password.value} onChange={this.cambiarEstado} maxLength="32" />
-                                {this.state.password.valid ? null : this.mostrarError("Contraseña")}
+                                    name="password" value={this.state.password.value} onChange={this.cambiarEstado}  maxLength="32" />
+                                {this.state.password.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
                             <Form.Field required>
                                 <label >Repetir contraseña:</label>
                                 <Input focus placeholder='Repetir contraseña...'
-                                    name="repitPassword" value={this.state.repitPassword.value} onChange={this.cambiarEstado} maxLength="32" />
-                                {this.state.repitPassword.valid ? null : this.mostrarError("Contraseña")}
+                                    name="repitPassword" value={this.state.repitPassword.value} onChange={this.cambiarEstado}   maxLength="32" />
+                                {this.state.repitPassword.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
                             <Form.Field >
                                 <label >Email:</label>
