@@ -1,33 +1,35 @@
 import * as actions from './actions';
 
 const initialState = {
-    test: true,
-    sucursal: {
-        sucursales: [],
-        editSucursal: false,
-        toBeEditted: {
-            nombre: '',
-            direccion: ''
-        }
-    },
-    transferencias: [],
-    movimientos:[] ,
-    clientes: [],
-    empleados: [],
-    dni:"",
-    numeroCuenta: "",
+	test: true,
+	sucursal: {
+		sucursales: [],
+		editSucursal: false,
+		toBeEditted: {
+			nombre: '',
+			direccion: ''
+		}
+	},
+	transferencias: [],
+	movimientos: [],
+	clientes: [],
+	empleados: [],
+	dni: "",
+	numeroCuenta: "",
 	titulares: [],
 	titular: {},
 	loading: false,
 	errors: {},
-	user:null
+	user: null,
+	tarjetas: [],
+	tarjeta: {}
 };
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actions.CARGAR_SUCURSALES:
 			return {
-			
+
 				...state,
 				sucursal: {
 					...state.sucursal,
@@ -88,6 +90,9 @@ const reducer = (state = initialState, action) => {
 				...state,
 				user: action.user
 			}
+		case actions.LOG_OUT:
+			return initialState;
+			
 		case actions.CARGAR_MOVIMIENTOS:
 			return {
 				...state,
@@ -120,36 +125,36 @@ const reducer = (state = initialState, action) => {
 				...state,
 				dni: action.dni
 			}
-        case actions.CARGAR_EMPLEADOS: 
-            return {
-                ...state,
-                empleados: action.payload
-        }
-        case actions.DELETE_EMPLEADO: 
-        const nuevosEmpleados = state.empleados.filter((empleado) => empleado.dni !== action.dni);
-            return {
-                ...state,
-                empleados: nuevosEmpleados
-        }
-        case actions.CREAR_EMPLEADO:
-            return {
-                ...state,
-                empleados: state.empleados
-        }
-        case actions.MODIFICAR_EMPLEADO:
-            return {
-                ...state,
-                dni: action.dni
-        }
-        case actions.ACTUALIZAR_EMPLEADO:
-        const empleadosActu = state.empleados.map((empleado) => {
-            if (empleado.dni === action.empleado.dni) return { ...empleado, ...action.empleado};
-            return empleado;
-        });
-            return {
-                ...state,
-                empleados: empleadosActu
-        }
+		case actions.CARGAR_EMPLEADOS:
+			return {
+				...state,
+				empleados: action.payload
+			}
+		case actions.DELETE_EMPLEADO:
+			const nuevosEmpleados = state.empleados.filter((empleado) => empleado.dni !== action.dni);
+			return {
+				...state,
+				empleados: nuevosEmpleados
+			}
+		case actions.CREAR_EMPLEADO:
+			return {
+				...state,
+				empleados: state.empleados
+			}
+		case actions.MODIFICAR_EMPLEADO:
+			return {
+				...state,
+				dni: action.dni
+			}
+		case actions.ACTUALIZAR_EMPLEADO:
+			const empleadosActu = state.empleados.map((empleado) => {
+				if (empleado.dni === action.empleado.dni) return { ...empleado, ...action.empleado };
+				return empleado;
+			});
+			return {
+				...state,
+				empleados: empleadosActu
+			}
 		case 'FETCH_TITULARES': {
 			return {
 				...state,
@@ -160,7 +165,7 @@ const reducer = (state = initialState, action) => {
 		case 'ADD_TITULAR': {
 			return {
 				...state,
-				titulares: [...state.titulares, action.payload.data],
+				titulares: [...state.titulares, action.payload],
 				errors: {},
 				loading: false
 			};
@@ -179,6 +184,39 @@ const reducer = (state = initialState, action) => {
 				loading: false
 			};
 		}
+
+
+		// Reducers de tarjetas
+		case 'FETCH_TARJETAS': {
+			return {
+				...state,
+				tarjetas: action.payload,
+				errors: {}
+			};
+		}
+		case 'ADD_TARJETA': {
+			return {
+				...state,
+				tarjetas: [...state.tarjetas, action.payload],
+				errors: {},
+				loading: false
+			};
+		}
+		case 'DELETE_TARJETA': {
+			return {
+				...state,
+				errors: {},
+				tarjetas: action.payload
+			};
+		}
+		case 'DELETE_TARJETA_REJECTED': {
+			return {
+				...state,
+				errors: action.payload.response.status,
+				loading: false
+			};
+		}
+
 		default:
 			return state;
 	}

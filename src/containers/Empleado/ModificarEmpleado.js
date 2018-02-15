@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Form from '../../components/FormularioEditarEmpleado';
+import Form from './FormularioEditarEmpleado';
 import { Header, Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
@@ -16,7 +16,7 @@ class ModificarEmpleado extends Component {
 
 const mapStateToProps = state => {
     return {
-        empleados: state.empleados,
+        empleados: state.bancoStore.empleados,
         dni: state.dni
     }
 }

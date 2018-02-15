@@ -229,8 +229,8 @@ class CreateMovimiento extends Component {
 
 const mapStateToProps = state => {
     return {
-      movimientos: state.movimientos,
-      numeroCuenta: state.numeroCuenta
+      movimientos: state.bancoStore.movimientos,
+      numeroCuenta: state.bancoStore.numeroCuenta
     }
   }
 

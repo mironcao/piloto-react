@@ -5,11 +5,11 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {createStore} from 'redux';
 import {BrowserRouter} from 'react-router-dom';
-import reducer from './store/reducer';
+import rootReducer from './store/rootReducer';
 import {Provider} from 'react-redux';
 import 'semantic-ui-css/semantic.min.css';
 
-const store = createStore(reducer);
+const store = createStore(rootReducer)
 
 ReactDOM.render(( 
     <Provider store={store}>

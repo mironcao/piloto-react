@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as actions from "../../store/actions";
-import Table from '../../components/TablaEmpleado';
+import Table from './TablaEmpleado';
 import axios from 'axios';
 import { Header, Container } from 'semantic-ui-react';
 
@@ -24,7 +24,7 @@ class Empleado extends Component {
 
 const mapStateToProps = state => {
     return {
-        empleados: state.empleados,
+        empleados: state.bancoStore.empleados,
     }
   }
 

@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { Table, Button, Icon } from 'semantic-ui-react';
+import { Table, Button, Icon, Message } from 'semantic-ui-react';
 import axios from 'axios';
-import * as actions from "../store/actions";
+import * as actions from "../../store/actions";
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 class TablaEmpleado extends Component {
+    state = {
+        exported: true
+    }
+    
     deleteEmpleado = (dni) => {
         axios.delete('http://localhost:8080/empleado/' + dni);
         this.props.deleteEmpleado(dni);
@@ -16,7 +20,24 @@ class TablaEmpleado extends Component {
         this.props.history.push('/modificarEmpleado');
     }
 
+    exportarEmpleados = () => {
+        this.setState({ exported: false });
+        axios.get("http://localhost:8080/empleado/export").then(response => {
+            if (response.status === 200)
+                this.setState({
+                    exported: true
+                });
+        });
+    }
+
     render() {
+        let mensajeExportar = !this.state.exported ? (<Message icon>
+            <Icon name='circle notched' loading />
+            <Message.Content>
+                <Message.Header>Exportando empleados</Message.Header>
+            </Message.Content>
+        </Message>) : null;
+
         return (
             <Table celled color='teal' key={'blue'}>
                 <Table.Header>
@@ -47,10 +68,15 @@ class TablaEmpleado extends Component {
                 <Table.Footer fullWidth>
                     <Table.Row>
                         <Table.HeaderCell colSpan='4'>
+                            <Button onClick={() => this.exportarEmpleados()}
+                                color='teal' floated='right' icon labelPosition='left' size='small'>
+                                <Icon name='external' />Exportar empleados
+                            </Button>
                             <Button onClick={() => this.props.history.push("/nuevoEmpleado")}
-                                color='teal' floated='right'  icon labelPosition='left' size='small'>
+                                color='teal' floated='right' icon labelPosition='left' size='small'>
                                 <Icon name='user' />Añadir empleado
                             </Button>
+                            {mensajeExportar}
                         </Table.HeaderCell>
                     </Table.Row>
                 </Table.Footer>
@@ -61,7 +87,7 @@ class TablaEmpleado extends Component {
 
 const mapStateToProps = state => {
     return {
-        empleados: state.empleados
+        empleados: state.bancoStore.empleados
     }
 }
 
