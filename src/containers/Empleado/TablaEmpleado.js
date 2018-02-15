@@ -15,8 +15,11 @@ class TablaEmpleado extends Component {
     }
     
     deleteEmpleado = (dni) => {
-        axios.delete('http://localhost:8080/empleado/' + dni);
-        this.props.deleteEmpleado(dni);
+        axios.delete('http://localhost:8080/empleado/' + dni).then((response) => {
+            this.props.deleteEmpleado(dni)
+            this.paginate(this.state.activePage)
+        })
+        
     }
 
     modificarEmpleado = (dni) => {
