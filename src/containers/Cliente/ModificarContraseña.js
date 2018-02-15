@@ -106,7 +106,7 @@ class ModificarContraseña extends Component {
     }
 
     cambiarEstado = (event, { name, value }) => {
-        this.setState({ [name]: { value: value, valid: true } })
+        this.setState({ [name]: { value: value, valid: true } , visible:false})
     }
 
     mostrarErrorContraseña() {
@@ -162,7 +162,7 @@ class ModificarContraseña extends Component {
 
 const mapStateToProps = state => {
     return {
-        dni: state.dni
+        dni: state.bancoStore.dni
     }
 }
 
