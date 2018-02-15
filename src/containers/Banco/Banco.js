@@ -103,7 +103,7 @@ class Banco extends Component {
           <Route path="/CrearMovimiento" component={CreateMovimiento} />
           <Route exact strict path="/Transferencias/GenerarTransferencia" component={GenerarTransferencia} />
           <Route exact strict path="/Transferencias/ListarTransferencias" component={ListarTransferencias} />
-          <Route exact path="/misTarjetas" component={MisTarjetas} />
+          <Route path="/misTarjetas" component={MisTarjetas} />
         </React.Fragment>
       );
     } else {
