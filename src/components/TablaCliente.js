@@ -76,17 +76,15 @@ class TablaCliente extends Component {
                 </Table.Body>
                 <Table.Footer fullWidth>
                     <Table.Row>
-                        <Table.HeaderCell />
+                        <Table.HeaderCell>
+                            <Pagination defaultActivePage={1} onPageChange={this.handlePaginationChange} totalPages={parseInt(this.calcularPaginas(), 10)} />
+                        </Table.HeaderCell>
                         <Table.HeaderCell colSpan='4'>
                             <Button color="teal" onClick={() => this.props.history.push('/Clientes/AñadirCliente')} floated='right' icon labelPosition='left' size='small'>
                                 <Icon name='user' /> Añadir Cliente
                                 </Button>
                         </Table.HeaderCell>
-                    </Table.Row>
-                    <Table.Row>
-                        <Table.HeaderCell>
-                            <Pagination defaultActivePage={1} onPageChange={this.handlePaginationChange} totalPages={parseInt(this.calcularPaginas(), 10)} />
-                        </Table.HeaderCell>
+
                     </Table.Row>
                 </Table.Footer>
             </Table>
