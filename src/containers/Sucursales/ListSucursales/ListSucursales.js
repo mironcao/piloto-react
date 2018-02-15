@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import ListItemSucursal from './ListItemSucursal/ListItemSucursal';
 import EditItemSucursal from './EdittemSucursal/EdittemSucursal';
 import { Table, Pagination } from 'semantic-ui-react';
+import axios from 'axios';
+import * as actions from '../../../store/actions';
+import { connect } from 'react-redux';
 
 class ListSucursales extends Component {
 
@@ -13,19 +16,29 @@ class ListSucursales extends Component {
     }
 
     paginate = (pageNumber) => {
-        const numberOfPages = Math.floor(this.props.sucursales.length / 10);
+        let numberOfPages = Math.floor(this.props.sucursales.length / 10);
         const initIndex = (pageNumber - 1) * this.state.pageSize;
+        if (this.props.sucursales.length % this.state.pageSize !== 0)
+            numberOfPages += 1;
         const endIndex = initIndex + this.state.pageSize;
         const sucursalesPaginadas = this.props.sucursales.filter((sucursal, index) => index >= initIndex && index < endIndex);
         this.setState({
             sucursalesPaginadas: sucursalesPaginadas,
-            numberOfPages: numberOfPages + 1,
+            numberOfPages: numberOfPages,
             activePage: pageNumber
         });
     }
 
     componentDidMount() {
-        this.paginate(1);
+        this.paginate(this.state.activePage);
+    }
+
+    borrarSucursalHandler = (id) => {
+        axios.delete("http://localhost:8080/sucursal/" + id)
+            .then(() => {
+                this.props.borrarSucursal(id);
+                this.paginate(this.state.activePage);
+            })
     }
 
     render() {
@@ -40,13 +53,13 @@ class ListSucursales extends Component {
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                    {this.props.showEdit ? <EditItemSucursal showEditHandler={this.props.showEditHandler} /> : null}
+                    {this.props.showEdit ? <EditItemSucursal paginate={() => this.paginate(this.state.activePage)} showEditHandler={this.props.showEditHandler} /> : null}
                     {this.state.sucursalesPaginadas.map(sucursal => (
                         <ListItemSucursal
                             key={sucursal.id}
                             nombre={sucursal.nombre}
                             direccion={sucursal.direccion}
-                            clickBorrar={() => this.props.clickBorrar(sucursal.id)}
+                            clickBorrar={() => this.borrarSucursalHandler(sucursal.id)}
                             clickEdit={() => {
                                 this.props.showEditHandler(true);
                                 this.props.clickEdit(sucursal, true);
@@ -69,4 +82,16 @@ class ListSucursales extends Component {
     }
 }
 
-export default ListSucursales;
+const mapStateToProps = state => {
+    return {
+
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        borrarSucursal: id => dispatch(actions.borrarSucursal(id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListSucursales);
