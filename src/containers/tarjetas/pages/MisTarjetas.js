@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { NavLink, Route } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
-import TarjetasListPage from './pages/tarjetas-list-page';
-import TarjetaFormPage from './pages/tarjeta-form-page';
+import TarjetasListPage from './tarjetas-list-page';
+import TarjetaFormPage from './tarjeta-form-page';
 
-export default class GestionTarjetas extends Component {
+export default class MisTarjetas extends Component {
   render() {
     return (
       <Container>
