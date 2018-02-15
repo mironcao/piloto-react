@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Button, Icon, Message } from 'semantic-ui-react';
+import { Table, Button, Icon, Message, Pagination } from 'semantic-ui-react';
 import axios from 'axios';
 import * as actions from "../../store/actions";
 import { connect } from 'react-redux';
@@ -7,7 +7,11 @@ import { withRouter } from 'react-router-dom';
 
 class TablaEmpleado extends Component {
     state = {
-        exported: true
+        exported: true,
+        numberOfPages: 0,
+        pageSize: 10,
+        activePage: 1,
+        empleadosPaginados: []
     }
     
     deleteEmpleado = (dni) => {
@@ -30,6 +34,23 @@ class TablaEmpleado extends Component {
         });
     }
 
+    paginate = (pageNumber) => {
+        let numberOfPages = Math.floor(this.props.empleados.length / 10);
+        if (this.props.empleados.length % 10 !== 0) numberOfPages = numberOfPages + 1;
+        const initIndex = (pageNumber - 1) * this.state.pageSize;
+        const endIndex = initIndex + this.state.pageSize;
+        const empleadosPaginados = this.props.empleados.filter((empleado, index) => index >= initIndex && index < endIndex);
+        this.setState({
+            empleadosPaginados: empleadosPaginados,
+            numberOfPages: numberOfPages,
+            activePage: pageNumber
+        });
+    }
+
+    componentDidMount() {
+        this.paginate(1);
+    }
+
     render() {
         let mensajeExportar = !this.state.exported ? (<Message icon>
             <Icon name='circle notched' loading />
@@ -50,7 +71,7 @@ class TablaEmpleado extends Component {
                 </Table.Header>
 
                 <Table.Body>
-                    {this.props.empleados.map((empleado) =>
+                    {this.state.empleadosPaginados.map((empleado) =>
                         <Table.Row key={empleado.dni}>
                             <Table.Cell>{empleado.dni}</Table.Cell>
                             <Table.Cell>{empleado.nombre}</Table.Cell>
@@ -68,6 +89,10 @@ class TablaEmpleado extends Component {
                 <Table.Footer fullWidth>
                     <Table.Row>
                         <Table.HeaderCell colSpan='4'>
+                            <Pagination
+                                activePage={this.state.activePage}
+                                totalPages={this.state.numberOfPages}
+                                onPageChange={(event, data) => this.paginate(data.activePage)} />
                             <Button onClick={() => this.exportarEmpleados()}
                                 color='teal' floated='right' icon labelPosition='left' size='small'>
                                 <Icon name='external' />Exportar empleados
