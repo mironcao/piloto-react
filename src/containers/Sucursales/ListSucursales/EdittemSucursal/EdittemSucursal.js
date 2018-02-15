@@ -3,7 +3,6 @@ import { Table, Button, Input, Message } from 'semantic-ui-react';
 import * as actions from '../../../../store/actions';
 import { connect } from 'react-redux';
 import axios from 'axios';
-import * as validadores from '../../../Validadores/ValidadorPersona';
 
 class EditItemSucursal extends Component {
     state = {
@@ -20,7 +19,6 @@ class EditItemSucursal extends Component {
     }
 
     onChangeNombreHandler = (event) => {
-        const nombre = this.state.nombre;
         let valid = event.target.value.trim(" ") !== "";
         const formValid = this.validateForm();
         this.setState({
@@ -34,7 +32,6 @@ class EditItemSucursal extends Component {
     }
 
     onChangeDireccionHandler = (event) => {
-        const direccion = this.state.direccion;
         let valid = event.target.value.trim(" ") !== "";
         const formValid = this.validateForm();
         this.setState({

@@ -107,7 +107,13 @@ class MisCuentas extends Component {
 					<Table.Body>
 						{this.mostrarCosas()}
 					</Table.Body>
-					<Pagination defaultActivePage={1} onPageChange={this.handlePaginationChange} totalPages={this.state.cuentas.length} />
+					<Table.Footer>
+						<Table.Row>
+							<Table.HeaderCell>
+								<Pagination defaultActivePage={1} onPageChange={this.handlePaginationChange} totalPages={this.state.cuentas.length} />
+							</Table.HeaderCell>
+						</Table.Row>
+					</Table.Footer>
 				</Table>
 			</Container>
 		)

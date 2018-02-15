@@ -11,7 +11,7 @@ class ListarTransferencias extends Component {
 	constructor() {
 		super();
 		this.state = {
-			transferencias: [], activePage: 1, itemsPerPage: 5, numberOfPages:1
+			transferencias: [], activePage: 1, itemsPerPage: 5, numberOfPages: 1
 		}
 	}
 
@@ -22,37 +22,36 @@ class ListarTransferencias extends Component {
 	}
 
 	cargarMisTransferencias = (cuenta) => {
-		let split = []
 		axios.get('http://localhost:8080/transferencia/listarTransferenciaId/' + cuenta)
-		.then(response => {
-			this.setState({transferencias:response.data})
-		})
+			.then(response => {
+				this.setState({ transferencias: response.data })
+			})
 	}
 
-	calcularPaginas=()=> {
-		let pages= this.state.transferencias.length/this.state.itemsPerPage;
-		if (this.state.transferencias.length%this.state.itemsPerPage===0)
-			return  pages;
-		return pages+1;
+	calcularPaginas = () => {
+		let pages = this.state.transferencias.length / this.state.itemsPerPage;
+		if (this.state.transferencias.length % this.state.itemsPerPage === 0)
+			return pages;
+		return pages + 1;
 	}
 
-	mostrarTransferencias=()=> {
+	mostrarTransferencias = () => {
 		let rows = [];
 		let split = [[]];
-		for(let i=0; i<=this.state.transferencias.length; i+=this.state.itemsPerPage) {
-			if(i+this.state.itemsPerPage <= this.state.transferencias.length)
-				split.push(this.state.transferencias.slice(i,i+this.state.itemsPerPage))
+		for (let i = 0; i <= this.state.transferencias.length; i += this.state.itemsPerPage) {
+			if (i + this.state.itemsPerPage <= this.state.transferencias.length)
+				split.push(this.state.transferencias.slice(i, i + this.state.itemsPerPage))
 			else
-				split.push(this.state.transferencias.slice(i,this.state.transferencias.length))
+				split.push(this.state.transferencias.slice(i, this.state.transferencias.length))
 		}
 
-		for(let transferencia of split[this.state.activePage]){
-				rows.push(<Table.Row>
-					<Table.Cell >{transferencia.idDestino}</Table.Cell>
-					<Table.Cell >{transferencia.cuenta}</Table.Cell>
-					<Table.Cell >{`${transferencia.importe}€`}</Table.Cell>
-					<Table.Cell >{new Date(transferencia.fechaRealizacion).toLocaleString()} </Table.Cell>
-				</Table.Row>)
+		for (let transferencia of split[this.state.activePage]) {
+			rows.push(<Table.Row>
+				<Table.Cell >{transferencia.idDestino}</Table.Cell>
+				<Table.Cell >{transferencia.cuenta}</Table.Cell>
+				<Table.Cell >{`${transferencia.importe}€`}</Table.Cell>
+				<Table.Cell >{new Date(transferencia.fechaRealizacion).toLocaleString()} </Table.Cell>
+			</Table.Row>)
 		}
 
 		return rows;
@@ -79,9 +78,12 @@ class ListarTransferencias extends Component {
 								Volver a mis cuentas
 							</Button>
 						</Table.HeaderCell>
+						<Table.HeaderCell>
+							<Pagination defaultActivePage={1} onPageChange={this.handlePaginationChange} totalPages={parseInt(this.calcularPaginas(), 10)} />
+						</Table.HeaderCell>
 					</Table.Row>
 				</Table.Footer>
-				<Pagination defaultActivePage={1} onPageChange={this.handlePaginationChange} totalPages={parseInt(this.calcularPaginas())} />
+				
 			</Table>
 		)
 	}
