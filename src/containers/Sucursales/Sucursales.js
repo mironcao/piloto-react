@@ -15,7 +15,8 @@ class Sucursales extends Component {
     state = {
         dataState: DATA_STATE.LOADING,
         showEdit: false,
-        exported: true,}
+        exported: true,
+    }
 
     componentDidMount() {
         axios.get("http://localhost:8080/sucursal/")
@@ -51,7 +52,7 @@ class Sucursales extends Component {
                 );
             case DATA_STATE.OK:
                 return (<ListSucursales
-                    sucursales={this.props.sucursal.sucursales}
+                    sucursales={this.props.sucursales}
                     clickBorrar={this.borrarSucursalHandler}
                     showEditHandler={this.changeShowEditHandler}
                     showEdit={this.state.showEdit}
@@ -65,6 +66,7 @@ class Sucursales extends Component {
     borrarSucursalHandler = (id) => {
         axios.delete("http://localhost:8080/sucursal/" + id);
         this.props.borrarSucursal(id);
+        this.props.paginate();
     }
 
     changeShowEditHandler = (open) => {
@@ -99,7 +101,7 @@ class Sucursales extends Component {
                     <Header as='h1' textAlign='center' color='teal'>Sucursales</Header>
                     <Container textAlign='right'>
                         <Button className="option-buttons" color='blue' onClick={() => this.changeShowEditHandler(true)}>Añadir sucursal</Button>
-                        <Button className="option-buttons" color='blue' onClick={() => this.exportarSucursales()}>Exportar Sucursales</Button>
+                        <Button className="option-buttons" color='blue' onClick={() => this.exportarSucursales()}>Exportar sucursales</Button>
                         {mensajeExportar}
                     </Container>
                     {sucursales}
@@ -111,6 +113,7 @@ class Sucursales extends Component {
 const mapStateToProps = state => {
     return {
         sucursal: state.bancoStore.sucursal,
+        sucursales: state.bancoStore.sucursal.sucursales
     }
 }
 
