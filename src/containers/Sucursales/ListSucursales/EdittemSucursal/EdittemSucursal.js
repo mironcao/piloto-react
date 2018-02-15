@@ -73,6 +73,7 @@ class EditItemSucursal extends Component {
                 .then((response) => {
                     this.props.updateSucursal(this.state.nombre.value, this.state.direccion.value);
                     this.props.showEditHandler(false);
+                    this.props.paginate();
                 })
         }
     }
@@ -89,6 +90,7 @@ class EditItemSucursal extends Component {
                 .then((response) => {
                     this.props.addSucursal(response.data);
                     this.props.showEditHandler(false);
+                    this.props.paginate();
                 })
         }
     }
