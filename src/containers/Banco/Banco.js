@@ -49,7 +49,7 @@ class Banco extends Component {
         <React.Fragment>
           <Menu.Item name='Mis Cuentas' active={this.activeItem === '/misCuentas'} onClick={() => this.handleItemClick('/misCuentas')} >
             <Icon name='suitcase' />
-            MisCuentas
+            Mis cuentas
         </Menu.Item>
         <Menu.Item name='Mis tarjetas' active={this.activeItem === '/misTarjetas'} onClick={() => this.handleItemClick('/misTarjetas')} >
             <Icon name='credit card alternative' />
