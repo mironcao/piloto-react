@@ -39,7 +39,6 @@ class EditarCliente extends Component {
                 }
 
             )
-            console.log(response.data.password)
         }
         )
 
@@ -144,7 +143,7 @@ class EditarCliente extends Component {
     }
 
     cambiarEstado = (event, { name, value }) => {
-        this.setState({ [name]: { value: value, valid: true } })
+        this.setState({ [name]: { value: value, valid: true } , visible:false})
     }
 
     mostrarError(tipo) {
@@ -220,7 +219,7 @@ class EditarCliente extends Component {
 
 const mapStateToProps = state => {
     return {
-        dni: state.dni
+        dni: state.bancoStore.dni
     }
 }
 
