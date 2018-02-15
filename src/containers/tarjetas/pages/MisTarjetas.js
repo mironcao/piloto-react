@@ -16,8 +16,8 @@ export default class MisTarjetas extends Component {
             Añadir tarjeta
             </NavLink>
         </div>
+        <Route exact path="/misTarjetas/new" component={TarjetaFormPage} />
         <Route exact path="/misTarjetas" component={TarjetasListPage} />
-        <Route path="/misTarjetas/new" component={TarjetaFormPage} />
       </Container>
     );
   }
