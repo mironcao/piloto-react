@@ -19,14 +19,8 @@ class LoginPage extends React.Component {
         { dni: this.state.dni, password: this.state.password}
           ).then(response => {
             if (response.data.nombre !== null) {
-              if(response.data.role==="USER"){
-                this.props.pasarUser(response.data);
-                this.props.history.push('/misCuentas')
-              }
-              else if(response.data.role==="EMPLEADO"){
-                this.props.pasarUser(response.data);
-                this.props.history.push('/misCuentasAdmin')
-              }
+              this.props.pasarUser(response.data);
+              this.props.history.push('/misCuentas')
             } else
               this.setState({ error: true })
         }).catch(error => this.setState({ error: true }))
