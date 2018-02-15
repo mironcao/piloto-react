@@ -9,20 +9,20 @@ class MisCuentas extends Component {
 
 	constructor() {
 		super();
-		this.state = { cuentas: [[]], dni: null, active: false, itemsPerPage:5, activePage:1 }
+		this.state = { cuentas: [[]], dni: null, active: false, itemsPerPage: 5, activePage: 1 }
 	}
 
 
 	buscarCuentas = (dni) => {
-		let split=[]
+		let split = []
 		axios.get('http://localhost:8080/cuenta/miscuentas?dni=' + dni).then(response => {
-			for(let i=0; i<=response.data.length; i+=this.state.itemsPerPage) {
-				if(i+this.state.itemsPerPage <= response.data.length)
-					split.push(response.data.slice(i,i+this.state.itemsPerPage))
+			for (let i = 0; i <= response.data.length; i += this.state.itemsPerPage) {
+				if (i + this.state.itemsPerPage <= response.data.length)
+					split.push(response.data.slice(i, i + this.state.itemsPerPage))
 				else
-					split.push(response.data.slice(i,response.data.length))
+					split.push(response.data.slice(i, response.data.length))
 			}
-			this.setState({cuentas:split})
+			this.setState({ cuentas: split })
 		})
 	}
 
@@ -51,7 +51,7 @@ class MisCuentas extends Component {
 	mostrarCuentas = () => {
 		let rows = [];
 		let index = 0;
-		for (let c of this.state.cuentas[this.state.activePage-1]) {
+		for (let c of this.state.cuentas[this.state.activePage - 1]) {
 			index = 0;
 			for (let t of c.titulares) {
 				if (index === 0) {
@@ -84,15 +84,12 @@ class MisCuentas extends Component {
 		return (
 			<Container>
 				<br></br>
-				<Header as='h2'>
+				<Header as='h2' color="teal" textAlign="center">
 					Mis cuentas
-		<Header.Subheader>
-						Información acerca de sus cuentas y movimientos.
-		</Header.Subheader>
 				</Header>
 				<br></br>
 
-				<Table celled color='teal'>
+				<Table celled unstackable color='teal'>
 					<Table.Header>
 						<Table.Row>
 							<Table.HeaderCell>Número Cuenta</Table.HeaderCell>
@@ -109,7 +106,7 @@ class MisCuentas extends Component {
 					</Table.Body>
 					<Table.Footer>
 						<Table.Row>
-							<Table.HeaderCell>
+							<Table.HeaderCell colSpan='7'>
 								<Pagination defaultActivePage={1} onPageChange={this.handlePaginationChange} totalPages={this.state.cuentas.length} />
 							</Table.HeaderCell>
 						</Table.Row>
@@ -124,8 +121,8 @@ class MisCuentas extends Component {
 
 const mapStateToProps = state => {
 	return {
-		cuentas:state.bancoStore.cuentas,
-		user:state.bancoStore.user
+		cuentas: state.bancoStore.cuentas,
+		user: state.bancoStore.user
 	}
 }
 

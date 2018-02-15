@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
 import axios from 'axios';
-import { Button, Table, Header, Message, Pagination } from 'semantic-ui-react';
+import { Button, Table, Header, Message, Pagination, Container } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 
 class MisCuentas extends Component {
 	constructor() {
 		super();
-		this.state = { cuentas: [[]], dni: null, active: false, visible: true, error: null, itemsPerPage:5, activePage:1 }
+		this.state = { cuentas: [[]], dni: null, active: false, visible: true, error: null, itemsPerPage: 5, activePage: 1 }
 	}
 
 	handleDismiss = () => {
@@ -42,26 +42,26 @@ class MisCuentas extends Component {
 	handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
 
 	validarDni(dni) {
-		var  validChars  =  'TRWAGMYFPDXBNJZSQVHLCKET';
-		var  nifRexp  =  /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/i;
-		var  nieRexp  =  /^[XYZ]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/i;
-		var  str  =  dni.toString().toUpperCase();
+		var validChars = 'TRWAGMYFPDXBNJZSQVHLCKET';
+		var nifRexp = /^[0-9]{8}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/i;
+		var nieRexp = /^[XYZ]{1}[0-9]{7}[TRWAGMYFPDXBNJZSQVHLCKET]{1}$/i;
+		var str = dni.toString().toUpperCase();
 
-		if  (!nifRexp.test(str)  &&  !nieRexp.test(str)) {
+		if (!nifRexp.test(str) && !nieRexp.test(str)) {
 			this.setState({ mensajeError: this.state.mensajeError + "El DNI es incorrecto\n" });
-			return  false;
+			return false;
 		}
-		var  nie  =  str
-			.replace(/^[X]/,  '0')
-			.replace(/^[Y]/,  '1')
-			.replace(/^[Z]/,  '2');
+		var nie = str
+			.replace(/^[X]/, '0')
+			.replace(/^[Y]/, '1')
+			.replace(/^[Z]/, '2');
 
-		var  letter  =  str.substr(-1);
-		var  charIndex  =  parseInt(nie.substr(0,  8), 10)  %  23;
-		if  (validChars.charAt(charIndex)  ===  letter)
-			return  true;
+		var letter = str.substr(-1);
+		var charIndex = parseInt(nie.substr(0, 8), 10) % 23;
+		if (validChars.charAt(charIndex) === letter)
+			return true;
 		this.setState({ mensajeError: this.state.mensajeError + "El DNI es incorrecto\n" });
-		return  false;
+		return false;
 	}
 
 
@@ -124,13 +124,10 @@ class MisCuentas extends Component {
 
 	render() {
 		return (
-			<div>
+			<Container>
 				<br></br>
-				<Header as='h2'>
-					Mis cuentas
-		<Header.Subheader>
-						Información acerca de sus cuentas y movimientos.
-		</Header.Subheader>
+				<Header as='h2' color="teal" textAlign="center">
+					Cuentas
 				</Header>
 				<label htmlFor="dni">DNI/NIE/NIF: &nbsp;&nbsp; </label>
 				<input name="dni" type="text" onChange={this.actualizarDni} />
@@ -139,7 +136,7 @@ class MisCuentas extends Component {
 				<br></br>
 
 				<br></br>
-				<Table collapsing unstackable celled structured color='teal'>
+				<Table unstackable celled structured color='teal'>
 					<Table.Header>
 						<Table.Row>
 							<Table.HeaderCell>Número Cuenta</Table.HeaderCell>
@@ -156,13 +153,13 @@ class MisCuentas extends Component {
 					</Table.Body>
 					<Table.Footer>
 						<Table.Row>
-							<Table.HeaderCell>
+							<Table.HeaderCell colSpan='7'>
 								<Pagination defaultActivePage={1} onPageChange={this.handlePaginationChange} totalPages={this.state.cuentas.length} />
 							</Table.HeaderCell>
 						</Table.Row>
 					</Table.Footer>
 				</Table>
-			</div>
+			</Container>
 		)
 	}
 
