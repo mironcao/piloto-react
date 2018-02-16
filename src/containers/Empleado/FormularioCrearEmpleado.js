@@ -98,10 +98,10 @@ class FormularioCrearEmpleado extends Component {
         }
         if (this.state.selectedOption === '') {
             valido = false;
-            this.state.errorSucursal = true;
+            this.setState({errorSucursal: true});
         }
         else
-            this.state.errorSucursal = false;
+            this.setState({errorSucursal: false});
         const empleado = {
             dni: { value: this.state.empleado.dni.value, valid: validos[0] }, 
             nombre: { value: this.state.empleado.nombre.value, valid: validos[1] }, 
