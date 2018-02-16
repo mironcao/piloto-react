@@ -192,7 +192,7 @@ class FormularioCrearEmpleado extends Component {
                                 {this.state.empleado.apellidos.valid ? null : this.mostrarError('Los apellidos son incorrectos')}
                             </Form.Field>
                             <Form.Field required>
-                            <label>Dirección:</label>
+                                <label>Dirección:</label>
                                 <Input
                                     placeholder='Dirección'
                                     maxLength='50'
@@ -203,7 +203,7 @@ class FormularioCrearEmpleado extends Component {
                                 {this.state.empleado.direccion.valid ? null : this.mostrarError('La dirección es incorrecta')}
                             </Form.Field>
                             <Form.Field required>
-                            <label>Contraseña:</label>
+                                <label>Contraseña:</label>
                                 <Input
                                     placeholder='Contraseña'
                                     maxLength='32'
@@ -215,7 +215,7 @@ class FormularioCrearEmpleado extends Component {
                                 {this.state.empleado.password.valid ? null : this.mostrarError('La contraseña debe tener un mínimo de 8 caracteres')}
                             </Form.Field>
                             <Form.Field required>
-                            <label>Repetir contraseña:</label>
+                                <label>Repetir contraseña:</label>
                                 <Input
                                     placeholder='Repetir contraseña'
                                     maxLength='32'
@@ -224,7 +224,7 @@ class FormularioCrearEmpleado extends Component {
                                     value={this.state.empleado.repeatPassword.value}
                                     onChange={this.handleChange}
                                 />
-                                {this.state.empleado.repeatPassword.valid ? null : this.mostrarError('Las contraseña no son iguales')}
+                                {this.state.empleado.repeatPassword.valid ? null : this.mostrarError('Las contraseñas no son iguales')}
                             </Form.Field>
                             <Form.Field>
                                 <label>Teléfono fijo:</label>
