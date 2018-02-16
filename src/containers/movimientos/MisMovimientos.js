@@ -9,20 +9,13 @@ import * as estilo from '../css/Movimiento';
 /* Constantes */
 const URL = 'http://localhost:8080/movimiento/mismovimientos/';
 
+const URL_EXPORT = 'http://localhost:8080/movimiento/export/';
+
 class MisMovimientos extends Component {
 
     constructor() {
         super();
         this.state = { itemsPerPage: 5, activePage: 1 }
-    }
-
-    handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
-
-    calcularPaginas = () => {
-        let pages = this.props.movimientos.length / this.state.itemsPerPage;
-        if (this.props.movimientos.length % this.state.itemsPerPage === 0)
-            return pages;
-        return pages + 1;
     }
 
     componentDidMount() {
@@ -56,6 +49,25 @@ class MisMovimientos extends Component {
 
         return rows;
 
+    }
+
+    exportarMovimientos =()=>{
+        axios.get(URL_EXPORT + this.props.numeroCuenta)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }
+
+    handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
+
+    calcularPaginas = () => {
+        let pages = this.props.movimientos.length / this.state.itemsPerPage;
+        if (this.props.movimientos.length % this.state.itemsPerPage === 0)
+            return pages;
+        return pages + 1;
     }
 
     render() {
@@ -108,6 +120,10 @@ class MisMovimientos extends Component {
                             Crear Movimiento
                         </Button>
                     </Link>
+
+                    <Button color="green" onClick={() => this.exportarMovimientos()} floated='right' icon labelPosition='left' size='small'>
+                        <Icon name='external' /> Exportar movimientos
+                    </Button>
                 </div>
             </div>
         );
