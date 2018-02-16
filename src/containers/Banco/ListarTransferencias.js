@@ -59,11 +59,14 @@ class ListarTransferencias extends Component {
 		return rows;
 	}
 
-	exportarClientes = () => {
+	exportarTransferencias = () => {
+		this.setState({
+			exported: true
+		});
 		axios.get("http://localhost:8080/transferencia/export").then(response => {
 			if (response.status === 200)
 				this.setState({
-					exported: true
+					exported: false
 				});
 		});
 	}
@@ -94,7 +97,7 @@ class ListarTransferencias extends Component {
 							<Button color="teal" onClick={() => this.props.history.push('/misCuentas')} floated='left' size='small'>
 								Volver a mis cuentas
 							</Button>
-							<Button color="green" onClick={() => this.exportarClientes()} floated='right' icon labelPosition='left' size='small'>
+							<Button color="green" onClick={() => this.exportarTransferencias()} floated='right' icon labelPosition='left' size='small'>
 								<Icon name='external' /> Exportar transferencias
                                             </Button>
 							{mensajeExportar}
