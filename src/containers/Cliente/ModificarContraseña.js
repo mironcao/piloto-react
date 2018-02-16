@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import * as actions from '../../store/actions';
-import { Button, Input, Message, Grid, Form } from 'semantic-ui-react';
+import { Button, Input, Message, Grid, Form, Icon } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment/Segment';
 
@@ -14,7 +14,8 @@ class ModificarContraseña extends Component {
             nombre: { value: "", valid: true }, apellidos: { value: "", valid: true },
             direccion: { value: "", valid: true }, email: { value: "", valid: true },
             fijo: { value: "", valid: true }, movil: { value: "", valid: true }, cliente: null, passwordAntigua: { value: "", valid: true }
-            , password: { value: "", valid: true }, repitPassword: { value: "", valid: true }, message: "", visible:false
+            , password: { value: "", valid: true }, repitPassword: { value: "", valid: true }, message: "", visible: false, verContraseñaAntigua:"password",
+            verContraseña:"password",verContraseñaNueva:"password"
         }
     }
 
@@ -34,7 +35,7 @@ class ModificarContraseña extends Component {
                 }
 
             )
-                }
+        }
         )
 
     }
@@ -50,11 +51,11 @@ class ModificarContraseña extends Component {
             this.mostrarMesajeActualizacion();
         }
     }
-    mostrarMesajeActualizacion=()=>{
-        this.setState({visible:true})
-      
+    mostrarMesajeActualizacion = () => {
+        this.setState({ visible: true })
+
     }
-    
+
     reiniciarFormulario() {
         this.setState(
             {
@@ -77,31 +78,31 @@ class ModificarContraseña extends Component {
             this.setState({
                 password: { value: contraseña, valid: false },
                 repitPassword: { value: repetirContraseña, valid: false },
-                passwordAntigua:{value: contraseñaAntigua, valid: false},
+                passwordAntigua: { value: contraseñaAntigua, valid: false },
                 message: "No puede haber ningun campo vacio o la contraseña tiene que tener un minimo de 8 caracteres"
             })
             return false;
         }
         else if (contraseñaAntigua !== this.state.passwordAntigua.value) {
             this.setState({
-                passwordAntigua:{value: contraseñaAntigua, valid: false},
+                passwordAntigua: { value: contraseñaAntigua, valid: false },
                 message: "La contraseña actual es incorrecta"
             })
             return false;
         }
         else if (contraseña !== repetirContraseña) {
-                this.setState({
-                    password: { value: contraseña, valid: false },
-                    repitPassword: { value: repetirContraseña, valid: false },
-                    message: "Las contraseñas no son iguales"
-                })
-                return false;
-            }
+            this.setState({
+                password: { value: contraseña, valid: false },
+                repitPassword: { value: repetirContraseña, valid: false },
+                message: "Las contraseñas no son iguales"
+            })
+            return false;
+        }
         return true;
     }
 
     cambiarEstado = (event, { name, value }) => {
-        this.setState({ [name]: { value: value, valid: true } , visible:false})
+        this.setState({ [name]: { value: value, valid: true }, visible: false })
     }
 
     mostrarErrorContraseña() {
@@ -112,27 +113,43 @@ class ModificarContraseña extends Component {
         )
     }
 
+    mostrarContraseña=(name) =>{
+        if(this.state[name] === "text")
+        this.setState({
+            [name]:"password"
+        })
+        else
+        this.setState({
+            [name]:"text"
+        })
+    }
+
     render() {
         return (
-            <Grid  textAlign="center" style={{ width: "50%", display:"inline-block",height: "100%" }} >
+            <Grid textAlign="center" style={{ width: "50%", display: "inline-block", height: "100%" }} >
                 <Grid.Column textAlign="left" >
                     <Form size="large">
-                        <Segment stacked>
-                            <Form.Field required>
-                                <label >Contraseña antigua:</label>
-                                <Input focus placeholder='Contraseña antigua...' type="password"
-                                    name="passwordAntigua" value={this.state.passwordAntigua.value} onChange={this.cambiarEstado} maxLength="32" />
-                                {this.state.passwordAntigua.valid ? null : this.mostrarErrorContraseña()}
-                            </Form.Field>
+                        <Segment stacked>      <Form.Field required>
+                            <label >Contraseña antigua:</label>
+                            <Input focus placeholder='Contraseña antigua...' type={this.state.verContraseñaAntigua} 
+                            icon={<Icon name='eye' size="large"  onMouseDown={()=>{this.mostrarContraseña("verContraseñaAntigua")}}
+                            onMouseUp={()=>{this.mostrarContraseña("verContraseñaAntigua")}} link/>}
+                                name="passwordAntigua" value={this.state.passwordAntigua.value} onChange={this.cambiarEstado} maxLength="32" />
+                            {this.state.passwordAntigua.valid ? null : this.mostrarErrorContraseña()}
+                        </Form.Field>
                             <Form.Field required>
                                 <label >Nueva contraseña:</label>
-                                <Input focus placeholder='Nueva contraseña...' type="password"
+                                <Input focus placeholder='Nueva contraseña...' type={this.state.verContraseña} 
+                            icon={<Icon name='eye' size="large" onMouseDown={()=>{this.mostrarContraseña("verContraseña")}}
+                            onMouseUp={()=>{this.mostrarContraseña("verContraseña")}} link/>}
                                     name="password" value={this.state.password.value} onChange={this.cambiarEstado} maxLength="32" />
                                 {this.state.password.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
                             <Form.Field required>
                                 <label >Repetir nueva contraseña:</label>
-                                <Input focus placeholder='Repetir nueva contraseña...' type="password"
+                                <Input focus placeholder='Repetir nueva contraseña...'type={this.state.verContraseñaNueva} 
+                            icon={<Icon name='eye' size="large"  onMouseDown={()=>{this.mostrarContraseña("verContraseñaNueva")}}
+                            onMouseUp={()=>{this.mostrarContraseña("verContraseñaNueva")}} link/>}
                                     name="repitPassword" value={this.state.repitPassword.value} onChange={this.cambiarEstado} maxLength="32" />
                                 {this.state.repitPassword.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
