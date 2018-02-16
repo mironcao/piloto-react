@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
 import axios from 'axios';
-import { Table, Button, Pagination } from 'semantic-ui-react'
+import { Table, Button, Pagination, Message, Icon } from 'semantic-ui-react'
 import { withRouter } from 'react-router-dom';
 
 class ListarTransferencias extends Component {
-
+	state = {
+		exported: false
+	}
 
 	constructor() {
 		super();
@@ -57,7 +59,22 @@ class ListarTransferencias extends Component {
 		return rows;
 	}
 
+	exportarClientes = () => {
+		axios.get("http://localhost:8080/transferencia/export").then(response => {
+			if (response.status === 200)
+				this.setState({
+					exported: true
+				});
+		});
+	}
+
 	render() {
+		let mensajeExportar = this.state.exported ? (<Message icon>
+			<Icon name='circle notched' loading />
+			<Message.Content>
+				<Message.Header>Transferencias exportadas</Message.Header>
+			</Message.Content>
+		</Message>) : null;
 		return (
 			<Table celled color='teal' key={'blue'}>
 				<Table.Header>
@@ -77,13 +94,17 @@ class ListarTransferencias extends Component {
 							<Button color="teal" onClick={() => this.props.history.push('/misCuentas')} floated='left' size='small'>
 								Volver a mis cuentas
 							</Button>
+							<Button color="green" onClick={() => this.exportarClientes()} floated='right' icon labelPosition='left' size='small'>
+								<Icon name='external' /> Exportar transferencias
+                                            </Button>
+							{mensajeExportar}
 						</Table.HeaderCell>
 						<Table.HeaderCell>
 							<Pagination defaultActivePage={1} onPageChange={this.handlePaginationChange} totalPages={parseInt(this.calcularPaginas(), 10)} />
 						</Table.HeaderCell>
 					</Table.Row>
 				</Table.Footer>
-				
+
 			</Table>
 		)
 	}
