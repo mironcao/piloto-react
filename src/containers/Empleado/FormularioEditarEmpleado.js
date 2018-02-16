@@ -36,7 +36,7 @@ class FormularioEditarEmpleado extends Component {
                 .then(response => {
                     let listaSucursales = []
                     response.data.map((sucursal) => {
-                        listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
+                        return listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
                     })
                     this.setState({ sucursales: listaSucursales });
                     this.props.cargarSucursales(response.data);
@@ -44,7 +44,7 @@ class FormularioEditarEmpleado extends Component {
         } else {
             let listaSucursales = []
             this.props.sucursales.map((sucursal) => {
-                listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
+                return listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
             })
             this.setState({ sucursales: listaSucursales })
         }

@@ -18,7 +18,7 @@ class ListarCliente extends Component {
     render() {
         return (
             <Container  style={{ marginTop: '3em' }}>
-                <Header textAlign=" center" as='h1' color='teal'>Clientes</Header>
+                <Header textAlign="center" as='h1' color='teal'>Clientes</Header>
                 <Tabla   clientes={this.props.clientes}/>
             </Container>
 

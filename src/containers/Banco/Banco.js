@@ -18,7 +18,7 @@ import ModificarEmpleado from '../Empleado/ModificarEmpleado';
 import GestionTitulares from '../titulares/GestionTitulares';
 import MisTarjetas from '../tarjetas/pages/MisTarjetas';
 import TarjetasListAdminPage from "../tarjetas/pages/tarjetas-list-admin-page";
-import { Route, Switch, Link, Redirect, withRouter } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -27,8 +27,8 @@ class Banco extends Component {
   state = { activeItem: '/misCuentas' }
 
   logout = () => {
-    axios.post('http://localhost:8080/login/out').
-    then(response => {
+    axios.post('http://localhost:8080/login/out')
+    .then(response => {
       console.log(response)
     }).catch(function (error){
       console.log(error)

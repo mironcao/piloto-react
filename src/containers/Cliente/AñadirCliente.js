@@ -23,7 +23,7 @@ class AñadirCliente extends Component {
                 .then(response => {
                     let listaSucursales = []
                     response.data.map((sucursal) => {
-                        listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
+                        return listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
                     })
                     this.setState({ sucursales: listaSucursales })
                     this.props.cargarSucursales(response.data)
@@ -33,7 +33,7 @@ class AñadirCliente extends Component {
         } else {
             let listaSucursales = []
             this.props.sucursales.map((sucursal) => {
-                listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
+                return listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
             })
             this.setState({ sucursales: listaSucursales })
         }
@@ -153,7 +153,7 @@ class AñadirCliente extends Component {
     }
 
     cambiarEstado = (event, { name, value }) => {
-        this.setState({ [name]: { value: value, valid: true } })
+        this.setState({ [name]: { value: value, valid: true,  } })
     }
     mostrarError(tipo) {
         return (
@@ -248,6 +248,9 @@ class AñadirCliente extends Component {
                             </Form.Field>
                         </Segment>
                     </Form>
+                    <Message className='mensajeObligatorio'>
+                        (*) Campos obligatorios
+                    </Message>
                 </Grid.Column>
             </Grid>
         )
