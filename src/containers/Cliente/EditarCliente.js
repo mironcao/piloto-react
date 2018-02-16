@@ -6,9 +6,7 @@ import { Button, Input, Message, Grid, Form } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import * as validadores from '../Validadores/ValidadorPersona';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment/Segment';
-import FormField from 'semantic-ui-react/dist/commonjs/collections/Form/FormField';
-import FormDropdown from 'semantic-ui-react/dist/commonjs/collections/Form/FormDropdown';
-import Label from 'semantic-ui-react/dist/commonjs/elements/Label/Label';
+
 
 
 class EditarCliente extends Component {
@@ -52,7 +50,7 @@ class EditarCliente extends Component {
                 fijo: this.state.fijo.value, movil: this.state.movil.value, password: this.state.password.value
             })
         }
-        this.setState({ visible: true, actualizado: true },()=>{this.reiniciarFormulario})
+        this.setState({ visible: true, actualizado: true },this.reiniciarFormulario)
         
     }
 
@@ -61,7 +59,7 @@ class EditarCliente extends Component {
 
 
     reiniciarFormulario() {
-        console.log(this.state.actualizado)
+        
         if (!this.state.actualizado) {
             this.setState(
                 {
@@ -210,8 +208,10 @@ class EditarCliente extends Component {
                             </Message>
                         </Segment>
                     </Form>
+                    <Message className='mensajeObligatorio'>
+                        (*) Campos obligatorios
+                    </Message>
                 </Grid.Column>
-
             </Grid>
         )
     }

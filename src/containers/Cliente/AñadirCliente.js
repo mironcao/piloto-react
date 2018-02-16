@@ -23,7 +23,7 @@ class AñadirCliente extends Component {
                 .then(response => {
                     let listaSucursales = []
                     response.data.map((sucursal) => {
-                        listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
+                        return listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
                     })
                     this.setState({ sucursales: listaSucursales })
                     this.props.cargarSucursales(response.data)
@@ -33,7 +33,7 @@ class AñadirCliente extends Component {
         } else {
             let listaSucursales = []
             this.props.sucursales.map((sucursal) => {
-                listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
+                return listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
             })
             this.setState({ sucursales: listaSucursales })
         }
@@ -153,7 +153,7 @@ class AñadirCliente extends Component {
     }
 
     cambiarEstado = (event, { name, value }) => {
-        this.setState({ [name]: { value: value, valid: true } })
+        this.setState({ [name]: { value: value, valid: true,  } })
     }
     mostrarError(tipo) {
         return (
@@ -221,19 +221,19 @@ class AñadirCliente extends Component {
                             </Form.Field>
                             <Form.Field >
                                 <label >Email:</label>
-                                <Input focus labelPosition="right corner" placeholder='Email...'
+                                <Input focus placeholder='Email...'
                                     name="email" value={this.state.email.value} onChange={this.cambiarEstado} />
                                 {this.state.email.valid ? null : this.mostrarError("email")}
                             </Form.Field>
                             <Form.Field >
                                 <label >Telefono fijo:</label>
-                                <Input focus labelPosition="rigth corner" placeholder='Fijo...'
+                                <Input focus placeholder='Fijo...'
                                     name="fijo" value={this.state.fijo.value} onChange={this.cambiarEstado} />
                                 {this.state.fijo.valid ? null : this.mostrarError("fijo")}
                             </Form.Field>
                             <Form.Field >
                                 <label >Telefono Movil:</label>
-                                <Input focus labelPosition="rigth corner" placeholder='Movil...'
+                                <Input focus  placeholder='Movil...'
                                     name="movil" value={this.state.movil.value} onChange={this.cambiarEstado} />
                                 {this.state.movil.valid ? null : this.mostrarError("movil")}
                             </Form.Field>
@@ -248,6 +248,9 @@ class AñadirCliente extends Component {
                             </Form.Field>
                         </Segment>
                     </Form>
+                    <Message className='mensajeObligatorio'>
+                        (*) Campos obligatorios
+                    </Message>
                 </Grid.Column>
             </Grid>
         )

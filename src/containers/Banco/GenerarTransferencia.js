@@ -21,7 +21,8 @@ class GenerarTransferencia extends Component {
 		importe: {
 			value: null,
 			valid: false,
-		}
+		},
+		error:false
 	}
 	peticion = () => {
 		const transferencia = {
@@ -31,8 +32,12 @@ class GenerarTransferencia extends Component {
 		}
 		if (validator.validarImporte(this.state.importe.value) && this.validarCuenta(this.state.cuentaDestino.value)) {
 			axios.post('http://localhost:8080/transferencia/transferencia', transferencia).then((response) => {
-			});
 			this.props.history.push('/misCuentas')
+			}).catch( (error)=> {
+				this.setState({
+					error: true
+				});
+			 });
 		}
 	}
 
@@ -91,6 +96,11 @@ class GenerarTransferencia extends Component {
 			<Message.Header>Error</Message.Header>
 			<p> La cuenta debe tener 25 dígitos</p>
 		</Message>
+
+		var messageImporteCuenta = <Message negative>
+			<Message.Header>Error</Message.Header>
+			<p> No puedes hacerte una transferencia a ti mismo o el importe de la transferencia es superior al de tu saldo en la cuenta</p>
+		</Message>
 		return (
 			<div class="ui fluid form">
 				<div class="field">
@@ -110,6 +120,10 @@ class GenerarTransferencia extends Component {
 				</div>
 
 				<button class="ui fluid button" onClick={this.peticion}>Realizar Transferencia</button>
+
+				<div>
+					{this.state.error ? messageImporteCuenta: null}
+				</div>
 
 				<Button color="teal" onClick={() => this.props.history.push('/misCuentas')} floated='left' size='small'>
 					Volver a mis cuentas

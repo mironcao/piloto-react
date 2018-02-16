@@ -7,8 +7,16 @@ import { connect } from 'react-redux';
 
 class App extends Component {
   render() {
-    return this.props.user !== null ? <Route path='/' component={Banco} /> : 
-    <div><Route path='/login' component={LoginPage} /><Redirect to='/login' /></div>
+    if (this.props.user !== null)
+      return <Route path='/' component={Banco} />
+    else if (this.props.user === null && this.props.history.location.pathname !== "/login"){
+      return (<div>
+        <Route path='/login' component={LoginPage} />
+        <Redirect to='/login' />
+      </div>)
+    } else {
+      return <Route path='/login' component={LoginPage} />
+    }
   }
 }
 

@@ -7,7 +7,7 @@ import TitularFormPage from './pages/titular-form-page';
 
 class GestionTitulares extends Component {
   render() {
-    console.log(this.props.numeroCuenta);
+    
     
     if (!(this.props.numeroCuenta ==='' || this.props.numeroCuenta ==null)) {
       return (

@@ -20,7 +20,7 @@ export default function TitularCard({titular, deleteTitular}) {
           <Button basic color="red" 
             onClick={() => {
               deleteTitularHandle(titular,deleteTitular);
-              console.log(titular);
+              
             }
             }>Eliminar</Button>
         </div>

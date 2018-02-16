@@ -4,11 +4,7 @@ import axios from 'axios';
 import * as actions from '../../store/actions';
 import { Button, Input, Message, Grid, Form } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
-import * as validadores from '../Validadores/ValidadorPersona';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment/Segment';
-import FormField from 'semantic-ui-react/dist/commonjs/collections/Form/FormField';
-import FormDropdown from 'semantic-ui-react/dist/commonjs/collections/Form/FormDropdown';
-import Label from 'semantic-ui-react/dist/commonjs/elements/Label/Label';
 
 
 class ModificarContraseña extends Component {
@@ -38,8 +34,7 @@ class ModificarContraseña extends Component {
                 }
 
             )
-            console.log(response.data.password)
-        }
+                }
         )
 
     }
@@ -125,19 +120,19 @@ class ModificarContraseña extends Component {
                         <Segment stacked>
                             <Form.Field required>
                                 <label >Contraseña antigua:</label>
-                                <Input focus placeholder='Contraseña antigua...'
+                                <Input focus placeholder='Contraseña antigua...' type="password"
                                     name="passwordAntigua" value={this.state.passwordAntigua.value} onChange={this.cambiarEstado} maxLength="32" />
                                 {this.state.passwordAntigua.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
                             <Form.Field required>
                                 <label >Nueva contraseña:</label>
-                                <Input focus placeholder='Nueva contraseña...'
+                                <Input focus placeholder='Nueva contraseña...' type="password"
                                     name="password" value={this.state.password.value} onChange={this.cambiarEstado} maxLength="32" />
                                 {this.state.password.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
                             <Form.Field required>
                                 <label >Repetir nueva contraseña:</label>
-                                <Input focus placeholder='Repetir nueva contraseña...'
+                                <Input focus placeholder='Repetir nueva contraseña...' type="password"
                                     name="repitPassword" value={this.state.repitPassword.value} onChange={this.cambiarEstado} maxLength="32" />
                                 {this.state.repitPassword.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>

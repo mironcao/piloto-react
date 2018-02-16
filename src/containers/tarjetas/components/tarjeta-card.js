@@ -20,7 +20,7 @@ export default function TarjetaCard({tarjeta, deleteTarjeta}) {
           <Button negative 
             onClick={() => {
               deleteTarjetaHandle(tarjeta,deleteTarjeta);
-              console.log(tarjeta);
+              
             }
             }>Eliminar</Button>
         </div>

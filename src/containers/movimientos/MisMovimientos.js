@@ -6,9 +6,10 @@ import Header from 'semantic-ui-react/dist/commonjs/elements/Header/Header';
 import axios from 'axios';
 import Link from 'react-router-dom/Link';
 import * as estilo from '../css/Movimiento';
-
 /* Constantes */
 const URL = 'http://localhost:8080/movimiento/mismovimientos/';
+
+const URL_EXPORT = 'http://localhost:8080/movimiento/export/';
 
 class MisMovimientos extends Component {
 
@@ -17,24 +18,13 @@ class MisMovimientos extends Component {
         this.state = { itemsPerPage: 5, activePage: 1 }
     }
 
-    handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
-
-    calcularPaginas = () => {
-        console.log("length", this.props.movimientos.length)
-        let pages = this.props.movimientos.length / this.state.itemsPerPage;
-        if (this.props.movimientos.length % this.state.itemsPerPage === 0)
-            return pages;
-        return pages + 1;
-    }
-
     componentDidMount() {
         axios.get(URL + this.props.numeroCuenta)
             .then(response => {
                 this.props.cargarMovimientosAction(response.data);
-                console.log(response.data);
             })
             .catch(function (error) {
-                console.log(error);
+                
             })
     }
 
@@ -49,7 +39,7 @@ class MisMovimientos extends Component {
         }
 
         for (let movimiento of split[this.state.activePage]) {
-            rows.push(<Table.Row>
+            rows.push(<Table.Row key={movimiento.id}>
                 <Table.Cell>{movimiento.fecha}</Table.Cell>
                 <Table.Cell>{movimiento.tipo}</Table.Cell>
                 <Table.Cell>{movimiento.importe}</Table.Cell>
@@ -59,6 +49,25 @@ class MisMovimientos extends Component {
 
         return rows;
 
+    }
+
+    exportarMovimientos =()=>{
+        axios.get(URL_EXPORT + this.props.numeroCuenta)
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(function (error) {
+                console.log(error)
+            })
+    }
+
+    handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
+
+    calcularPaginas = () => {
+        let pages = this.props.movimientos.length / this.state.itemsPerPage;
+        if (this.props.movimientos.length % this.state.itemsPerPage === 0)
+            return pages;
+        return pages + 1;
     }
 
     render() {
@@ -99,18 +108,22 @@ class MisMovimientos extends Component {
 
                 <div>
                     <Link to='/misCuentas'>
-                        <Button floated='center'>
+                        <Button align ='center'>
                             Atrás
                         </Button>
                     </Link>
 
                     <Link to='/misMovimientos/CrearMovimiento'>
-                        <Button color='teal' floated='center'
+                        <Button color='teal' align='center'
                             icon labelPosition='left'>
                             <Icon name='payment' />
                             Crear Movimiento
                         </Button>
                     </Link>
+
+                    <Button color="green" onClick={() => this.exportarMovimientos()} floated='right' icon labelPosition='left' size='small'>
+                        <Icon name='external' /> Exportar movimientos
+                    </Button>
                 </div>
             </div>
         );
