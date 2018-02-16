@@ -34,7 +34,7 @@ class ModificarContraseña extends Component {
                 }
 
             )
-            console.log(response.data.password)
+            
         }
         )
 

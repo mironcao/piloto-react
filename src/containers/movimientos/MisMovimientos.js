@@ -20,7 +20,7 @@ class MisMovimientos extends Component {
     handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
 
     calcularPaginas = () => {
-        console.log("length", this.props.movimientos.length)
+        
         let pages = this.props.movimientos.length / this.state.itemsPerPage;
         if (this.props.movimientos.length % this.state.itemsPerPage === 0)
             return pages;
@@ -31,10 +31,10 @@ class MisMovimientos extends Component {
         axios.get(URL + this.props.numeroCuenta)
             .then(response => {
                 this.props.cargarMovimientosAction(response.data);
-                console.log(response.data);
+                
             })
             .catch(function (error) {
-                console.log(error);
+                
             })
     }
 
