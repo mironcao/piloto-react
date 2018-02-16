@@ -60,10 +60,13 @@ class TablaCliente extends Component {
         this.props.history.push("/Clientes/EditarCliente");
     }
     exportarClientes = () => {
+        this.setState({
+            exported: true
+        });
         axios.get("http://localhost:8080/clientes/export").then(response => {
             if (response.status === 200)
                 this.setState({
-                    exported: true
+                    exported: false
                 });
         });
     }
