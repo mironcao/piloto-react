@@ -63,7 +63,7 @@ class ListarTransferencias extends Component {
 		this.setState({
 			exported: true
 		});
-		axios.get("http://localhost:8080/transferencia/export").then(response => {
+		axios.get("http://localhost:8080/transferencia/export/"+ this.props.numeroCuenta).then(response => {
 			if (response.status === 200)
 				this.setState({
 					exported: false
