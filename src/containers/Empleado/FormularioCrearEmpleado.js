@@ -9,10 +9,11 @@ import * as validadores from '../Validadores/ValidadorPersona';
 class FormularioCrearEmpleado extends Component {
     constructor () {
         super();
-        this.state = {selectedOption: '', empleado: {
+        this.state = { selectedOption: '', sucursales: [], empleado: {
         dni: { value: '', valid: true }, nombre: { value: '', valid: true }, apellidos: { value: '', valid: true },
-        direccion: { value: '', valid: true }, fijo: { value: '', valid: true }, movil: { value: '', valid: true },
-        email: { value: '', valid: true }, sucursal: '', usuario: 'user', sucursales: []
+        direccion: { value: '', valid: true }, password: { value: '', valid: true }, repeatPassword: { value: '', valid: true }, 
+        fijo: { value: '', valid: true }, movil: { value: '', valid: true },
+        email: { value: '', valid: true }, sucursal: '', usuario: 'user', errorSucursal: false
     }}}
 
     componentDidMount() {
@@ -42,6 +43,7 @@ class FormularioCrearEmpleado extends Component {
                 nombre: empleado.nombre.value,
                 apellidos: empleado.apellidos.value,
                 direccion: empleado.direccion.value,
+                password: empleado.password.value,
                 fijo: empleado.fijo.value,
                 movil: empleado.movil.value,
                 email: empleado.email.value,
@@ -56,7 +58,7 @@ class FormularioCrearEmpleado extends Component {
     
 
     validarEmpleado() {
-        const validos = [true, true, true, true, true, true, true];
+        const validos = [true, true, true, true, true, true, true, true, true];
         var valido = true;
         if (!validadores.validarDNI(this.state.empleado.dni.value)) {
             validos[0] = false;
@@ -74,26 +76,42 @@ class FormularioCrearEmpleado extends Component {
             validos[3] = false;
             valido = false;
         }
-        if (!validadores.validateTelefonoFijo(this.state.empleado.fijo.value)) {
+        if (this.state.empleado.password.value.length < 8) {            
             validos[4] = false;
             valido = false;
         }
-        if (!validadores.validateTelefonoMovil(this.state.empleado.movil.value)) {
+        if (this.state.empleado.password.value !==  this.state.empleado.repeatPassword.value) {
             validos[5] = false;
             valido = false;
         }
-        if (!validadores.validarEmail(this.state.empleado.email.value)) {
+        if (!validadores.validateTelefonoFijo(this.state.empleado.fijo.value)) {
             validos[6] = false;
             valido = false;
         }
+        if (!validadores.validateTelefonoMovil(this.state.empleado.movil.value)) {
+            validos[7] = false;
+            valido = false;
+        }
+        if (!validadores.validarEmail(this.state.empleado.email.value)) {
+            validos[8] = false;
+            valido = false;
+        }
+        if (this.state.selectedOption === '') {
+            valido = false;
+            this.state.errorSucursal = true;
+        }
+        else
+            this.state.errorSucursal = false;
         const empleado = {
             dni: { value: this.state.empleado.dni.value, valid: validos[0] }, 
             nombre: { value: this.state.empleado.nombre.value, valid: validos[1] }, 
             apellidos: { value: this.state.empleado.apellidos.value, valid: validos[2] },
             direccion: { value: this.state.empleado.direccion.value, valid: validos[3] }, 
-            fijo: { value: this.state.empleado.fijo.value, valid: validos[4] }, 
-            movil: { value: this.state.empleado.movil.value, valid: validos[5] },
-            email: { value: this.state.empleado.email.value, valid: validos[6] }, 
+            password: { value: this.state.empleado.password.value, valid: validos[4] }, 
+            repeatPassword: { value: this.state.empleado.repeatPassword.value, valid: validos[5] }, 
+            fijo: { value: this.state.empleado.fijo.value, valid: validos[6] }, 
+            movil: { value: this.state.empleado.movil.value, valid: validos[7] },
+            email: { value: this.state.empleado.email.value, valid: validos[8] }, 
             sucursal: this.state.empleado.sucursal, usuario: this.state.empleado.usuario
         }
         this.setState( {
@@ -124,8 +142,9 @@ class FormularioCrearEmpleado extends Component {
     reiniciarCampos = () => {
         this.setState({selectedOption: '', empleado: {
             dni: { value: '', valid: true }, nombre: { value: '', valid: true }, apellidos: { value: '', valid: true },
+            password: { value: '', valid: true }, repeatPassword: { value: '', valid: true },
             direccion: { value: '', valid: true }, fijo: { value: '', valid: true }, movil: { value: '', valid: true },
-            email: { value: '', valid: true }, sucursal: '', usuario: 'user'
+            email: { value: '', valid: true }, sucursal: '', usuario: 'user', errorSucursal: false
         }})
     }
 
@@ -183,6 +202,30 @@ class FormularioCrearEmpleado extends Component {
                                 />
                                 {this.state.empleado.direccion.valid ? null : this.mostrarError('La dirección es incorrecta')}
                             </Form.Field>
+                            <Form.Field required>
+                            <label>Contraseña:</label>
+                                <Input
+                                    placeholder='Contraseña'
+                                    maxLength='32'
+                                    type='password'
+                                    name='password'
+                                    value={this.state.empleado.password.value}
+                                    onChange={this.handleChange}
+                                />
+                                {this.state.empleado.password.valid ? null : this.mostrarError('La contraseña debe tener un mínimo de 8 caracteres')}
+                            </Form.Field>
+                            <Form.Field required>
+                            <label>Repetir contraseña:</label>
+                                <Input
+                                    placeholder='Repetir contraseña'
+                                    maxLength='32'
+                                    type='password'
+                                    name='repeatPassword'
+                                    value={this.state.empleado.repeatPassword.value}
+                                    onChange={this.handleChange}
+                                />
+                                {this.state.empleado.repeatPassword.valid ? null : this.mostrarError('Las contraseña no son iguales')}
+                            </Form.Field>
                             <Form.Field>
                                 <label>Teléfono fijo:</label>
                                 <Input
@@ -222,6 +265,7 @@ class FormularioCrearEmpleado extends Component {
                                     this.handleChange(event, data)}}
                                     placeholder='Sucursal' fluid selection options={this.state.sucursales} 
                                     name='sucursal' value={this.state.selectedOption} />
+                                {this.state.errorSucursal ? this.mostrarError('Seleccione una sucursal') : null}
                             </Form.Field>
 
                             <Button onClick={() => this.createEmpleado(this.state.empleado)}
