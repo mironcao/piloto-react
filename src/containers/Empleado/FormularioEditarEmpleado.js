@@ -7,7 +7,10 @@ import { connect } from 'react-redux';
 import * as validadores from '../Validadores/ValidadorPersona';
 
 class FormularioEditarEmpleado extends Component {
-    state = { empleadoInicial: null, empleado: null, selectedOption: '', sucursales: [] }
+    state = { empleadoInicial: null, empleado: null, selectedOption: '', sucursales: [], 
+        oldPassword: { value: '', valid: true }, newPassword: { value: '', valid: true }, 
+        repeatPassword: { value: '', valid: true }, ogPassword: ''
+    }
 
     componentWillMount() {
         let empleadoSinValidaciones = this.props.empleados.filter((empleado) => empleado.dni === this.props.dni)[0]
@@ -19,6 +22,7 @@ class FormularioEditarEmpleado extends Component {
             nombre: { value: empleadoSinValidaciones.nombre, valid: true },
             apellidos: { value: empleadoSinValidaciones.apellidos, valid: true },
             direccion: { value: empleadoSinValidaciones.direccion, valid: true },
+            password: { value: empleadoSinValidaciones.password, valid: true },
             fijo: { value: empleadoSinValidaciones.fijo, valid: true },
             movil: { value: empleadoSinValidaciones.movil, valid: true },
             email: { value: empleadoSinValidaciones.email, valid: true },
@@ -26,7 +30,7 @@ class FormularioEditarEmpleado extends Component {
         }
         this.setState({
             empleadoInicial: { ...empleado },
-            empleado: empleado, selectedOption: empleado.sucursal.id
+            empleado: empleado, selectedOption: empleado.sucursal.id, ogPassword: empleado.password.value
         })
     }
 
@@ -52,17 +56,20 @@ class FormularioEditarEmpleado extends Component {
 
     reiniciarCampos = () => {
         let empleado = this.state.empleadoInicial;
-        this.setState({ empleado: { ...empleado }, selectedOption: empleado.sucursal.id })
+        this.setState({ empleado: { ...empleado }, selectedOption: empleado.sucursal.id, 
+            oldPassword: { value: '', valid: true }, newPassword: { value: '', valid: true }, 
+            repeatPassword: { value: '', valid: true }
+        })
     }
 
     actualizarEmpleado = () => {
-        
         if (this.validarEmpleado()) {
             let empleadoActualizado = {
                 dni: this.state.empleado.dni,
                 nombre: this.state.empleado.nombre.value,
                 apellidos: this.state.empleado.apellidos.value,
                 direccion: this.state.empleado.direccion.value,
+                password: this.state.newPassword.value,
                 fijo: this.state.empleado.fijo.value,
                 movil: this.state.empleado.movil.value,
                 email: this.state.empleado.email.value,
@@ -87,8 +94,16 @@ class FormularioEditarEmpleado extends Component {
         });
     }
 
+    handleChangeContraseña = (e, { name, value }) => {
+        let contraseña = this.state[name];
+        contraseña.value = value;
+        this.setState({
+            [name]: contraseña
+        });
+    }
+
     validarEmpleado() {
-        const validos = [true, true, true, true, true, true];
+        const validos = [true, true, true, true, true, true, true, true, true];
         var valido = true;
         if (!validadores.validarNombre(this.state.empleado.nombre.value)) {
             validos[0] = false;
@@ -114,18 +129,34 @@ class FormularioEditarEmpleado extends Component {
             validos[5] = false;
             valido = false;
         }
+        if (this.state.ogPassword !== this.state.oldPassword.value) {            
+            validos[6] = false;
+            valido = false;
+        }
+        if (this.state.newPassword.value.length < 8) {
+            validos[7] = false;
+            valido = false;
+        }
+        if (this.state.newPassword.value !== this.state.repeatPassword.value) {
+            validos[8] = false;
+            valido = false;
+        }
         const empleado = {
             dni: this.state.empleado.dni,
             nombre: { value: this.state.empleado.nombre.value, valid: validos[0] },
             apellidos: { value: this.state.empleado.apellidos.value, valid: validos[1] },
             direccion: { value: this.state.empleado.direccion.value, valid: validos[2] },
+            password: { value: this.state.newPassword, valid: validos[6] && validos[7] && validos[8]},
             fijo: { value: this.state.empleado.fijo.value, valid: validos[3] },
             movil: { value: this.state.empleado.movil.value, valid: validos[4] },
             email: { value: this.state.empleado.email.value, valid: validos[5] },
             sucursal: this.state.empleado.sucursal, usuario: this.state.empleado.usuario
         }
         this.setState({
-            empleado: empleado
+            empleado: empleado,
+            oldPassword: { value: this.state.oldPassword.value, valid: validos[6] },
+            newPassword: { value: this.state.newPassword.value, valid: validos[7] },
+            repeatPassword: { value: this.state.repeatPassword.value, valid: validos[8] }
         })
         return valido;
     }
@@ -177,6 +208,42 @@ class FormularioEditarEmpleado extends Component {
                                     onChange={this.handleChange}
                                 />
                                 {this.state.empleado.direccion.valid ? null : this.mostrarError('La dirección es incorrecta')}
+                            </Form.Field>
+                            <Form.Field required>
+                                <label>Antigua contraseña:</label>
+                                <Input
+                                    placeholder='Antigua contraseña'
+                                    maxLength='32'
+                                    type='password'
+                                    name='oldPassword'
+                                    value={this.state.oldPassword.value}
+                                    onChange={this.handleChangeContraseña}
+                                />
+                                {this.state.oldPassword.valid ? null : this.mostrarError('La contraseña no es correcta')}
+                            </Form.Field>
+                            <Form.Field required>
+                                <label>Nueva contraseña:</label>
+                                <Input
+                                    placeholder='Nueva contraseña'
+                                    maxLength='32'
+                                    type='password'
+                                    name='newPassword'
+                                    value={this.state.newPassword.value}
+                                    onChange={this.handleChangeContraseña}
+                                />
+                                {this.state.newPassword.valid ? null : this.mostrarError('La contraseña debe tener un mínimo de 8 caracteres')}
+                            </Form.Field>
+                            <Form.Field required>
+                                <label>Repetir contraseña:</label>
+                                <Input
+                                    placeholder='Nueva contraseña'
+                                    maxLength='32'
+                                    type='password'
+                                    name='repeatPassword'
+                                    value={this.state.repeatPassword.value}
+                                    onChange={this.handleChangeContraseña}
+                                />
+                                {this.state.repeatPassword.valid ? null : this.mostrarError('Las contraseñas no son iguales')}
                             </Form.Field>
                             <Form.Field>
                                 <label>Teléfono fijo:</label>
