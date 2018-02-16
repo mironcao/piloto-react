@@ -19,7 +19,6 @@ class TablaCliente extends Component {
     handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
 
     calcularPaginas = () => {
-        console.log("length", this.props.clientes.length)
         let pages = this.props.clientes.length / this.state.itemsPerPage;
         if (this.props.clientes.length % this.state.itemsPerPage === 0)
             return pages;

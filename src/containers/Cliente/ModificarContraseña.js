@@ -34,8 +34,7 @@ class ModificarContraseña extends Component {
                 }
 
             )
-            console.log(response.data.password)
-        }
+                }
         )
 
     }
@@ -121,19 +120,19 @@ class ModificarContraseña extends Component {
                         <Segment stacked>
                             <Form.Field required>
                                 <label >Contraseña antigua:</label>
-                                <Input focus placeholder='Contraseña antigua...'
+                                <Input focus placeholder='Contraseña antigua...' type="password"
                                     name="passwordAntigua" value={this.state.passwordAntigua.value} onChange={this.cambiarEstado} maxLength="32" />
                                 {this.state.passwordAntigua.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
                             <Form.Field required>
                                 <label >Nueva contraseña:</label>
-                                <Input focus placeholder='Nueva contraseña...'
+                                <Input focus placeholder='Nueva contraseña...' type="password"
                                     name="password" value={this.state.password.value} onChange={this.cambiarEstado} maxLength="32" />
                                 {this.state.password.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
                             <Form.Field required>
                                 <label >Repetir nueva contraseña:</label>
-                                <Input focus placeholder='Repetir nueva contraseña...'
+                                <Input focus placeholder='Repetir nueva contraseña...' type="password"
                                     name="repitPassword" value={this.state.repitPassword.value} onChange={this.cambiarEstado} maxLength="32" />
                                 {this.state.repitPassword.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>

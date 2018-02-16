@@ -6,7 +6,6 @@ import Header from 'semantic-ui-react/dist/commonjs/elements/Header/Header';
 import axios from 'axios';
 import Link from 'react-router-dom/Link';
 import * as estilo from '../css/Movimiento';
-
 /* Constantes */
 const URL = 'http://localhost:8080/movimiento/mismovimientos/';
 
@@ -20,7 +19,6 @@ class MisMovimientos extends Component {
     handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
 
     calcularPaginas = () => {
-        console.log("length", this.props.movimientos.length)
         let pages = this.props.movimientos.length / this.state.itemsPerPage;
         if (this.props.movimientos.length % this.state.itemsPerPage === 0)
             return pages;
@@ -31,7 +29,6 @@ class MisMovimientos extends Component {
         axios.get(URL + this.props.numeroCuenta)
             .then(response => {
                 this.props.cargarMovimientosAction(response.data);
-                console.log(response.data);
             })
             .catch(function (error) {
                 console.log(error);
@@ -49,7 +46,7 @@ class MisMovimientos extends Component {
         }
 
         for (let movimiento of split[this.state.activePage]) {
-            rows.push(<Table.Row>
+            rows.push(<Table.Row key={movimiento.id}>
                 <Table.Cell>{movimiento.fecha}</Table.Cell>
                 <Table.Cell>{movimiento.tipo}</Table.Cell>
                 <Table.Cell>{movimiento.importe}</Table.Cell>
@@ -99,13 +96,13 @@ class MisMovimientos extends Component {
 
                 <div>
                     <Link to='/misCuentas'>
-                        <Button floated='center'>
+                        <Button align ='center'>
                             Atrás
                         </Button>
                     </Link>
 
                     <Link to='/misMovimientos/CrearMovimiento'>
-                        <Button color='teal' floated='center'
+                        <Button color='teal' align='center'
                             icon labelPosition='left'>
                             <Icon name='payment' />
                             Crear Movimiento
