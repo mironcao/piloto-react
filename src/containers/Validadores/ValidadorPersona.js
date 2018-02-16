@@ -14,14 +14,14 @@
             .replace(/^[Z]/, '2');
 
         var letter = str.substr(-1);
-        var charIndex = parseInt(nie.substr(0, 8)) % 23;
+        var charIndex = parseInt(nie.substr(0, 8),10) % 23;
         if (validChars.charAt(charIndex) === letter) 
             return true;
         return false;
     }
     
     export const validarEmail=(email) => {
-        var expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        var expr = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
         if (!expr.test(email) && email.length!==0) {
             return false;
         }

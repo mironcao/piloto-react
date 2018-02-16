@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button, Checkbox, Icon, Table } from 'semantic-ui-react'
-import TarjetaCard from "./tarjeta-card";
 
 export default function TarjetasListAdmin(props) {
   const tarjetasRows = () => {

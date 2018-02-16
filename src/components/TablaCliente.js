@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Table, Icon, Pagination } from 'semantic-ui-react';
+import { Button, Table, Icon, Pagination , Message} from 'semantic-ui-react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions';
@@ -7,6 +7,9 @@ import { withRouter } from 'react-router-dom';
 
 
 class TablaCliente extends Component {
+    state = {
+        exported: false
+    }
 
     constructor() {
         super();
@@ -57,8 +60,22 @@ class TablaCliente extends Component {
         this.props.editarCliente(dni);
         this.props.history.push("/Clientes/EditarCliente");
     }
+    exportarClientes = () => {
+        axios.get("http://localhost:8080/clientes/export").then(response => {
+            if (response.status === 200)
+                this.setState({
+                    exported: true
+                });
+        });
+    }
 
     render() {
+        let mensajeExportar = this.state.exported ? (<Message icon>
+            <Icon name='circle notched' loading />
+            <Message.Content>
+                <Message.Header>Exportando clientes</Message.Header>
+            </Message.Content>
+        </Message>) : null;
         return (
             <Table celled color='teal' key={'blue'}>
                 <Table.Header>
@@ -83,8 +100,11 @@ class TablaCliente extends Component {
                             <Button color="teal" onClick={() => this.props.history.push('/Clientes/AñadirCliente')} floated='right' icon labelPosition='left' size='small'>
                                 <Icon name='user' /> Añadir Cliente
                                 </Button>
+                            <Button color="green" onClick={() => this.exportarClientes()} floated='right' icon labelPosition='left' size='small'>
+                                <Icon name='external' /> Exportar clientes
+                                            </Button>
+                            {mensajeExportar}
                         </Table.HeaderCell>
-
                     </Table.Row>
                 </Table.Footer>
             </Table>

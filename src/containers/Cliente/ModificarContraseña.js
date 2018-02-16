@@ -4,11 +4,7 @@ import axios from 'axios';
 import * as actions from '../../store/actions';
 import { Button, Input, Message, Grid, Form } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
-import * as validadores from '../Validadores/ValidadorPersona';
 import Segment from 'semantic-ui-react/dist/commonjs/elements/Segment/Segment';
-import FormField from 'semantic-ui-react/dist/commonjs/collections/Form/FormField';
-import FormDropdown from 'semantic-ui-react/dist/commonjs/collections/Form/FormDropdown';
-import Label from 'semantic-ui-react/dist/commonjs/elements/Label/Label';
 
 
 class ModificarContraseña extends Component {
