@@ -29,9 +29,9 @@ class Banco extends Component {
   logout = () => {
     axios.post('http://localhost:8080/login/out')
     .then(response => {
-      console.log(response)
+      
     }).catch(function (error){
-      console.log(error)
+      
     })
     this.props.logout();
   }
@@ -42,7 +42,7 @@ class Banco extends Component {
   }
 
   mostrarLinks = () => {
-    console.log(this.props.user);
+    
 
     if (this.props.user.role === "USER") {
       return (

@@ -56,7 +56,7 @@ class FormularioEditarEmpleado extends Component {
     }
 
     actualizarEmpleado = () => {
-        console.log(this.state.empleado)
+        
         if (this.validarEmpleado()) {
             let empleadoActualizado = {
                 dni: this.state.empleado.dni,

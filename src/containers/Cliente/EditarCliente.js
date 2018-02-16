@@ -59,7 +59,7 @@ class EditarCliente extends Component {
 
 
     reiniciarFormulario() {
-        console.log(this.state.actualizado)
+        
         if (!this.state.actualizado) {
             this.setState(
                 {

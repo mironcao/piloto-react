@@ -37,11 +37,11 @@ class CreateMovimiento extends Component {
                 {importe: this.state.importe.value, tipo: this.state.tipo.value, 
                 descripcion: this.state.descripcion.value, usuario: 'pepe'})
                 .then(function (response){
-                    console.log(response);
+                    
                 })
                 .then(response => this.props.history.push('/misMovimientos') )
                 .catch(function (error){
-                    console.log(error);
+                    
             })
         }
         else{

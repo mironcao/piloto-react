@@ -31,7 +31,7 @@ class MisMovimientos extends Component {
                 this.props.cargarMovimientosAction(response.data);
             })
             .catch(function (error) {
-                console.log(error);
+                
             })
     }
 
