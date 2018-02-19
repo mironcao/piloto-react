@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { Button, Checkbox, Icon, Table, Pagination, Input } from 'semantic-ui-react';
-import TarjetaCard from "./tarjeta-card";
+import { Button, Checkbox, Icon, Table, Pagination } from 'semantic-ui-react';
 import TarjetaFormAdminNew from './tarjeta-form-admin-new';
 import { deleteTarjetas as deleteTarjetasAction } from "../actions/tarjetas-actions";
 import axios from "axios";
@@ -97,7 +96,7 @@ class TarjetasListAdmin extends Component {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {this.state.newTarjetaRowVisibility == true && <TarjetaFormAdminNew />}
+          {this.state.newTarjetaRowVisibility === true && <TarjetaFormAdminNew />}
           {this.tarjetasRows()}
         </Table.Body>
         <Table.Footer fullWidth>
