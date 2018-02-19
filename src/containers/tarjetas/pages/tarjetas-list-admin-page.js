@@ -3,8 +3,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import TarjetasListAdmin from '../components/tarjetas-list-admin';
-import { fetchTarjetas as fetchTarjetasAction, deleteTarjeta as deleteTarjetaAction } from "../actions/tarjetas-actions";
-import { Message } from 'semantic-ui-react';
+import { fetchTarjetas as fetchTarjetasAction } from "../actions/tarjetas-actions";
+import { Message, Header, Container } from 'semantic-ui-react';
 import axios from "axios";
 
 
@@ -40,27 +40,16 @@ class TarjetasListAdminPage extends Component {
       })
   }
 
-  eliminarTarjeta = (tarjeta) => {
-    axios.delete(`${URL}/${tarjeta.numeroTarjeta}`)
-      .then(response => {
-        this.props.deleteTarjeta(this.props.tarjetas.filter(item => item.numeroTarjeta !== tarjeta.numeroTarjeta));
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }
-
-  
-
-
   render() {
     return (
-      <div>
-        <h1>Listado de tarjetas</h1>
-        <TarjetasListAdmin tarjetas={this.props.tarjetas}
-          deleteTarjeta={this.eliminarTarjeta} />
+      <Container style={{marginTop: '3em'}}>
+        <Header as='h2' color='teal' textAlign='center'>Listado de tarjetas</Header>
+        {this.state.dataState === DATA_STATE.OK && 
+          <TarjetasListAdmin tarjetas={this.props.tarjetas}
+            createTarjeta={this.crearTarjeta} />
+        }
         {this.printError()}
-      </div>
+      </Container>
     )
   }
 
@@ -90,9 +79,6 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchTarjetas: (tarjetas) => {
       dispatch(fetchTarjetasAction(tarjetas))
-    },
-    deleteTarjeta: tarjeta => {
-      dispatch(deleteTarjetaAction(tarjeta))
     }
   }
 }

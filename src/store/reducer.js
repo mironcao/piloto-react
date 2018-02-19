@@ -217,6 +217,18 @@ const reducer = (state = initialState, action) => {
 			};
 		}
 
+		case 'DELETE_TARJETAS': {
+			console.log(action.payload);			
+			let tarjetas = state.tarjetas.filter((tarjeta)=>!action.payload.find((tj)=>tj === tarjeta.numeroTarjeta));
+			console.log(tarjetas);
+			
+			return {
+				...state,
+				errors: {},
+				tarjetas: tarjetas
+			};
+		}
+
 		default:
 			return state;
 	}
