@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Segment, Grid, Message, Input } from 'semantic-ui-react';
+import { Button, Form, Segment, Grid, Message, Input, Icon } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import * as actions from "../../store/actions";
@@ -9,11 +9,12 @@ import * as validadores from '../Validadores/ValidadorPersona';
 class FormularioCrearEmpleado extends Component {
     constructor () {
         super();
-        this.state = { selectedOption: '', sucursales: [], empleado: {
+        this.state = { selectedOption: '', sucursales: [], verContraseñaNueva: 'password', 
+        verContraseñaRepetida: 'password', empleado: {
         dni: { value: '', valid: true }, nombre: { value: '', valid: true }, apellidos: { value: '', valid: true },
         direccion: { value: '', valid: true }, password: { value: '', valid: true }, repeatPassword: { value: '', valid: true }, 
         fijo: { value: '', valid: true }, movil: { value: '', valid: true },
-        email: { value: '', valid: true }, sucursal: '', usuario: 'user', errorSucursal: false
+        email: { value: '', valid: true }, sucursal: '', usuario: 'user', errorSucursal: false,
     }}}
 
     componentDidMount() {
@@ -148,6 +149,17 @@ class FormularioCrearEmpleado extends Component {
         }})
     }
 
+    mostrarContraseña = (name) => {
+        if (this.state[name] === 'text')
+            this.setState({
+                [name]: 'password'
+            })
+        else
+            this.setState({
+                [name]: 'text'
+            })
+    }
+
     render() {
         return (
             <Grid
@@ -207,10 +219,14 @@ class FormularioCrearEmpleado extends Component {
                                 <Input
                                     placeholder='Contraseña'
                                     maxLength='32'
-                                    type='password'
+                                    type={this.state.verContraseñaNueva}
                                     name='password'
                                     value={this.state.empleado.password.value}
                                     onChange={this.handleChange}
+                                    icon={
+                                        <Icon name='eye' size='large'  
+                                        onMouseDown={() => {this.mostrarContraseña('verContraseñaNueva')}}
+                                        onMouseUp={() => {this.mostrarContraseña('verContraseñaNueva')}} link/>}
                                 />
                                 {this.state.empleado.password.valid ? null : this.mostrarError('La contraseña debe tener un mínimo de 8 caracteres')}
                             </Form.Field>
@@ -219,10 +235,14 @@ class FormularioCrearEmpleado extends Component {
                                 <Input
                                     placeholder='Repetir contraseña'
                                     maxLength='32'
-                                    type='password'
+                                    type={this.state.verContraseñaRepetida} 
                                     name='repeatPassword'
                                     value={this.state.empleado.repeatPassword.value}
                                     onChange={this.handleChange}
+                                    icon={
+                                        <Icon name='eye' size='large'  
+                                        onMouseDown={() => {this.mostrarContraseña('verContraseñaRepetida')}}
+                                        onMouseUp={() => {this.mostrarContraseña('verContraseñaRepetida')}} link/>}
                                 />
                                 {this.state.empleado.repeatPassword.valid ? null : this.mostrarError('Las contraseñas no son iguales')}
                             </Form.Field>

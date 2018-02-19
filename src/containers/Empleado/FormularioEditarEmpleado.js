@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Form, Segment, Grid, Message, Input } from 'semantic-ui-react';
+import { Button, Form, Segment, Grid, Message, Input, Icon } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 import * as actions from "../../store/actions";
@@ -9,7 +9,8 @@ import * as validadores from '../Validadores/ValidadorPersona';
 class FormularioEditarEmpleado extends Component {
     state = { empleadoInicial: null, empleado: null, selectedOption: '', sucursales: [], 
         oldPassword: { value: '', valid: true }, newPassword: { value: '', valid: true }, 
-        repeatPassword: { value: '', valid: true }, ogPassword: ''
+        repeatPassword: { value: '', valid: true }, ogPassword: '', verContraseñaAntigua: 'password',
+        verContraseñaNueva: 'password', verContraseñaRepetida: 'password'
     }
 
     componentWillMount() {
@@ -169,6 +170,17 @@ class FormularioEditarEmpleado extends Component {
         )
     }
 
+    mostrarContraseña = (name) => {
+        if (this.state[name] === 'text')
+            this.setState({
+                [name]: 'password'
+            })
+        else
+            this.setState({
+                [name]: 'text'
+            })
+    }
+
     render() {
         return (
             <Grid
@@ -214,10 +226,14 @@ class FormularioEditarEmpleado extends Component {
                                 <Input
                                     placeholder='Antigua contraseña'
                                     maxLength='32'
-                                    type='password'
+                                    type={this.state.verContraseñaAntigua}
                                     name='oldPassword'
                                     value={this.state.oldPassword.value}
                                     onChange={this.handleChangeContraseña}
+                                    icon={
+                                        <Icon name='eye' size='large'  
+                                        onMouseDown={() => {this.mostrarContraseña('verContraseñaAntigua')}}
+                                        onMouseUp={() => {this.mostrarContraseña('verContraseñaAntigua')}} link/>}
                                 />
                                 {this.state.oldPassword.valid ? null : this.mostrarError('La contraseña no es correcta')}
                             </Form.Field>
@@ -226,22 +242,30 @@ class FormularioEditarEmpleado extends Component {
                                 <Input
                                     placeholder='Nueva contraseña'
                                     maxLength='32'
-                                    type='password'
+                                    type={this.state.verContraseñaNueva} 
                                     name='newPassword'
                                     value={this.state.newPassword.value}
                                     onChange={this.handleChangeContraseña}
+                                    icon={
+                                        <Icon name='eye' size='large'  
+                                        onMouseDown={() => {this.mostrarContraseña('verContraseñaNueva')}}
+                                        onMouseUp={() => {this.mostrarContraseña('verContraseñaNueva')}} link/>}
                                 />
                                 {this.state.newPassword.valid ? null : this.mostrarError('La contraseña debe tener un mínimo de 8 caracteres')}
                             </Form.Field>
                             <Form.Field required>
                                 <label>Repetir contraseña:</label>
                                 <Input
-                                    placeholder='Nueva contraseña'
+                                    placeholder='Repetir contraseña'
                                     maxLength='32'
-                                    type='password'
+                                    type={this.state.verContraseñaRepetida} 
                                     name='repeatPassword'
                                     value={this.state.repeatPassword.value}
                                     onChange={this.handleChangeContraseña}
+                                    icon={
+                                        <Icon name='eye' size='large'  
+                                        onMouseDown={() => {this.mostrarContraseña('verContraseñaRepetida')}}
+                                        onMouseUp={() => {this.mostrarContraseña('verContraseñaRepetida')}} link/>}
                                 />
                                 {this.state.repeatPassword.valid ? null : this.mostrarError('Las contraseñas no son iguales')}
                             </Form.Field>
