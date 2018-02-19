@@ -10,13 +10,13 @@ class ListSucursales extends Component {
 
     state = {
         numberOfPages: 0,
-        pageSize: 10,
+        pageSize: 5,
         activePage: 1,
         sucursalesPaginadas: []
     }
 
     paginate = (pageNumber) => {
-        let numberOfPages = Math.floor(this.props.sucursales.length / 10);
+        let numberOfPages = Math.floor(this.props.sucursales.length / this.state.pageSize);
         const initIndex = (pageNumber - 1) * this.state.pageSize;
         if (this.props.sucursales.length % this.state.pageSize !== 0)
             numberOfPages += 1;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Input, Message, Dropdown, Grid, Form } from 'semantic-ui-react';
+import { Button, Input, Message, Dropdown, Grid, Form, Icon} from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import * as validadores from '../Validadores/ValidadorPersona'
 import * as actions from '../../store/actions';
@@ -14,7 +14,7 @@ class AñadirCliente extends Component {
             clientes: [], sucursalId: "", DNI: { value: "", valid: true }, nombre: { value: "", valid: true },
             apellidos: { value: "", valid: true }, direccion: { value: "", valid: true }, email: { value: "", valid: true },
             fijo: { value: "", valid: true }, movil: { value: "", valid: true}, sucursales: [], password: { value: "", valid: true},
-            repitPassword: { value: "", valid: true} ,message:""}}
+            repitPassword: { value: "", valid: true} ,message:"",  verContraseña:"password",verContraseñaNueva:"password"}}
         
 
     componentDidMount() {
@@ -23,7 +23,7 @@ class AñadirCliente extends Component {
                 .then(response => {
                     let listaSucursales = []
                     response.data.map((sucursal) => {
-                        listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
+                        return listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
                     })
                     this.setState({ sucursales: listaSucursales })
                     this.props.cargarSucursales(response.data)
@@ -33,7 +33,7 @@ class AñadirCliente extends Component {
         } else {
             let listaSucursales = []
             this.props.sucursales.map((sucursal) => {
-                listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
+                return listaSucursales.push({ text: sucursal.nombre, value: sucursal.id })
             })
             this.setState({ sucursales: listaSucursales })
         }
@@ -153,7 +153,7 @@ class AñadirCliente extends Component {
     }
 
     cambiarEstado = (event, { name, value }) => {
-        this.setState({ [name]: { value: value, valid: true } })
+        this.setState({ [name]: { value: value, valid: true,  } })
     }
     mostrarError(tipo) {
         return (
@@ -162,6 +162,18 @@ class AñadirCliente extends Component {
             </Message>
         )
     }
+
+    mostrarContraseña=(name) =>{
+        if(this.state[name] === "text")
+        this.setState({
+            [name]:"password"
+        })
+        else
+        this.setState({
+            [name]:"text"
+        })
+    }
+
     mostrarErrorContraseña() {
         return (
             <Message negative>
@@ -209,31 +221,35 @@ class AñadirCliente extends Component {
                             </Form.Field>
                             <Form.Field required>
                                 <label >Contraseña:</label>
-                                <Input focus placeholder='Contraseña...'
-                                    name="password" type='password' value={this.state.password.value} onChange={this.cambiarEstado}  maxLength="32" />
+                                <Input focus placeholder='Contraseña...' type={this.state.verContraseña} 
+                            icon={<Icon name='eye' size="large" onMouseDown={()=>{this.mostrarContraseña("verContraseña")}}
+                            onMouseUp={()=>{this.mostrarContraseña("verContraseña")}} link/>}
+                                    name="password" value={this.state.password.value} onChange={this.cambiarEstado} maxLength="32" />
                                 {this.state.password.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
                             <Form.Field required>
                                 <label >Repetir contraseña:</label>
-                                <Input focus placeholder='Repetir contraseña...'
-                                    type='password' name="repitPassword" value={this.state.repitPassword.value} onChange={this.cambiarEstado}   maxLength="32" />
+                                <Input focus placeholder='Repetir contraseña...'type={this.state.verContraseñaNueva} 
+                            icon={<Icon name='eye' size="large"  onMouseDown={()=>{this.mostrarContraseña("verContraseñaNueva")}}
+                            onMouseUp={()=>{this.mostrarContraseña("verContraseñaNueva")}} link/>}
+                                    name="repitPassword" value={this.state.repitPassword.value} onChange={this.cambiarEstado} maxLength="32" />
                                 {this.state.repitPassword.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
                             <Form.Field >
                                 <label >Email:</label>
-                                <Input focus labelPosition="right corner" placeholder='Email...'
+                                <Input focus placeholder='Email...'
                                     name="email" value={this.state.email.value} onChange={this.cambiarEstado} />
                                 {this.state.email.valid ? null : this.mostrarError("email")}
                             </Form.Field>
                             <Form.Field >
                                 <label >Telefono fijo:</label>
-                                <Input focus labelPosition="rigth corner" placeholder='Fijo...'
+                                <Input focus placeholder='Fijo...'
                                     name="fijo" value={this.state.fijo.value} onChange={this.cambiarEstado} />
                                 {this.state.fijo.valid ? null : this.mostrarError("fijo")}
                             </Form.Field>
                             <Form.Field >
                                 <label >Telefono Movil:</label>
-                                <Input focus labelPosition="rigth corner" placeholder='Movil...'
+                                <Input focus  placeholder='Movil...'
                                     name="movil" value={this.state.movil.value} onChange={this.cambiarEstado} />
                                 {this.state.movil.valid ? null : this.mostrarError("movil")}
                             </Form.Field>
@@ -248,6 +264,9 @@ class AñadirCliente extends Component {
                             </Form.Field>
                         </Segment>
                     </Form>
+                    <Message className='mensajeObligatorio'>
+                        (*) Campos obligatorios
+                    </Message>
                 </Grid.Column>
             </Grid>
         )

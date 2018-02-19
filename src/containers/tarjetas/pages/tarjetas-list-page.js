@@ -22,9 +22,9 @@ class TarjetasListPage extends Component {
   };
 
   componentDidMount() {
-    console.log("---------------------------------");
-    console.log(`Listado tarjetas ---> DNI:${this.props.dni}`);
-    console.log("---------------------------------");
+    
+    
+    
     
     axios.get(`${URL}/${this.props.dni}`)
       .then(response => {
@@ -46,7 +46,7 @@ class TarjetasListPage extends Component {
         this.props.deleteTarjeta(this.props.tarjetas.filter(item => item.numeroTarjeta !== tarjeta.numeroTarjeta));
       })
       .catch(error => {
-        console.log(error);
+        
       })
   }
 

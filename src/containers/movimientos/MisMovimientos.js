@@ -1,40 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from "../../store/actions";
-import { Table, Button, Icon, Pagination } from 'semantic-ui-react'
+import { Table, Button, Icon, Pagination, Message } from 'semantic-ui-react'
 import Header from 'semantic-ui-react/dist/commonjs/elements/Header/Header';
 import axios from 'axios';
 import Link from 'react-router-dom/Link';
 import * as estilo from '../css/Movimiento';
-
 /* Constantes */
 const URL = 'http://localhost:8080/movimiento/mismovimientos/';
+
+const URL_EXPORT = 'http://localhost:8080/movimiento/export/';
 
 class MisMovimientos extends Component {
 
     constructor() {
         super();
-        this.state = { itemsPerPage: 5, activePage: 1 }
-    }
-
-    handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
-
-    calcularPaginas = () => {
-        console.log("length", this.props.movimientos.length)
-        let pages = this.props.movimientos.length / this.state.itemsPerPage;
-        if (this.props.movimientos.length % this.state.itemsPerPage === 0)
-            return pages;
-        return pages + 1;
+        this.state = { itemsPerPage: 5, activePage: 1, 
+            export:{enabled: false, valido:true} }
     }
 
     componentDidMount() {
         axios.get(URL + this.props.numeroCuenta)
             .then(response => {
                 this.props.cargarMovimientosAction(response.data);
-                console.log(response.data);
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch(error => {
+                
             })
     }
 
@@ -49,7 +40,7 @@ class MisMovimientos extends Component {
         }
 
         for (let movimiento of split[this.state.activePage]) {
-            rows.push(<Table.Row>
+            rows.push(<Table.Row key={movimiento.id}>
                 <Table.Cell>{movimiento.fecha}</Table.Cell>
                 <Table.Cell>{movimiento.tipo}</Table.Cell>
                 <Table.Cell>{movimiento.importe}</Table.Cell>
@@ -61,14 +52,62 @@ class MisMovimientos extends Component {
 
     }
 
+    exportarMovimientos =()=>{
+        axios.get(URL_EXPORT + this.props.numeroCuenta)
+            .then(response => {
+                this.exportCorrecto();
+            })
+            .catch(error => {
+                this.exportIncorrecto();
+            })
+    }
+
+    handlePaginationChange = (e, { activePage }) => this.setState({ activePage })
+
+    calcularPaginas = () => {
+        let pages = this.props.movimientos.length / this.state.itemsPerPage;
+        if (this.props.movimientos.length % this.state.itemsPerPage === 0)
+            return pages;
+        return pages + 1;
+    }
+
+    exportCorrecto=()=>{
+        this.setState({export:{
+            enabled: true,
+            valido: true
+        }})
+    }
+
+    exportIncorrecto=()=>{
+        this.setState({export:{
+            enabled: true,
+            valido: false
+        }})
+    }
+
+    printMensajeOk=()=>{
+        return(
+            <Message positive>
+                <Message.Header>Correcto</Message.Header>
+                <p>Los movimientos se han exportado correctamente</p>
+            </Message>
+        );
+    }
+
+    printMensajeError=()=>{
+        return(
+            <Message negative>
+                <Message.Header>Error</Message.Header>
+                <p>No hay movimientos o no se han podido exportar</p>
+            </Message>
+        );
+    }
+
     render() {
         return (
             <div style={estilo.align}>
                 <br />
                 <Header as='h2' color="teal">Mis Movimientos</Header>
-                <Header.Subheader>
-                    Movimientos asociados a la cuenta: {this.props.numeroCuenta}
-                </Header.Subheader>
                 <br />
                 <div>
                     <Table celled selectable color="teal">
@@ -89,28 +128,41 @@ class MisMovimientos extends Component {
                         <Table.Footer>
                             <Table.Row>
                                 <Table.HeaderCell colSpan='4'>
-                                    <Pagination defaultActivePage={1} onPageChange={this.handlePaginationChange} totalPages={parseInt(this.calcularPaginas(), 10)} />
+                                    <Link to='/misCuentas'>
+                                        <Button floated='left'>
+                                        Atrás
+                                        </Button>
+                                    </Link>    
+
+                                    <Link to='/misMovimientos/CrearMovimiento'>
+                                        <Button color='teal' 
+                                            icon labelPosition='left'>
+                                            <Icon name='payment' />
+                                            Crear Movimiento
+                                        </Button>
+                                    </Link>
+
+                                    <Button color="green" onClick={() => this.exportarMovimientos()} 
+                                        floated='right' icon labelPosition='left' size='small'>
+                                        <Icon name='external' /> Exportar movimientos
+                                    </Button>
                                 </Table.HeaderCell>
                             </Table.Row>
+                        </Table.Footer>
+                        <Table.Footer>
+                            <Table.Row>
+                                <Table.HeaderCell colSpan='4'>
+                                    <Pagination floated='right' defaultActivePage={1} onPageChange={this.handlePaginationChange} totalPages={parseInt(this.calcularPaginas(), 10)} />
+                                </Table.HeaderCell>
+                               </Table.Row>
                         </Table.Footer>
                     </Table>
                     <br />
                 </div>
-
+                <br/>
                 <div>
-                    <Link to='/misCuentas'>
-                        <Button floated='center'>
-                            Atrás
-                        </Button>
-                    </Link>
-
-                    <Link to='/misMovimientos/CrearMovimiento'>
-                        <Button color='teal' floated='center'
-                            icon labelPosition='left'>
-                            <Icon name='payment' />
-                            Crear Movimiento
-                        </Button>
-                    </Link>
+                    {this.state.export.enabled & this.state.export.valido ? this.printMensajeOk() : null}
+                    {this.state.export.enabled & !this.state.export.valido ? this.printMensajeError() : null}
                 </div>
             </div>
         );

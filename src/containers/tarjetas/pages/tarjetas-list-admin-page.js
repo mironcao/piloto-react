@@ -1,4 +1,3 @@
-// src/pages/titular-list-page.js
 
 import React, { Component } from 'react';
 import { connect } from "react-redux";
@@ -22,10 +21,6 @@ class TarjetasListAdminPage extends Component {
   };
 
   componentDidMount() {
-    console.log("---------------------------------");
-    console.log(`Listado tarjetas ---> DNI:${this.props.dni}`);
-    console.log("---------------------------------");
-    
     axios.get(`${URL}`)
       .then(response => {
         this.props.fetchTarjetas(response.data);
