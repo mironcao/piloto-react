@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Button, Input, Message, Dropdown, Grid, Form } from 'semantic-ui-react';
+import { Button, Input, Message, Dropdown, Grid, Form, Icon} from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import * as validadores from '../Validadores/ValidadorPersona'
 import * as actions from '../../store/actions';
@@ -14,7 +14,7 @@ class AñadirCliente extends Component {
             clientes: [], sucursalId: "", DNI: { value: "", valid: true }, nombre: { value: "", valid: true },
             apellidos: { value: "", valid: true }, direccion: { value: "", valid: true }, email: { value: "", valid: true },
             fijo: { value: "", valid: true }, movil: { value: "", valid: true}, sucursales: [], password: { value: "", valid: true},
-            repitPassword: { value: "", valid: true} ,message:""}}
+            repitPassword: { value: "", valid: true} ,message:"",  verContraseña:"password",verContraseñaNueva:"password"}}
         
 
     componentDidMount() {
@@ -162,6 +162,18 @@ class AñadirCliente extends Component {
             </Message>
         )
     }
+
+    mostrarContraseña=(name) =>{
+        if(this.state[name] === "text")
+        this.setState({
+            [name]:"password"
+        })
+        else
+        this.setState({
+            [name]:"text"
+        })
+    }
+
     mostrarErrorContraseña() {
         return (
             <Message negative>
@@ -209,14 +221,18 @@ class AñadirCliente extends Component {
                             </Form.Field>
                             <Form.Field required>
                                 <label >Contraseña:</label>
-                                <Input focus placeholder='Contraseña...'
-                                    name="password" type='password' value={this.state.password.value} onChange={this.cambiarEstado}  maxLength="32" />
+                                <Input focus placeholder='Contraseña...' type={this.state.verContraseña} 
+                            icon={<Icon name='eye' size="large" onMouseDown={()=>{this.mostrarContraseña("verContraseña")}}
+                            onMouseUp={()=>{this.mostrarContraseña("verContraseña")}} link/>}
+                                    name="password" value={this.state.password.value} onChange={this.cambiarEstado} maxLength="32" />
                                 {this.state.password.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
                             <Form.Field required>
                                 <label >Repetir contraseña:</label>
-                                <Input focus placeholder='Repetir contraseña...'
-                                    type='password' name="repitPassword" value={this.state.repitPassword.value} onChange={this.cambiarEstado}   maxLength="32" />
+                                <Input focus placeholder='Repetir contraseña...'type={this.state.verContraseñaNueva} 
+                            icon={<Icon name='eye' size="large"  onMouseDown={()=>{this.mostrarContraseña("verContraseñaNueva")}}
+                            onMouseUp={()=>{this.mostrarContraseña("verContraseñaNueva")}} link/>}
+                                    name="repitPassword" value={this.state.repitPassword.value} onChange={this.cambiarEstado} maxLength="32" />
                                 {this.state.repitPassword.valid ? null : this.mostrarErrorContraseña()}
                             </Form.Field>
                             <Form.Field >
