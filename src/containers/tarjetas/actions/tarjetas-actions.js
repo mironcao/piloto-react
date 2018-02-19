@@ -19,3 +19,10 @@ export function deleteTarjeta(tarjetas) {
     payload: tarjetas
   }
 }
+
+export function deleteTarjetas(tarjetas) {
+  return {
+    type: 'DELETE_TARJETAS',
+    payload: tarjetas
+  }
+}
