@@ -83,7 +83,8 @@ class TablaEmpleado extends Component {
                                 <Button className="option-buttons" icon='edit' color='blue'
                                     onClick={() => this.modificarEmpleado(empleado.dni)} />
                                 <Button className="option-buttons" icon='delete' color='red' 
-                                    onClick={() => this.deleteEmpleado(empleado.dni)} />
+                                    onClick={() => { if (window.confirm('¿Está seguro de que desea eliminar el empleado ' + empleado.dni + '?'))
+                                                        this.deleteEmpleado(empleado.dni)}} />
                             </Table.Cell>
                         </Table.Row>
                     )}
