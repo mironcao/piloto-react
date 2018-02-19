@@ -91,7 +91,7 @@ class MisCuentas extends Component {
 
 	gestionarTitulares = (numeroCuenta) => {
 		this.props.listarMovimientos(numeroCuenta);
-		this.props.history.push('/titulares/list');
+		this.props.history.push('/titulares');
 	}
 
 	mostrarCuentas = () => {

@@ -13,15 +13,15 @@ class GestionTitulares extends Component {
       return (
         <Container>
           <div className="ui two item menu">
-            <NavLink className="item" activeClassName="active" exact to="/titulares/list">
+            <NavLink className="item" activeClassName="active" exact to="/titulares">
               Listado de titulares
             </NavLink>
             <NavLink className="item" activeClassName="active" exact to="/titulares/new">
               Añadir titular
             </NavLink>
           </div>
-          <Route exact path="/titulares/list" component={TitularesListPage}/>
-          <Route path="/titulares/new" component={TitularFormPage}/>
+          <Route exact path="/titulares/new" component={TitularFormPage}/>
+          <Route exact path="/titulares" component={TitularesListPage}/>
         </Container>
       );
     }

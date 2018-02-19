@@ -119,7 +119,6 @@ class Banco extends Component {
           <Route path="/ListarClientes" component={ListarCliente} />
           <Route path="/Clientes/AñadirCliente" component={AñadirCliente} />
           <Route path="/Clientes/EditarCliente" component={EditarCliente} />
-          <Route path="/titulares" component={GestionTitulares} />
           <Route path="/empleado" component={Empleado} />
           <Route path="/nuevoEmpleado" component={NuevoEmpleado} />
           <Route path="/modificarEmpleado" component={ModificarEmpleado} />
