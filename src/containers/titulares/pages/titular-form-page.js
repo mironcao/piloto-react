@@ -19,7 +19,7 @@ class TitularFormPage extends Component {
     axios.post(`${URL}/new/${this.props.ncuenta}`, titular)
       .then(response => {         
         this.setState({ redirect:true });
-        this.addTitular(response.data)
+        this.props.addTitular(response.data)
       })
   }
 
@@ -28,7 +28,7 @@ class TitularFormPage extends Component {
       <div>
         {
           this.state.redirect ?
-          <Redirect to="/titulares/list" /> :
+          <Redirect to="/titulares" /> :
           <TitularForm contact={this.props.titular} loading={this.props.loading} onSubmit={this.submit} />
         }
       </div>
