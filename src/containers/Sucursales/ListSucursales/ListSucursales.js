@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ListItemSucursal from './ListItemSucursal/ListItemSucursal';
 import EditItemSucursal from './EdittemSucursal/EdittemSucursal';
-import { Table, Pagination } from 'semantic-ui-react';
+import { Table, Pagination, Message, Icon, Button } from 'semantic-ui-react';
 import axios from 'axios';
 import * as actions from '../../../store/actions';
 import { connect } from 'react-redux';
@@ -12,7 +12,9 @@ class ListSucursales extends Component {
         numberOfPages: 0,
         pageSize: 5,
         activePage: 1,
-        sucursalesPaginadas: []
+        sucursalesPaginadas: [],
+        showEdit: false,
+        exported: true
     }
 
     paginate = (pageNumber) => {
@@ -41,19 +43,42 @@ class ListSucursales extends Component {
             })
     }
 
-    render() {
-        return (
+    exportarSucursales = () => {
+        this.setState({ exported: false });
+        axios.get("http://localhost:8080/sucursal/export").then(response => {
+            if (response.status === 200)
+                this.setState({
+                    exported: true
+                });
+        });
+    }
 
-            <Table selectable celled color='teal'>
+    changeShowEditHandler = (open) => {
+        this.setState({
+            showEdit: open
+        });
+        this.props.editSucursal({ nombre: '', direccion: '' }, false);
+    }
+
+    render() {
+
+        let mensajeExportar = !this.state.exported ? (<Message icon>
+            <Icon name='circle notched' loading />
+            <Message.Content>
+                <Message.Header>Exportando sucursales</Message.Header>
+            </Message.Content>
+        </Message>) : null;
+
+        return (
+            <Table celled color='teal'>
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>Nombre</Table.HeaderCell>
                         <Table.HeaderCell>Dirección</Table.HeaderCell>
-                        <Table.HeaderCell />
+                        <Table.HeaderCell>Opciones</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                    {this.props.showEdit ? <EditItemSucursal paginate={() => this.paginate(this.state.activePage)} showEditHandler={this.props.showEditHandler} /> : null}
                     {this.state.sucursalesPaginadas.map(sucursal => (
                         <ListItemSucursal
                             key={sucursal.id}
@@ -61,11 +86,14 @@ class ListSucursales extends Component {
                             direccion={sucursal.direccion}
                             clickBorrar={() => this.borrarSucursalHandler(sucursal.id)}
                             clickEdit={() => {
-                                this.props.showEditHandler(true);
+                                this.changeShowEditHandler(true);
                                 this.props.clickEdit(sucursal, true);
                             }}
                         />
                     ))}
+                    {this.state.showEdit ? <EditItemSucursal 
+                        paginate={() => this.paginate(this.state.activePage)} 
+                        showEditHandler={this.changeShowEditHandler} /> : null}
                 </Table.Body>
                 <Table.Footer>
                     <Table.Row>
@@ -74,6 +102,15 @@ class ListSucursales extends Component {
                                 activePage={this.state.activePage}
                                 totalPages={this.state.numberOfPages}
                                 onPageChange={(event, data) => this.paginate(data.activePage)} />
+                            <Button  onClick={() => this.exportarSucursales()}
+                                color='teal' floated='right' icon labelPosition='left' size='small'>
+                                <Icon name='external' />Exportar sucursales
+                            </Button>
+                            <Button onClick={() => this.changeShowEditHandler(true)} 
+                                color='teal' floated='right' icon labelPosition='left' size='small'>
+                                <Icon name='building' />Añadir sucursal
+                            </Button>                            
+                            {mensajeExportar}
                         </Table.HeaderCell>
                     </Table.Row>
                 </Table.Footer>
@@ -90,7 +127,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        borrarSucursal: id => dispatch(actions.borrarSucursal(id))
+        borrarSucursal: id => dispatch(actions.borrarSucursal(id)),
+        editSucursal: (sucursal, edit) => dispatch(actions.editSucursal(sucursal, edit))
     }
 }
 

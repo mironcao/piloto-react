@@ -124,8 +124,7 @@ class MisCuentas extends Component {
 
 	render() {
 		return (
-			<Container>
-				<br></br>
+			<Container style={{ marginTop: '3em', marginBottom: '3em' }}>
 				<Header as='h2' color="teal" textAlign="center">
 					Cuentas
 				</Header>
