@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Table, Icon, Pagination , Message} from 'semantic-ui-react';
+import { Button, Table, Icon, Pagination, Message, Confirm } from 'semantic-ui-react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions';
@@ -8,7 +8,8 @@ import { withRouter } from 'react-router-dom';
 
 class TablaCliente extends Component {
     state = {
-        exported: false
+        exported: false,
+        borrado: null,
     }
 
     constructor() {
@@ -42,18 +43,46 @@ class TablaCliente extends Component {
                 <Table.Cell >{cliente.apellidos}</Table.Cell>
                 <Table.Cell className="options">
                     <Button className="option-buttons" color="blue" icon='edit' onClick={() => this.editarCliente(cliente.dni)}></Button>
-                    <Button className="option-buttons" color="red" icon='delete' onClick={() => this.borrarCliente(cliente.dni)}></Button>
+                    <Button className="option-buttons" color="red" icon='delete' onClick={() => this.mostrar(cliente.dni)}></Button>
+                    {this.state.borrado}
                 </Table.Cell>
-            </Table.Row>)
+            </Table.Row>
+            )
         }
-
         return rows;
 
     }
 
+    mostrar = (dni) => {
+        this.setState({
+        
+            borrado:<Confirm
+                
+                content={this.mostrarMensajeConfirmacion(dni)}
+                open={true}
+                cancelButton='No, gracias'
+                confirmButton="Confirmar"
+                onCancel={this.cambiarConfirmacionBorrado}
+                onConfirm={() => this.borrarCliente(dni)} />
+                
+        });
+
+    }
+
+
+    mostrarMensajeConfirmacion(dni) {
+        return "¿Estas seguro de que quieres eliminar el cliente con DNI " + dni + " ?";
+    }
+    cambiarConfirmacionBorrado = () => {
+        this.setState({ borrado: null })
+    }
+
+
     borrarCliente(dni) {
         axios.delete("http://localhost:8080/clientes/cliente/" + dni);
         this.props.deleteCliente(dni);
+        this.cambiarConfirmacionBorrado();
+
     }
     editarCliente(dni) {
         this.props.editarCliente(dni);
