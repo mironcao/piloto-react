@@ -142,9 +142,9 @@ class EditItemSucursal extends Component {
                     <Input maxLength="50" fluid error={!this.state.direccion.valid} onChange={this.onChangeDireccionHandler} value={this.state.direccion.value}></Input>
                     {this.state.direccion.valid ? null : message}
                 </Table.Cell>
-                <Table.Cell textAlign='right'>
-                    <Button color='blue' onClick={this.onGuardarHandler}>Guardar</Button>
-                    <Button color='red' onClick={this.cancelarHandler}>Cancelar</Button>
+                <Table.Cell className="options">
+                    <Button className="option-buttons" color='blue' onClick={this.onGuardarHandler}>Guardar</Button>
+                    <Button className="option-buttons" color='red' onClick={this.cancelarHandler}>Cancelar</Button>
                 </Table.Cell>
             </Table.Row>
         );
