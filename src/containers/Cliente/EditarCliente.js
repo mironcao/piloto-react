@@ -24,7 +24,6 @@ class EditarCliente extends Component {
         axios.get("http://localhost:8080/clientes/buscarCliente/" + this.props.dni).then(response => {
             this.setState(
                 {
-
                     cliente: response.data,
                     DNI: { value: response.data.dni, valid: true },
                     nombre: { value: response.data.nombre, valid: true },
@@ -53,10 +52,6 @@ class EditarCliente extends Component {
         this.setState({ visible: true, actualizado: true },this.reiniciarFormulario)
         
     }
-
-       
-        
-
 
     reiniciarFormulario() {
         
@@ -168,7 +163,7 @@ class EditarCliente extends Component {
                                 {this.state.nombre.valid ? null : this.mostrarError("nombre")}
                             </Form.Field>
                             <Form.Field required>
-                                <label >Apellidos:</label>
+                                <label>Apellidos:</label>
                                 <Input focus placeholder='Apellidos...'
                                     name="apellidos" value={this.state.apellidos.value} onChange={this.cambiarEstado} maxLength="30" />
                                 {this.state.apellidos.valid ? null : this.mostrarError("apellidos")}

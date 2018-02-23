@@ -65,19 +65,24 @@ class FormularioEditarEmpleado extends Component {
 
     actualizarEmpleado = () => {
         if (this.validarEmpleado()) {
+            let password = this.state.newPassword.value;
+            if (this.state.oldPassword.value === '' &&
+                this.state.newPassword.value === '' &&
+                this.state.repeatPassword.value === '')
+                password = this.state.ogPassword;
             let empleadoActualizado = {
                 dni: this.state.empleado.dni,
                 nombre: this.state.empleado.nombre.value,
                 apellidos: this.state.empleado.apellidos.value,
                 direccion: this.state.empleado.direccion.value,
-                password: this.state.newPassword.value,
+                password: password,
                 fijo: this.state.empleado.fijo.value,
                 movil: this.state.empleado.movil.value,
                 email: this.state.empleado.email.value,
                 sucursal: this.state.empleado.sucursal.id,
                 usuario: this.state.empleado.usuario
             };
-            axios.put('http://localhost:8080/empleado/' + empleadoActualizado.dni, empleadoActualizado).then(() => {
+            axios.put('http://localhost:8080/empleado/', empleadoActualizado).then(() => {
                 this.props.actualizarEmpleado(empleadoActualizado);
                 this.props.history.push("/empleado")
             });
@@ -130,17 +135,22 @@ class FormularioEditarEmpleado extends Component {
             validos[5] = false;
             valido = false;
         }
-        if (this.state.ogPassword !== this.state.oldPassword.value) {            
-            validos[6] = false;
-            valido = false;
-        }
-        if (this.state.newPassword.value.length < 8) {
-            validos[7] = false;
-            valido = false;
-        }
-        if (this.state.newPassword.value !== this.state.repeatPassword.value) {
-            validos[8] = false;
-            valido = false;
+        if (!(this.state.oldPassword.value === '' &&
+            this.state.newPassword.value === '' &&
+            this.state.repeatPassword.value === '')) {
+            
+            if (this.state.ogPassword !== this.state.oldPassword.value) {            
+                validos[6] = false;
+                valido = false;
+            }
+            if (this.state.newPassword.value.length < 8) {
+                validos[7] = false;
+                valido = false;
+            }
+            if (this.state.newPassword.value !== this.state.repeatPassword.value) {
+                validos[8] = false;
+                valido = false;
+            }
         }
         const empleado = {
             dni: this.state.empleado.dni,
