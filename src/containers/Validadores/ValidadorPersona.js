@@ -27,14 +27,14 @@ export const validarEmail=(email) => {
     return true;
 }
 export const validateTelefonoMovil=(movil)=> {
-    var expr = /^(\\+34|0034|34)?[6|7][0-9]{8}$/;
+    var expr = /^(\\+34|0034)?[6|7][0-9]{8}$/;
     if (!expr.test(movil) && movil.length !== 0) {
         return false;
     }
     return true;
 }
 export const validateTelefonoFijo=(fijo) =>{
-    var expr = /^(\\+34|0034|34)?[8|9][0-9]{8}$/;
+    var expr = /^(\\+34|0034)?[8|9][0-9]{8}$/;
     if (!expr.test(fijo) && fijo.length !== 0) {
         return false;
     }
